@@ -32,13 +32,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (id == R.id.nav_account) {
-                    // Այստեղ արդեն կան նաև կարգավորումները
                     startActivity(new Intent(this, AccountActivity.class));
                     overridePendingTransition(0, 0);
                     finish();
                     return true;
                 }
-                // nav_settings բլոկը հեռացված է, որպեսզի Build-ը չկանգնի
                 return id == R.id.nav_leaderboard;
             });
         }

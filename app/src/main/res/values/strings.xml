@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Quiz AI</string>
+    <string name="app_name">Quizora</string>
     <string name="select_category">Select Category</string>
     <string name="start_game">Start Game</string>
     <string name="settings">Settings</string>

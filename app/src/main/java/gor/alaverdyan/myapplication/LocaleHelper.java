@@ -10,7 +10,7 @@ public class LocaleHelper {
 
     public static Context setLocale(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-        String lang = prefs.getString("lang", "en"); // Լռելյայն՝ անգլերեն
+        String lang = prefs.getString("lang", "en");
         return updateResources(context, lang);
     }
 

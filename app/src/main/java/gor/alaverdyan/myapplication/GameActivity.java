@@ -177,10 +177,8 @@ public class GameActivity extends AppCompatActivity {
         String uid = FirebaseAuth.getInstance().getUid();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
-        // Save total score to leaderboard
         db.child("leaderboard").child(uid).setValue(score);
 
-        // Progress logic: Unlock next level only if 10/10 correct
         if (correctAnswersCount == 10) {
             String unlockKey = "";
             if (difficulty.equalsIgnoreCase("easy")) unlockKey = "medium_unlocked";

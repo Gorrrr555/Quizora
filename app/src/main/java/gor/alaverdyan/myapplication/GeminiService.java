@@ -16,7 +16,6 @@ import okhttp3.Response;
 
 public class GeminiService {
     private final OkHttpClient client;
-    // Վերցնում ենք բանալին BuildConfig-ից
     private final String API_KEY = BuildConfig.OPENROUTER_API_KEY;
 
     public GeminiService() {
@@ -29,7 +28,6 @@ public class GeminiService {
     }
 
     public void generateQuestions(String category, String difficulty, AIResponseCallback callback) {
-        // Հրահանգում ենք AI-ին վերադարձնել մաքուր JSON
         String prompt = "Give me 1 Armenian quiz question about " + category + " for " + difficulty + " difficulty. " +
                 "Response MUST be ONLY a JSON object: {\"q\":\"Հարց\", \"o1\":\"v1\", \"o2\":\"v2\", \"o3\":\"v3\", \"o4\":\"v4\", \"a\":1}. " +
                 "The 'a' field is the index of correct option (1-4).";
@@ -74,7 +72,6 @@ public class GeminiService {
                                     .getJSONObject("message")
                                     .getString("content");
 
-                            // Մաքրում ենք AI-ի հնարավոր ավելորդ Markdown նշանները
                             String cleanedJson = aiResult.replaceAll("(?s)```.*?```", "").trim();
                             if (cleanedJson.contains("{")) {
                                 cleanedJson = cleanedJson.substring(cleanedJson.indexOf("{"), cleanedJson.lastIndexOf("}") + 1);

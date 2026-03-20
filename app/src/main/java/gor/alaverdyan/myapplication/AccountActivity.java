@@ -28,7 +28,6 @@ public class AccountActivity extends AppCompatActivity {
             tvNickname.setText(user.getDisplayName() != null ? user.getDisplayName() : "No Nickname");
             tvEmail.setText(user.getEmail());
 
-            // Fetch Score from Database
             FirebaseDatabase.getInstance().getReference("leaderboard")
                     .child(user.getUid()).get().addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult().exists()) {

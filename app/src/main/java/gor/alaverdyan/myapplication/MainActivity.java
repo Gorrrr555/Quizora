@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // UI Binding
         difficultySection = findViewById(R.id.difficultySection);
         btnStart = findViewById(R.id.btnStart);
         btnEasy = findViewById(R.id.btnEasy);
@@ -39,18 +38,15 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView cardHistory = findViewById(R.id.cardHistory);
         MaterialCardView cardSport = findViewById(R.id.cardSport);
 
-        // Category Selection with Visual Feedback
         cardMath.setOnClickListener(v -> selectCategory(cardMath, "Math"));
         cardChemistry.setOnClickListener(v -> selectCategory(cardChemistry, "Chemistry"));
         cardHistory.setOnClickListener(v -> selectCategory(cardHistory, "History"));
         cardSport.setOnClickListener(v -> selectCategory(cardSport, "Sport"));
 
-        // Difficulty Buttons
         btnEasy.setOnClickListener(v -> updateDifficulty("Easy", btnEasy));
         btnMed.setOnClickListener(v -> updateDifficulty("Medium", btnMed));
         btnHard.setOnClickListener(v -> updateDifficulty("Hard", btnHard));
 
-        // Start Game
         btnStart.setOnClickListener(v -> {
             if (!selectedCategory.isEmpty()) {
                 // Note: Changed QuizActivity to GameActivity to match your logic file
@@ -68,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectCategory(MaterialCardView card, String category) {
-        // Reset last selected card color
+
         if (lastSelectedCard != null) {
             lastSelectedCard.setStrokeColor(Color.parseColor("#DDDDDD"));
             lastSelectedCard.setStrokeWidth(2);
         }
 
-        // Highlight new selection in blue
+
         selectedCategory = category;
         card.setStrokeColor(Color.parseColor("#2196F3"));
         card.setStrokeWidth(6);
@@ -86,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateDifficulty(String diff, Button clickedButton) {
         selectedDifficulty = diff;
 
-        // Visual feedback for buttons (Simple version)
+
         btnEasy.setBackgroundColor(Color.LTGRAY);
         btnMed.setBackgroundColor(Color.LTGRAY);
         btnHard.setBackgroundColor(Color.LTGRAY);
@@ -113,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         btnHard.setEnabled(isHardUnlocked);
                         btnHard.setAlpha(isHardUnlocked ? 1.0f : 0.4f);
                     } else {
-                        // Default state: Only Easy is available
+
                         btnMed.setEnabled(false);
                         btnHard.setEnabled(false);
                         btnMed.setAlpha(0.4f);
@@ -141,6 +137,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkUnlocks(); // Refresh locks when returning from a game
+        checkUnlocks();
     }
 }
