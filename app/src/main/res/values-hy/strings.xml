@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Վիկտորինա AI</string>
+    <string name="select_category">Ընտրեք կատեգորիան</string>
+    <string name="start_game">Սկսել խաղը</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="dark_mode">Մութ ռեժիմ</string>
+    <string name="language">Լեզու</string>
+</resources>

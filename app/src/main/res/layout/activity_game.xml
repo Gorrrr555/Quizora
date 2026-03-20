@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFDFD">
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="#FFFFFF">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score: 0"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:id="@+id/txtQuestion"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:text="Question text"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"/>
 
-        <TextView
-            android:id="@+id/txtQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="#333333"
-            android:layout_marginBottom="40dp"/>
+    <Button android:id="@+id/btnOption1" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginBottom="10dp"/>
+    <Button android:id="@+id/btnOption2" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginBottom="10dp"/>
+    <Button android:id="@+id/btnOption3" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginBottom="10dp"/>
 
-        <Button android:id="@+id/btnOpt1" android:layout_width="match_parent" android:layout_height="65dp" android:layout_marginBottom="12dp" style="@style/Widget.Material3.Button.TonalButton"/>
-        <Button android:id="@+id/btnOpt2" android:layout_width="match_parent" android:layout_height="65dp" android:layout_marginBottom="12dp" style="@style/Widget.Material3.Button.TonalButton"/>
-        <Button android:id="@+id/btnOpt3" android:layout_width="match_parent" android:layout_height="65dp" android:layout_marginBottom="12dp" style="@style/Widget.Material3.Button.TonalButton"/>
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imgFeedback"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:alpha="0.9"
-        android:elevation="10dp"/>
-
-</FrameLayout>
+</LinearLayout>

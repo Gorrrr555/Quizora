@@ -1,63 +1,202 @@
 package gor.alaverdyan.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.List;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class GameActivity extends AppCompatActivity {
-    private List<Question> questions;
-    private int currentIdx = 0;
-    private ImageView imgFeedback;
+
+    private RelativeLayout loadingLayout;
+    private TextView tvQuestion, tvScore, tvTimer, tvQuestionCount;
+    private LinearLayout optionsContainer;
+
+    private String category, difficulty;
+    private int score = 0;
+    private int questionIndex = 1;
+    private int correctAnswersCount = 0;
+    private CountDownTimer countDownTimer;
+    private final String API_KEY = BuildConfig.OPENROUTER_API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_quiz);
 
-        imgFeedback = findViewById(R.id.imgFeedback);
-        questions = QuestionBank.getQuestions(getIntent().getStringExtra("CAT"), getIntent().getStringExtra("DIFF"));
+        loadingLayout = findViewById(R.id.loadingLayout);
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvScore = findViewById(R.id.tvScore);
+        tvTimer = findViewById(R.id.tvTimer);
+        tvQuestionCount = findViewById(R.id.tvQuestionCount);
+        optionsContainer = findViewById(R.id.optionsContainer);
 
-        displayQuestion();
+        category = getIntent().getStringExtra("category");
+        difficulty = getIntent().getStringExtra("difficulty");
+
+        loadQuestion();
     }
 
-    private void displayQuestion() {
-        if (currentIdx >= questions.size()) {
-            finish();
+    private void loadQuestion() {
+        if (questionIndex > 10) {
+            handleGameOver();
             return;
         }
 
-        Question q = questions.get(currentIdx);
-        ((TextView)findViewById(R.id.txtQuestion)).setText(q.text);
+        if (countDownTimer != null) countDownTimer.cancel();
 
-        Button[] btns = {findViewById(R.id.btnOpt1), findViewById(R.id.btnOpt2), findViewById(R.id.btnOpt3)};
-        for (int i = 0; i < 3; i++) {
-            btns[i].setText(q.options[i]);
-            btns[i].setEnabled(true);
-            final int choice = i;
-            btns[i].setOnClickListener(v -> checkAnswer(choice, q.correct, btns));
-        }
+        loadingLayout.setVisibility(View.VISIBLE);
+        optionsContainer.removeAllViews();
+        tvQuestionCount.setText(questionIndex + "/10");
+        tvScore.setText("Pts: " + score);
+
+        OkHttpClient client = new OkHttpClient();
+        String prompt = "One " + difficulty + " quiz question about " + category +
+                " in English. Format: Question|Opt1|Opt2|Opt3|Opt4|Correct(1-4). Seed: " + System.currentTimeMillis();
+
+        try {
+            JSONObject json = new JSONObject();
+            json.put("model", "google/gemini-2.0-flash-001");
+            json.put("temperature", 1.0);
+            JSONArray messages = new JSONArray();
+            messages.put(new JSONObject().put("role", "user").put("content", prompt));
+            json.put("messages", messages);
+
+            Request request = new Request.Builder()
+                    .url("https://openrouter.ai/api/v1/chat/completions")
+                    .post(RequestBody.create(json.toString(), MediaType.parse("application/json")))
+                    .addHeader("Authorization", "Bearer " + API_KEY)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(() -> tvQuestion.setText("Network Error"));
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful() && response.body() != null) {
+                        try {
+                            String res = response.body().string();
+                            String content = new JSONObject(res).getJSONArray("choices")
+                                    .getJSONObject(0).getJSONObject("message").getString("content");
+                            runOnUiThread(() -> {
+                                parseAndShow(content);
+                                startTimer();
+                            });
+                        } catch (Exception e) { runOnUiThread(() -> loadQuestion()); }
+                    }
+                }
+            });
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
-    private void checkAnswer(int selected, int correct, Button[] btns) {
-        for (Button b : btns) b.setEnabled(false);
+    private void startTimer() {
+        long timeLimit;
+        if (difficulty.equalsIgnoreCase("easy")) timeLimit = 10000;
+        else if (difficulty.equalsIgnoreCase("medium")) timeLimit = 30000;
+        else timeLimit = 60000;
 
-        if (selected == correct) {
-            imgFeedback.setImageResource(android.R.drawable.presence_online);
-            imgFeedback.setVisibility(View.VISIBLE);
-        } else {
-            imgFeedback.setImageResource(android.R.drawable.presence_busy);
-            imgFeedback.setVisibility(View.VISIBLE);
+        countDownTimer = new CountDownTimer(timeLimit, 1000) {
+            @Override
+            public void onTick(long millis) {
+                tvTimer.setText((millis / 1000) + "s");
+                if (millis < 4000) tvTimer.setTextColor(Color.RED);
+                else tvTimer.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(GameActivity.this, "Time's up!", Toast.LENGTH_SHORT).show();
+                questionIndex++;
+                loadQuestion();
+            }
+        }.start();
+    }
+
+    private void parseAndShow(String text) {
+        loadingLayout.setVisibility(View.GONE);
+        String[] p = text.trim().split("\\|");
+        if (p.length >= 6) {
+            tvQuestion.setText(p[0]);
+            int correctIdx = Integer.parseInt(p[5].replaceAll("[^0-9]", ""));
+
+            for (int i = 1; i <= 4; i++) {
+                final int current = i;
+                Button btn = new Button(this);
+                btn.setText(p[i]);
+                btn.setAllCaps(false);
+                btn.setBackgroundResource(R.drawable.edit_text_bg);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 15, 0, 15);
+                btn.setLayoutParams(params);
+
+                btn.setOnClickListener(v -> {
+                    if (current == correctIdx) {
+                        score += 10;
+                        correctAnswersCount++;
+                        Toast.makeText(this, "Correct! 🎉", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Wrong! ❌", Toast.LENGTH_SHORT).show();
+                    }
+                    questionIndex++;
+                    loadQuestion();
+                });
+                optionsContainer.addView(btn);
+            }
+        } else { loadQuestion(); }
+    }
+
+    private void handleGameOver() {
+        if (countDownTimer != null) countDownTimer.cancel();
+        String uid = FirebaseAuth.getInstance().getUid();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
+        // Save total score to leaderboard
+        db.child("leaderboard").child(uid).setValue(score);
+
+        // Progress logic: Unlock next level only if 10/10 correct
+        if (correctAnswersCount == 10) {
+            String unlockKey = "";
+            if (difficulty.equalsIgnoreCase("easy")) unlockKey = "medium_unlocked";
+            else if (difficulty.equalsIgnoreCase("medium")) unlockKey = "hard_unlocked";
+
+            if (!unlockKey.isEmpty()) {
+                db.child("users").child(uid).child("progress").child(unlockKey).setValue(true);
+                Toast.makeText(this, "Mastered! Next Level Unlocked!", Toast.LENGTH_LONG).show();
+            }
         }
 
-        new Handler().postDelayed(() -> {
-            imgFeedback.setVisibility(View.GONE);
-            currentIdx++;
-            displayQuestion();
-        }, 1000);
+        tvQuestion.setText("Finished! Score: " + score);
+        optionsContainer.removeAllViews();
+        Button btnExit = new Button(this);
+        btnExit.setText("Back to Menu");
+        btnExit.setOnClickListener(v -> finish());
+        optionsContainer.addView(btnExit);
     }
 }
