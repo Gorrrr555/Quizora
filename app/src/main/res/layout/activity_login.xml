@@ -47,6 +47,15 @@
         android:textSize="16sp"
         android:textStyle="bold"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primaryBlue"/>
+
     <TextView
         android:id="@+id/tvGoToRegister"
         android:layout_width="wrap_content"
@@ -55,5 +64,18 @@
         android:textColor="@color/darkBlue"
         android:layout_marginTop="20dp"
         android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/resendVerificationLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Resend Verification Email"
+        android:textColor="@color/darkBlue"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

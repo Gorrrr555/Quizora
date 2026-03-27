@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@color/bgGray">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verify Your Email"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/textDark"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/verificationMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="A verification email has been sent to your address. Please check your inbox and spam folder to verify your account."
+        android:textColor="@color/textDark"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnCheckVerification"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="I HAVE VERIFIED (CHECK STATUS)"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/primaryBlue"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnResendVerification"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="RESEND VERIFICATION EMAIL"
+        android:textColor="@color/primaryBlue"
+        android:backgroundTint="@android:color/transparent"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnBackToLogin"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="BACK TO LOGIN"
+        android:textColor="@color/darkBlue"
+        android:backgroundTint="@android:color/transparent"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textSize="16sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/darkBlue"/>
+
+</LinearLayout>
