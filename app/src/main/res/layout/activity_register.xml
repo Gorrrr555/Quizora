@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,50 +12,82 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Account"
-        android:textSize="28sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/textDark"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join our community of learners!"
+        android:textColor="@color/textSecondary"
+        android:textSize="16sp"
         android:layout_marginBottom="32dp"/>
 
     <EditText
         android:id="@+id/etRegNickname"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:hint="Nickname"
         android:background="@drawable/edit_text_bg"
-        android:paddingStart="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/textDark"
+        android:textColorHint="@color/textSecondary"
+        android:paddingStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"/>
 
     <EditText
         android:id="@+id/etRegEmail"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:background="@drawable/edit_text_bg"
-        android:paddingStart="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/textDark"
+        android:textColorHint="@color/textSecondary"
+        android:paddingStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"/>
 
     <EditText
         android:id="@+id/etRegPassword"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Password (min. 6 characters)"
+        android:layout_height="60dp"
+        android:hint="Password (min. 6 chars)"
         android:inputType="textPassword"
         android:background="@drawable/edit_text_bg"
-        android:paddingStart="16dp"
-        android:layout_marginBottom="24dp"/>
+        android:textColor="@color/textDark"
+        android:textColorHint="@color/textSecondary"
+        android:paddingStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="2dp"/>
 
-    <Button
+    <EditText
+        android:id="@+id/etRegConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_bg"
+        android:textColor="@color/textDark"
+        android:textColorHint="@color/textSecondary"
+        android:paddingStart="20dp"
+        android:layout_marginBottom="24dp"
+        android:elevation="2dp"/>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegisterNow"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:text="REGISTER"
         android:textColor="@color/white"
-        android:backgroundTint="@color/darkBlue"
+        android:backgroundTint="@color/primaryBlue"
         android:textAllCaps="false"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:elevation="4dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -63,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:visibility="gone"
-        android:indeterminateTint="@color/darkBlue"/>
+        android:indeterminateTint="@color/primaryBlue"/>
 
     <TextView
         android:id="@+id/loginTextView"
@@ -71,7 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Already have an account? Log in."
-        android:textColor="@color/darkBlue"
+        android:textColor="@color/primaryBlue"
+        android:textStyle="bold"
         android:textSize="16sp"
         android:clickable="true"
         android:focusable="true"

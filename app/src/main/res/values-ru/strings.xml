@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Quizora</string>
+
+    <string name="settings">Настройки</string>
+    <string name="dark_mode">Темный режим</string>
+    <string name="language">Язык</string>
+    <string name="logout">Выйти</string>
+    <string name="points">Очки</string>
+    <string name="score">Счет</string>
+    <string name="correct">Верно</string>
+    <string name="back_to_menu">В меню</string>
+    <string name="preferences">Предпочтения</string>
+    <string name="online">В сети</string>
+
+    <string name="choose_your_path">Выберите свой путь</string>
+    <string name="hello_user">Привет, %1$s</string>
+    <string name="ready_to_level_up">Готовы повысить\nсвои навыки сегодня?</string>
+    <string name="select_difficulty">Выберите сложность</string>
+    <string name="start_quiz">НАЧАТЬ ТЕСТ</string>
+    <string name="select_category">Пожалуйста, выберите категорию</string>
+
+    <string name="splash_tagline">Бросьте вызов своему разуму</string>
+
+    <string name="math">Математика</string>
+    <string name="math_subtitle">Овладейте числами</string>
+    <string name="chemistry">Химия</string>
+    <string name="chemistry_subtitle">Наука о жизни</string>
+    <string name="history">История</string>
+    <string name="history_subtitle">Исследуйте прошлое</string>
+    <string name="sport">Спорт</string>
+    <string name="sport_subtitle">Играйте в игру</string>
+
+    <string name="question_of">Вопрос %1$d из 10</string>
+    <string name="next_question">Следующий вопрос</string>
+    <string name="congratulations">Поздравляем!</string>
+    <string name="view_leaderboard">Посмотреть рейтинг</string>
+    <string name="quiz_summary">Итоги теста</string>
+    <string name="added_pts">Добавлено очков</string>
+
+    <string name="bonus_fifty_fifty">½</string>
+    <string name="bonus_time_freeze">❄️</string>
+
+    <string name="league_bronze">Бронзовая лига</string>
+    <string name="league_silver">Серебряная лига</string>
+    <string name="league_gold">Золотая лига</string>
+    <string name="league_elite">Элитная лига</string>
+    <string name="league_bronze_tab">🥉 Бронза</string>
+    <string name="league_silver_tab">🥈 Серебро</string>
+    <string name="league_gold_tab">🥇 Золото</string>
+    <string name="league_elite_tab">💎 Элита</string>
+    <string name="leagues_title">Лиги Quizora</string>
+    <string name="rank_points">%1$d очков</string>
+
+    <string name="account_stats">Статистика аккаунта</string>
+    <string name="total_pts">Всего очков</string>
+    <string name="quizzes">Тесты</string>
+
+    <string name="title_math_easy">Математик-новичок</string>
+    <string name="title_math_medium">Числовой ниндзя</string>
+    <string name="title_math_hard">Мастер чисел</string>
+    <string name="title_chem_easy">Исследователь атомов</string>
+    <string name="title_chem_medium">Легенда лаборатории</string>
+    <string name="title_chem_hard">Мастер-химик</string>
+    <string name="title_hist_easy">Путешественник во времени</string>
+    <string name="title_hist_medium">Хранитель летописи</string>
+    <string name="title_hist_hard">Исторический мудрец</string>
+    <string name="title_sport_easy">Новичок</string>
+    <string name="title_sport_medium">Все звезды</string>
+    <string name="title_sport_hard">Величайший игрок</string>
+    <string name="title_conqueror">Покоритель викторин</string>
+
+    <string-array name="loading_messages">
+        <item>Ищем в архивах…</item>
+        <item>Ищем испытания…</item>
+        <item>Точим виртуальные карандаши…</item>
+        <item>Полируем вопросы…</item>
+        <item>Пробуждаем базу знаний…</item>
+        <item>Собираем факты и данные…</item>
+        <item>Делаем вопрос сложнее!</item>
+        <item>Почти готово…</item>
+    </string-array>
+</resources>

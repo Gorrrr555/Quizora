@@ -1,53 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="@color/bgGray">
 
-    <TextView
-        android:id="@+id/tvTopNickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi, Guest"
-        android:padding="20dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="#3F51B5"/>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-    <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_gradient_shape"
+            android:padding="24dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivAvatarSmall"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:padding="2dp"
+                android:src="@drawable/avatar_placeholder"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
+                app:tint="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTopNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Hi, Explorer"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/ivAvatarSmall"
+                app:layout_constraintStart_toEndOf="@id/ivAvatarSmall"
+                app:layout_constraintTop_toTopOf="@id/ivAvatarSmall" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCoins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#33FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🪙"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvCoinsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLeague"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#33FFFFFF"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="@id/tvTopNickname"
+                app:layout_constraintTop_toBottomOf="@id/tvTopNickname"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:id="@+id/tvLeagueIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🥉"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvLeagueName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Bronze League"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/ready_to_level_up"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardLeague" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvTopNickname"
-        android:layout_above="@id/bottom_navigation">
+        android:layout_marginTop="-48dp"
+        android:background="@drawable/home_content_bg"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="24dp"
+            android:paddingTop="32dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Category"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="24dp"
+                android:text="@string/choose_your_path"
+                android:textColor="@color/textDark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2">
+                android:alignmentMode="alignMargins"
+                android:columnCount="2"
+                android:columnOrderPreserved="false"
+                android:useDefaultMargins="true">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardMath"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Math ➕" android:layout_gravity="center" android:textStyle="bold"/>
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="@color/surfaceColor"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/cardStroke"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardBackgroundColor="@color/primaryLight"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="➕"
+                                android:textSize="20sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/math"
+                            android:textColor="@color/textDark"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -55,9 +219,45 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chemistry 🧪" android:layout_gravity="center" android:textStyle="bold"/>
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="@color/surfaceColor"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/cardStroke"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardBackgroundColor="@color/primaryLight"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="🧪"
+                                android:textSize="20sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/chemistry"
+                            android:textColor="@color/textDark"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -65,9 +265,45 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="History 📜" android:layout_gravity="center" android:textStyle="bold"/>
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="@color/surfaceColor"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/cardStroke"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardBackgroundColor="@color/primaryLight"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="📜"
+                                android:textSize="20sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/history"
+                            android:textColor="@color/textDark"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -75,11 +311,46 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sport ⚽" android:layout_gravity="center" android:textStyle="bold"/>
-                </com.google.android.material.card.MaterialCardView>
+                    android:layout_marginBottom="4dp"
+                    app:cardBackgroundColor="@color/surfaceColor"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/cardStroke"
+                    app:strokeWidth="1dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            app:cardBackgroundColor="@color/primaryLight"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="⚽"
+                                android:textSize="20sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/sport"
+                            android:textColor="@color/textDark"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>
 
@@ -87,30 +358,84 @@
                 android:id="@+id/difficultySection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:layout_marginTop="20dp">
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/select_difficulty"
+                    android:textColor="@color/textDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleDifficulty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:singleSelection="true">
-                    <Button android:id="@+id/btnEasy" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Easy"/>
-                    <Button android:id="@+id/btnMed" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Medium"/>
-                    <Button android:id="@+id/btnHard" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Hard"/>
+
+                    <Button
+                        android:id="@+id/btnEasy"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Easy"
+                        android:textColor="@color/primaryBlue"
+                        app:strokeColor="@color/primaryBlue" />
+
+                    <Button
+                        android:id="@+id/btnMed"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Medium"
+                        android:textColor="@color/primaryBlue"
+                        app:strokeColor="@color/primaryBlue" />
+
+                    <Button
+                        android:id="@+id/btnHard"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hard"
+                        android:textColor="@color/primaryBlue"
+                        app:strokeColor="@color/primaryBlue" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
-                <Button android:id="@+id/btnStart" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginTop="20dp" android:text="Start Game"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="32dp"
+                    android:backgroundTint="@color/primaryBlue"
+                    android:text="@string/start_quiz"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="24dp"
+                    app:elevation="4dp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="140dp" />
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
+        android:layout_gravity="bottom"
+        android:background="@color/surfaceColor"
+        app:elevation="16dp"
         app:menu="@menu/bottom_menu" />
-</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

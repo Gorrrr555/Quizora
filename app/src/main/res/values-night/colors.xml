@@ -1,0 +1,30 @@
+<resources>
+    <!-- Refined Mild Dark Mode Palette -->
+    <color name="primaryBlue">#A5B4FC</color> <!-- Light Indigo (Slate 300 equivalent) -->
+    <color name="primaryBlueVariant">#818CF8</color>
+    <color name="primaryLight">#312E81</color> <!-- Deep Indigo for contrast -->
+    <color name="secondaryColor">#FDA4AF</color> <!-- Light Rose -->
+    <color name="accentAmber">#FDE047</color> <!-- Vibrant Yellow/Gold -->
+
+    <!-- Backgrounds and Surfaces -->
+    <color name="bgGray">#0F172A</color> <!-- Deep Navy background -->
+    <color name="surfaceColor">#1E293B</color> <!-- Slate 800 for cards -->
+    <color name="textDark">#F8FAFC</color> <!-- Very Light Slate (High visibility) -->
+    <color name="textSecondary">#CBD5E1</color> <!-- Slate 300 (Very readable) -->
+    <color name="cardStroke">#334155</color> <!-- Slate 700 -->
+
+    <!-- Header Gradient -->
+    <color name="headerGradientStart">#1E1B4B</color>
+    <color name="headerGradientEnd">#1E293B</color>
+
+    <!-- Feedback Colors -->
+    <color name="successLight">#064E3B</color>
+    <color name="successText">#4ADE80</color> <!-- Bright Green -->
+    <color name="errorLight">#7F1D1D</color>
+    <color name="errorText">#F87171</color> <!-- Bright Red -->
+    <color name="warningLight">#78350F</color>
+    <color name="warningText">#FDE047</color>
+
+    <color name="dangerLight">#450A0A</color>
+    <color name="dangerText">#F87171</color>
+</resources>

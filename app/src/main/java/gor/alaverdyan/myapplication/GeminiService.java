@@ -27,6 +27,11 @@ public class GeminiService {
         void onError(String errorMessage);
     }
 
+    public interface ChatCallback {
+        void onSuccess(String response);
+        void onError(String errorMessage);
+    }
+
     public void generateQuestions(String category, String difficulty, AIResponseCallback callback) {
         String prompt = "Give me 1 Armenian quiz question about " + category + " for " + difficulty + " difficulty. " +
                 "Response MUST be ONLY a JSON object: {\"q\":\"Հարց\", \"o1\":\"v1\", \"o2\":\"v2\", \"o3\":\"v3\", \"o4\":\"v4\", \"a\":1}. " +
@@ -101,6 +106,60 @@ public class GeminiService {
 
         } catch (Exception e) {
             callback.onError("Request error: " + e.getMessage());
+        }
+    }
+
+    public void askAi(String userPrompt, ChatCallback callback) {
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("model", "google/gemini-2.0-flash-001");
+
+            JSONArray messages = new JSONArray();
+            JSONObject message = new JSONObject();
+            message.put("role", "user");
+            message.put("content", userPrompt);
+            messages.put(message);
+            jsonBody.put("messages", messages);
+
+            RequestBody body = RequestBody.create(
+                    jsonBody.toString(),
+                    MediaType.parse("application/json; charset=utf-8")
+            );
+
+            Request request = new Request.Builder()
+                    .url("https://openrouter.ai/api/v1/chat/completions")
+                    .post(body)
+                    .addHeader("Authorization", "Bearer " + API_KEY)
+                    .addHeader("HTTP-Referer", "http://localhost")
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    callback.onError("Network Error");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful() && response.body() != null) {
+                        try {
+                            String responseData = response.body().string();
+                            JSONObject jsonResponse = new JSONObject(responseData);
+                            String aiResult = jsonResponse.getJSONArray("choices")
+                                    .getJSONObject(0)
+                                    .getJSONObject("message")
+                                    .getString("content");
+                            callback.onSuccess(aiResult);
+                        } catch (Exception e) {
+                            callback.onError("Parsing Error");
+                        }
+                    } else {
+                        callback.onError("API Error");
+                    }
+                }
+            });
+        } catch (Exception e) {
+            callback.onError("Error");
         }
     }
 }

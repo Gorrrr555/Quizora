@@ -1,14 +1,16 @@
 package gor.alaverdyan.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -35,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-
             }
         });
-
     }
 
     @Override
@@ -64,21 +67,13 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     if (currentUser.isEmailVerified()) {
-                        Toast.makeText(LoginActivity.this, "Already logged in and verified.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Your email is not verified. Redirecting to verification.",
-                                Toast.LENGTH_LONG).show();
                         startActivity(new Intent(LoginActivity.this, EmailVerificationActivity.class));
                         finish();
                     }
                 } else {
-
-                    Toast.makeText(LoginActivity.this,
-                            "Failed to refresh user data, please log in again: " + task.getException().getMessage(),
-                            Toast.LENGTH_LONG).show();
                     mAuth.signOut();
                 }
             });
@@ -111,31 +106,21 @@ public class LoginActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (reloadTask.isSuccessful()) {
                                     if (user.isEmailVerified()) {
-                                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                         finish();
                                     } else {
-                                        Toast.makeText(LoginActivity.this,
-                                                "Your email is not verified. Redirecting to verification.",
-                                                Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(LoginActivity.this, EmailVerificationActivity.class));
                                         finish();
                                     }
                                 } else {
-                                    Toast.makeText(LoginActivity.this,
-                                            "Failed to refresh user data: " + reloadTask.getException().getMessage(),
-                                            Toast.LENGTH_LONG).show();
                                     mAuth.signOut();
                                 }
                             });
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Login failed: " + task.getException().getMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);
                     }
                 });
     }
-
 }

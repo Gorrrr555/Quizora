@@ -4,54 +4,126 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F3FF">
+    android:background="@color/bgGray">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:background="@drawable/main_gradient_shape">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="20dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_gradient_shape"
+            android:minHeight="200dp">
+
             <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leaderboard"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp"
+                android:layout_marginTop="48dp"
+                android:text="Quizora Leagues"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="20dp"/>
-            <LinearLayout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/leagueTabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="3dp"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="#BFFFFFFF">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🥉 Bronze" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🥈 Silver" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🥇 Gold" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💎 Elite" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <LinearLayout
+                android:id="@+id/podiumContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="bottom"
                 android:orientation="horizontal"
-                android:gravity="bottom">
-                <include layout="@layout/item_podium" android:layout_width="0dp" android:layout_height="100dp" android:layout_weight="1"/>
-                <include layout="@layout/item_podium" android:layout_width="0dp" android:layout_height="140dp" android:layout_weight="1"/>
-                <include layout="@layout/item_podium" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1"/>
+                android:paddingHorizontal="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leagueTabs">
+
+                <!-- Rank 2 (Left) -->
+                <include
+                    android:id="@+id/podium2"
+                    layout="@layout/item_podium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <!-- Rank 1 (Center) -->
+                <include
+                    android:id="@+id/podium1"
+                    layout="@layout/item_podium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1" />
+
+                <!-- Rank 3 (Right) -->
+                <include
+                    android:id="@+id/podium3"
+                    layout="@layout/item_podium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
-        </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLeaderboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
+        android:background="@drawable/home_content_bg"
         android:clipToPadding="false"
-        android:layout_marginBottom="56dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:paddingTop="16dp"
+        android:paddingBottom="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#FFFFFF"
+        android:background="@color/surfaceColor"
+        app:elevation="16dp"
         app:menu="@menu/bottom_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

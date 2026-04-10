@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Verify Your Email"
-        android:textSize="28sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/textDark"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <TextView
         android:id="@+id/verificationMessage"
@@ -22,44 +23,48 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="A verification email has been sent to your address. Please check your inbox and spam folder to verify your account."
-        android:textColor="@color/textDark"
+        android:textColor="@color/textSecondary"
         android:textSize="16sp"
         android:layout_marginBottom="32dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCheckVerification"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="I HAVE VERIFIED (CHECK STATUS)"
+        android:layout_height="60dp"
+        android:text="I HAVE VERIFIED"
         android:textColor="@color/white"
         android:backgroundTint="@color/primaryBlue"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:elevation="4dp"
         android:layout_marginBottom="16dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnResendVerification"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="RESEND VERIFICATION EMAIL"
+        android:layout_height="60dp"
+        android:text="Resend Verification Email"
         android:textColor="@color/primaryBlue"
-        android:backgroundTint="@android:color/transparent"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textSize="16sp"
+        app:cornerRadius="24dp"
         android:layout_marginBottom="16dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBackToLogin"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="BACK TO LOGIN"
-        android:textColor="@color/darkBlue"
-        android:backgroundTint="@android:color/transparent"
+        android:layout_height="60dp"
+        android:text="Back to Login"
+        android:textColor="@color/textSecondary"
         android:textStyle="bold"
         android:textAllCaps="false"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        app:cornerRadius="24dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -68,6 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:visibility="gone"
-        android:indeterminateTint="@color/darkBlue"/>
+        android:indeterminateTint="@color/primaryBlue"/>
 
 </LinearLayout>

@@ -1,8 +1,82 @@
 <resources>
-    <string name="app_name">Վիկտորինա AI</string>
-    <string name="select_category">Ընտրեք կատեգորիան</string>
-    <string name="start_game">Սկսել խաղը</string>
+    <string name="app_name">Quizora</string>
+
     <string name="settings">Կարգավորումներ</string>
     <string name="dark_mode">Մութ ռեժիմ</string>
     <string name="language">Լեզու</string>
+    <string name="logout">Դուրս գալ</string>
+    <string name="points">Միավոր</string>
+    <string name="score">Հաշիվ</string>
+    <string name="correct">Ճիշտ</string>
+    <string name="back_to_menu">Գլխավոր մենյու</string>
+    <string name="preferences">Նախընտրություններ</string>
+    <string name="online">Առցանց</string>
+
+    <string name="choose_your_path">Ընտրեք ձեր ուղին</string>
+    <string name="hello_user">Ողջույն, %1$s</string>
+    <string name="ready_to_level_up">Պատրա՞ստ եք բարձրացնել\nձեր հմտությունները այսօր:</string>
+    <string name="select_difficulty">Ընտրեք բարդությունը</string>
+    <string name="start_quiz">ՍԿՍԵԼ ԹԵՍՏԸ</string>
+    <string name="select_category">Խնդրում ենք ընտրել կատեգորիա</string>
+
+    <string name="splash_tagline">Մարտահրավեր նետեք ձեր մտքին</string>
+
+    <string name="math">Մաթեմատիկա</string>
+    <string name="math_subtitle">Տիրապետեք թվերին</string>
+    <string name="chemistry">Քիմիա</string>
+    <string name="chemistry_subtitle">Կյանքի գիտություն</string>
+    <string name="history">Պատմություն</string>
+    <string name="history_subtitle">Բացահայտեք անցյալը</string>
+    <string name="sport">Սպորտ</string>
+    <string name="sport_subtitle">Խաղացեք խաղը</string>
+
+    <string name="question_of">Հարց %1$d - 10-ից</string>
+    <string name="next_question">Հաջորդ հարցը</string>
+    <string name="congratulations">Շնորհավորում ենք:</string>
+    <string name="view_leaderboard">Տեսնել վարկանիշը</string>
+    <string name="quiz_summary">Թեստի ամփոփում</string>
+    <string name="added_pts">Ավելացված միավորներ</string>
+
+    <string name="bonus_fifty_fifty">½</string>
+    <string name="bonus_time_freeze">❄️</string>
+
+    <string name="league_bronze">Բրոնզե Լիգա</string>
+    <string name="league_silver">Արծաթե Լիգա</string>
+    <string name="league_gold">Ոսկե Լիգա</string>
+    <string name="league_elite">Էլիտար Լիգա</string>
+    <string name="league_bronze_tab">🥉 Բրոնզ</string>
+    <string name="league_silver_tab">🥈 Արծաթ</string>
+    <string name="league_gold_tab">🥇 Ոսկի</string>
+    <string name="league_elite_tab">💎 Էլիտա</string>
+    <string name="leagues_title">Quizora Լիգաներ</string>
+    <string name="rank_points">%1$d միավոր</string>
+
+    <string name="account_stats">Հաշվի վիճակագրություն</string>
+    <string name="total_pts">Ընդհանուր միավոր</string>
+    <string name="quizzes">Թեստեր</string>
+
+    <string name="title_math_easy">Մաթեմատիկայի սկսնակ</string>
+    <string name="title_math_medium">Թվերի նինջա</string>
+    <string name="title_math_hard">Մաթեմատիկայի հրաշագործ</string>
+    <string name="title_chem_easy">Ատոմների հետազոտող</string>
+    <string name="title_chem_medium">Լաբորատորիայի լեգենդ</string>
+    <string name="title_chem_hard">Վարպետ քիմիկոս</string>
+    <string name="title_hist_easy">Ժամանակի ճանապարհորդ</string>
+    <string name="title_hist_medium">Տարեգրության պահապան</string>
+    <string name="title_hist_hard">Պատմական իմաստուն</string>
+    <string name="title_sport_easy">Նորեկ</string>
+    <string name="title_sport_medium">Բոլոր աստղերը</string>
+    <string name="title_sport_hard">Բոլոր ժամանակների մեծագույնը</string>
+    <string name="title_conqueror">Վիկտորինայի նվաճող</string>
+
+    <string-array name="loading_messages">
+        <item>Որոնում արխիվներում…</item>
+        <item>Փնտրում ենք մարտահրավերներ…</item>
+        <item>Սրում ենք վիրտուալ մատիտները…</item>
+        <item>Հղկում ենք հարցերը…</item>
+        <item>Արթնացնում ենք գիտելիքների բազան…</item>
+        <item>Հավաքում ենք փաստեր և տվյալներ…</item>
+        <item>Համոզվում ենք, որ սա բարդ է լինելու:</item>
+        <item>Գրեթե պատրաստ է…</item>
+    </string-array>
 </resources>

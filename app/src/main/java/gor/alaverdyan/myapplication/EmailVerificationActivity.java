@@ -1,6 +1,6 @@
 package gor.alaverdyan.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,6 +22,11 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +45,6 @@ public class EmailVerificationActivity extends AppCompatActivity {
         if (currentUser != null) {
             String email = currentUser.getEmail();
             verificationMessage.setText("A verification email has been sent to " + email + ". Please check your inbox and spam folder to verify your account.");
-        } else {
-            verificationMessage.setText("It seems you are not logged in. Please go back to login and try again.");
-            btnResendVerification.setEnabled(false);
         }
 
         btnCheckVerification.setOnClickListener(v -> checkEmailVerificationStatus());
@@ -52,12 +56,6 @@ public class EmailVerificationActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkEmailVerificationStatus();
-    }
-
     private void checkEmailVerificationStatus() {
         currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -66,21 +64,13 @@ public class EmailVerificationActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     if (currentUser.isEmailVerified()) {
-                        Toast.makeText(EmailVerificationActivity.this, "Email verified! Redirecting...", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(EmailVerificationActivity.this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(EmailVerificationActivity.this, "Email not yet verified. Please verify your email.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EmailVerificationActivity.this, "Email not yet verified.", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(EmailVerificationActivity.this, "Failed to refresh verification status: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-        } else {
-
-            Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(EmailVerificationActivity.this, LoginActivity.class));
-            finish();
         }
     }
 
@@ -91,17 +81,9 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            Toast.makeText(EmailVerificationActivity.this, "Verification email sent. Check your inbox and spam.", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(EmailVerificationActivity.this,
-                                    "Failed to send verification email: " + task.getException().getMessage(),
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(EmailVerificationActivity.this, "Verification email sent.", Toast.LENGTH_LONG).show();
                         }
                     });
-        } else {
-            Toast.makeText(EmailVerificationActivity.this, "No user logged in. Please log in or register.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(EmailVerificationActivity.this, LoginActivity.class));
-            finish();
         }
     }
 }

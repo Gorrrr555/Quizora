@@ -1,8 +1,82 @@
 <resources>
     <string name="app_name">Quizora</string>
-    <string name="select_category">Select Category</string>
-    <string name="start_game">Start Game</string>
+
     <string name="settings">Settings</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="language">Language</string>
+    <string name="logout">Logout</string>
+    <string name="points">Pts</string>
+    <string name="score">Score</string>
+    <string name="correct">Correct</string>
+    <string name="back_to_menu">Back to Menu</string>
+    <string name="preferences">Preferences</string>
+    <string name="online">Online</string>
+
+    <string name="choose_your_path">Choose your path</string>
+    <string name="hello_user">Hello, %1$s</string>
+    <string name="ready_to_level_up">Ready to level up\nyour skills today?</string>
+    <string name="select_difficulty">Select Difficulty</string>
+    <string name="start_quiz">START QUIZ</string>
+    <string name="select_category">Please select a category</string>
+
+    <string name="splash_tagline">Challenge Your Mind</string>
+
+    <string name="math">Mathematics</string>
+    <string name="math_subtitle">Master the numbers</string>
+    <string name="chemistry">Chemistry</string>
+    <string name="chemistry_subtitle">Science of life</string>
+    <string name="history">History</string>
+    <string name="history_subtitle">Explore the past</string>
+    <string name="sport">Sports</string>
+    <string name="sport_subtitle">Play the game</string>
+
+    <string name="question_of">Question %1$d of 10</string>
+    <string name="next_question">Next Question</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="view_leaderboard">View Leaderboard</string>
+    <string name="quiz_summary">Quiz Summary</string>
+    <string name="added_pts">Added Pts</string>
+
+    <string name="bonus_fifty_fifty">½</string>
+    <string name="bonus_time_freeze">❄️</string>
+
+    <string name="league_bronze">Bronze League</string>
+    <string name="league_silver">Silver League</string>
+    <string name="league_gold">Gold League</string>
+    <string name="league_elite">Elite League</string>
+    <string name="league_bronze_tab">🥉 Bronze</string>
+    <string name="league_silver_tab">🥈 Silver</string>
+    <string name="league_gold_tab">🥇 Gold</string>
+    <string name="league_elite_tab">💎 Elite</string>
+    <string name="leagues_title">Quizora Leagues</string>
+    <string name="rank_points">%1$d pts</string>
+
+    <string name="account_stats">Account Statistics</string>
+    <string name="total_pts">Total Pts</string>
+    <string name="quizzes">Quizzes</string>
+
+    <string name="title_math_easy">Math Novice</string>
+    <string name="title_math_medium">Number Ninja</string>
+    <string name="title_math_hard">Math Wizard</string>
+    <string name="title_chem_easy">Atom Explorer</string>
+    <string name="title_chem_medium">Lab Legend</string>
+    <string name="title_chem_hard">Master Chemist</string>
+    <string name="title_hist_easy">Time Traveler</string>
+    <string name="title_hist_medium">Chronicle Keeper</string>
+    <string name="title_hist_hard">Historical Sage</string>
+    <string name="title_sport_easy">Rookie</string>
+    <string name="title_sport_medium">All-Star</string>
+    <string name="title_sport_hard">G.O.A.T</string>
+    <string name="title_conqueror">Quiz Conqueror</string>
+
+    <string-array name="loading_messages">
+        <item>Consulting the archives…</item>
+        <item>Searching for challenges…</item>
+        <item>Sharpening the virtual pencils…</item>
+        <item>Polishing the questions…</item>
+        <item>Waking up the knowledge base…</item>
+        <item>Gathering facts and data…</item>
+        <item>Making sure this one is tricky!</item>
+        <item>Almost ready…</item>
+    </string-array>
 </resources>

@@ -1,81 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@color/bgGray">
 
+    <!-- Header Section -->
     <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/edit_text_bg"
-        android:backgroundTint="@color/primaryBlue" />
+        android:id="@+id/headerBg"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/main_gradient_shape"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardProfile"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="60dp"
+        app:cardCornerRadius="55dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/white"
+        app:strokeWidth="4dp">
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/avatar_placeholder"
+            android:padding="20dp"
+            app:tint="@color/primaryBlue"
+            android:contentDescription="User Avatar" />
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvUserNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Nickname"
-        android:textColor="#212121"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="12dp"
+        android:text="User Nickname"
+        android:textColor="@color/textDark"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardProfile" />
 
     <TextView
         android:id="@+id/tvUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="user@example.com"
-        android:textColor="#757575"
-        android:textSize="16sp" />
+        android:layout_marginTop="4dp"
+        android:text="user@email.com"
+        android:textColor="@color/textSecondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserNickname" />
 
+    <!-- Stats Section -->
     <LinearLayout
+        android:id="@+id/statsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/edit_text_bg"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserEmail">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Account Statistics"
-            android:textColor="@color/primaryBlue"
-            android:textStyle="bold" />
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/primaryLight"
+            app:strokeWidth="1dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="10dp"
-            android:background="#EEEEEE" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvTotalScore"
-            android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvTotalScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/primaryBlue"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Pts"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Total Score: 0"
-            android:textColor="#212121"
-            android:textSize="18sp" />
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/primaryLight"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvGamesPlayed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quizzes"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-    <Spacer
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#FF5252"
-        android:text="LOGOUT"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/dangerLight"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textColor="@color/dangerText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:icon="@android:drawable/ic_lock_power_off"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:iconGravity="textStart"
+        app:iconTint="@color/dangerText"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:strokeColor="#FEE2E2"
+        app:strokeWidth="1dp" />
 
-</LinearLayout>
+    <!-- Bottom Navigation from MainActivity -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="16dp"
+        app:itemIconTint="@color/primaryBlue"
+        app:itemTextColor="@color/primaryBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_menu"
+        android:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

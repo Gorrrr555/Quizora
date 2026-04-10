@@ -1,7 +1,34 @@
 <resources>
-    <color name="primaryBlue">#2196F3</color>
-    <color name="darkBlue">#1976D2</color>
-    <color name="bgGray">#F8F9FA</color>
+    <!-- Primary Palette -->
+    <color name="primaryBlue">#6366F1</color> <!-- Indigo 500 -->
+    <color name="primaryBlueVariant">#4338CA</color> <!-- Indigo 700 -->
+    <color name="primaryLight">#EEF2FF</color> <!-- Indigo 50 -->
+    <color name="secondaryColor">#F43F5E</color> <!-- Rose 500 -->
+    <color name="accentAmber">#F59E0B</color> <!-- Amber 500 -->
+
+    <!-- Neutral Colors -->
+    <color name="bgGray">#F8FAFC</color> <!-- Slate 50 -->
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="textDark">#1E293B</color> <!-- Slate 800 -->
+    <color name="textSecondary">#64748B</color> <!-- Slate 500 -->
+    <color name="cardStroke">#F1F5F9</color> <!-- Slate 100 -->
+
+    <!-- Constant Colors -->
     <color name="white">#FFFFFF</color>
-    <color name="textDark">#212121</color>
+    <color name="black">#000000</color>
+
+    <!-- Header Gradient -->
+    <color name="headerGradientStart">#6366F1</color>
+    <color name="headerGradientEnd">#818CF8</color>
+
+    <!-- Feedback Colors -->
+    <color name="successLight">#DCFCE7</color>
+    <color name="successText">#15803D</color>
+    <color name="errorLight">#FEE2E2</color>
+    <color name="errorText">#B91C1C</color>
+    <color name="warningLight">#FEF3C7</color>
+    <color name="warningText">#B45309</color>
+
+    <color name="dangerLight">#FEF2F2</color>
+    <color name="dangerText">#EF4444</color>
 </resources>
