@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private String selectedDifficulty = "Easy";
     private LinearLayout difficultySection;
     private Button btnEasy, btnMed, btnHard, btnStart;
-    private TextView tvTopNickname, tvSubtitle, tvCoinsCount, tvLeagueName, tvLeagueIcon;
+    private TextView tvTopNickname, tvSubtitle, tvCoinsCount;
     private MaterialCardView lastSelectedCard = null, cardCoins;
     private BottomNavigationView bottomNav;
 
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         tvTopNickname = findViewById(R.id.tvTopNickname);
         tvSubtitle = findViewById(R.id.tvSubtitle);
         tvCoinsCount = findViewById(R.id.tvCoinsCount);
-        tvLeagueName = findViewById(R.id.tvLeagueName);
-        tvLeagueIcon = findViewById(R.id.tvLeagueIcon);
         cardCoins = findViewById(R.id.cardCoins);
         difficultySection = findViewById(R.id.difficultySection);
         btnStart = findViewById(R.id.btnStart);
@@ -88,10 +86,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cardCoins.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ShopActivity.class));
-        });
-
         loadUserInfo();
         checkDailyBonus();
         setupBottomNavigation();
@@ -107,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 String nickname = snapshot.child("nickname").getValue(String.class);
                                 Long coins = snapshot.child("quizCoins").getValue(Long.class);
-                                String league = snapshot.child("league").getValue(String.class);
                                 
                                 if (nickname != null) {
                                     tvTopNickname.setText(getString(R.string.hello_user, nickname));
@@ -118,40 +111,12 @@ public class MainActivity extends AppCompatActivity {
                                 } else {
                                     tvCoinsCount.setText("0");
                                 }
-
-                                if (league != null) {
-                                    updateLeagueDisplay(league);
-                                }
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {}
                     });
-        }
-    }
-
-    private void updateLeagueDisplay(String league) {
-        switch (league) {
-            case "Bronze":
-                tvLeagueName.setText(R.string.league_bronze);
-                tvLeagueIcon.setText("🥉");
-                break;
-            case "Silver":
-                tvLeagueName.setText(R.string.league_silver);
-                tvLeagueIcon.setText("🥈");
-                break;
-            case "Gold":
-                tvLeagueName.setText(R.string.league_gold);
-                tvLeagueIcon.setText("🥇");
-                break;
-            case "Elite":
-                tvLeagueName.setText(R.string.league_elite);
-                tvLeagueIcon.setText("💎");
-                break;
-            default:
-                tvLeagueName.setText(R.string.league_bronze);
-                tvLeagueIcon.setText("🥉");
         }
     }
 

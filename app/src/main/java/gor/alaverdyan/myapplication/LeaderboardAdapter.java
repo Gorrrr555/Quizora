@@ -37,7 +37,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         LeaderboardUser user = userList.get(position);
         holder.tvRank.setText(String.valueOf(position + 4)); // +4 because top 3 are in podium
         holder.tvNickname.setText(user.nickname);
-        holder.tvScore.setText(user.leaguePoints + " pts");
+        holder.tvScore.setText(user.totalScore + " pts");
         
         holder.tvScore.setTextColor(ContextCompat.getColor(context, R.color.primaryBlue));
     }

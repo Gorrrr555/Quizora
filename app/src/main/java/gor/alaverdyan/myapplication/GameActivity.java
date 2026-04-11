@@ -228,6 +228,16 @@ public class GameActivity extends AppCompatActivity {
         cardSolution.setVisibility(View.GONE);
         btnNext.setVisibility(View.GONE);
         
+        // Re-enable bonuses for new question if they were not used
+        if (!isFiftyFiftyUsed) {
+            btnFiftyFifty.setEnabled(true);
+            btnFiftyFifty.setAlpha(1.0f);
+        }
+        if (!isTimeFreezeUsed) {
+            btnTimeFreeze.setEnabled(true);
+            btnTimeFreeze.setAlpha(1.0f);
+        }
+        
         tvQuestionCount.setText(getString(R.string.question_of, questionIndex));
         tvScore.setText(getString(R.string.score) + ": " + score);
         questionProgress.setProgress(questionIndex * 10);
@@ -400,6 +410,11 @@ public class GameActivity extends AppCompatActivity {
         for (MaterialButton b : optionButtons) {
             b.setEnabled(false);
         }
+        // Disable bonuses as well
+        btnFiftyFifty.setEnabled(false);
+        btnFiftyFifty.setAlpha(0.5f);
+        btnTimeFreeze.setEnabled(false);
+        btnTimeFreeze.setAlpha(0.5f);
     }
 
     private void handleGameOver() {
@@ -418,25 +433,18 @@ public class GameActivity extends AppCompatActivity {
                     Long currentTotalScore = snapshot.child("totalScore").getValue(Long.class);
                     Long currentGamesCount = snapshot.child("gamesPlayed").getValue(Long.class);
                     Long currentCoins = snapshot.child("quizCoins").getValue(Long.class);
-                    Long currentLeaguePoints = snapshot.child("leaguePoints").getValue(Long.class);
-                    String league = snapshot.child("league").getValue(String.class);
 
                     if (currentTotalScore == null) currentTotalScore = 0L;
                     if (currentGamesCount == null) currentGamesCount = 0L;
                     if (currentCoins == null) currentCoins = 0L;
-                    if (currentLeaguePoints == null) currentLeaguePoints = 0L;
-                    if (league == null) league = "Bronze";
 
                     long newTotal = currentTotalScore + score;
-                    long newLeaguePoints = currentLeaguePoints + score;
                     
                     userRef.child("totalScore").setValue(newTotal);
                     userRef.child("gamesPlayed").setValue(currentGamesCount + 1);
                     userRef.child("quizCoins").setValue(currentCoins + coinsEarned);
-                    userRef.child("leaguePoints").setValue(newLeaguePoints);
 
                     FirebaseDatabase.getInstance().getReference("leaderboard").child(uid).setValue(newTotal);
-                    FirebaseDatabase.getInstance().getReference("leagues").child(league).child(uid).setValue(newLeaguePoints);
                 }
             }
 

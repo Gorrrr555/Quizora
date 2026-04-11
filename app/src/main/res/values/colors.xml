@@ -17,6 +17,11 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
+    <!-- Medal Colors -->
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
+
     <!-- Header Gradient -->
     <color name="headerGradientStart">#6366F1</color>
     <color name="headerGradientEnd">#818CF8</color>

@@ -122,8 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
                             userMap.put("totalScore", 0L);
                             userMap.put("gamesPlayed", 0L);
                             userMap.put("quizCoins", 100L);
-                            userMap.put("league", "Bronze");
-                            userMap.put("leaguePoints", 0L);
 
                             mDatabase.child(firebaseUser.getUid()).setValue(userMap)
                                     .addOnCompleteListener(dbTask -> {

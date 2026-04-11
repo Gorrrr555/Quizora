@@ -40,17 +40,6 @@
     <string name="bonus_fifty_fifty">½</string>
     <string name="bonus_time_freeze">❄️</string>
 
-    <string name="league_bronze">Бронзовая лига</string>
-    <string name="league_silver">Серебряная лига</string>
-    <string name="league_gold">Золотая лига</string>
-    <string name="league_elite">Элитная лига</string>
-    <string name="league_bronze_tab">🥉 Бронза</string>
-    <string name="league_silver_tab">🥈 Серебро</string>
-    <string name="league_gold_tab">🥇 Золото</string>
-    <string name="league_elite_tab">💎 Элита</string>
-    <string name="leagues_title">Лиги Quizora</string>
-    <string name="rank_points">%1$d очков</string>
-
     <string name="account_stats">Статистика аккаунта</string>
     <string name="total_pts">Всего очков</string>
     <string name="quizzes">Тесты</string>

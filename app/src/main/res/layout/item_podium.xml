@@ -10,6 +10,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <!-- Light/Glow behind the badge -->
+        <View
+            android:id="@+id/viewRankGlow"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@id/ivAvatarPodium"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="-12dp"
+            android:background="@drawable/avatar_placeholder"
+            android:backgroundTint="@color/accentAmber"
+            android:alpha="0.3"
+            app:tint="@color/accentAmber" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivAvatarPodium"
             android:layout_width="72dp"
@@ -23,14 +36,14 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardRankBadge"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_alignBottom="@id/ivAvatarPodium"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-4dp"
+            android:layout_marginBottom="-6dp"
             app:cardBackgroundColor="@color/accentAmber"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="8dp"
             app:strokeWidth="0dp">
 
             <TextView
@@ -40,7 +53,7 @@
                 android:layout_gravity="center"
                 android:text="1"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
@@ -68,7 +81,6 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
-    <!-- PODIUM STEP -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardPodiumStep"
         android:layout_width="match_parent"

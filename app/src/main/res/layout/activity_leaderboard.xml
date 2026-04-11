@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:text="Quizora Leagues"
+                android:text="Global Leaderboard"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -32,54 +32,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/leagueTabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@android:color/transparent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                app:tabIndicatorColor="@color/white"
-                app:tabIndicatorHeight="3dp"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="#BFFFFFFF">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🥉 Bronze" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🥈 Silver" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🥇 Gold" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💎 Elite" />
-
-            </com.google.android.material.tabs.TabLayout>
-
             <LinearLayout
                 android:id="@+id/podiumContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="40dp"
                 android:gravity="bottom"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/leagueTabs">
+                app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-                <!-- Rank 2 (Left) -->
                 <include
                     android:id="@+id/podium2"
                     layout="@layout/item_podium"
@@ -87,7 +51,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <!-- Rank 1 (Center) -->
                 <include
                     android:id="@+id/podium1"
                     layout="@layout/item_podium"
@@ -95,7 +58,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.1" />
 
-                <!-- Rank 3 (Right) -->
                 <include
                     android:id="@+id/podium3"
                     layout="@layout/item_podium"

@@ -2,17 +2,20 @@ package gor.alaverdyan.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,12 +32,9 @@ public class LeaderboardActivity extends AppCompatActivity {
     private RecyclerView rvLeaderboard;
     private LeaderboardAdapter adapter;
     private List<LeaderboardUser> allUsers = new ArrayList<>();
-    private List<LeaderboardUser> filteredList = new ArrayList<>();
-    private TabLayout leagueTabs;
     private BottomNavigationView bottomNav;
 
     private View podium1, podium2, podium3, podiumContainer;
-    private String currentSelectedLeague = "Bronze";
     private DatabaseReference usersRef;
     private ValueEventListener usersListener;
 
@@ -49,7 +49,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
 
         rvLeaderboard = findViewById(R.id.rvLeaderboard);
-        leagueTabs = findViewById(R.id.leagueTabs);
         bottomNav = findViewById(R.id.bottom_navigation);
         
         podiumContainer = findViewById(R.id.podiumContainer);
@@ -63,27 +62,8 @@ public class LeaderboardActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        setupTabs();
         setupBottomNavigation();
         startDataListener();
-    }
-
-    private void setupTabs() {
-        leagueTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0: currentSelectedLeague = "Bronze"; break;
-                    case 1: currentSelectedLeague = "Silver"; break;
-                    case 2: currentSelectedLeague = "Gold"; break;
-                    case 3: currentSelectedLeague = "Elite"; break;
-                }
-                Log.d(TAG, "Tab selected: " + currentSelectedLeague);
-                filterAndRefreshUI();
-            }
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
-        });
     }
 
     private void startDataListener() {
@@ -97,8 +77,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                             LeaderboardUser user = data.getValue(LeaderboardUser.class);
                             if (user != null) {
                                 user.uid = data.getKey();
-                                if (user.leaguePoints == null) user.leaguePoints = 0L;
-                                if (user.league == null) user.league = "Bronze";
+                                if (user.totalScore == null) user.totalScore = 0L;
                                 tempList.add(user);
                             }
                         } catch (Exception e) {
@@ -106,9 +85,11 @@ public class LeaderboardActivity extends AppCompatActivity {
                         }
                     }
                 }
-                Log.d(TAG, "Data loaded. Count: " + tempList.size());
+                
+                Collections.sort(tempList, (u1, u2) -> Long.compare(u2.totalScore, u1.totalScore));
+                
                 allUsers = tempList;
-                filterAndRefreshUI();
+                updateUI();
             }
 
             @Override
@@ -119,78 +100,71 @@ public class LeaderboardActivity extends AppCompatActivity {
         usersRef.addValueEventListener(usersListener);
     }
 
-    private void filterAndRefreshUI() {
-        filteredList.clear();
-        String selected = currentSelectedLeague.toLowerCase();
-        
-        for (LeaderboardUser user : allUsers) {
-            String userLeague = (user.league != null) ? user.league.toLowerCase() : "";
-            if (userLeague.equals(selected) || userLeague.contains(selected)) {
-                filteredList.add(user);
-            }
-        }
-
-        Log.d(TAG, "Filtered for " + currentSelectedLeague + ": " + filteredList.size());
-
-        Collections.sort(filteredList, (u1, u2) -> {
-            long p1 = u1.leaguePoints != null ? u1.leaguePoints : 0;
-            long p2 = u2.leaguePoints != null ? u2.leaguePoints : 0;
-            return Long.compare(p2, p1);
-        });
-
-        updateUI();
-    }
-
     private void updateUI() {
-        if (filteredList.isEmpty()) {
+        if (allUsers.isEmpty()) {
             podiumContainer.setVisibility(View.GONE);
             adapter.updateData(new ArrayList<>());
-            Log.d(TAG, "UI Update: Empty list, podium hidden.");
             return;
         }
 
         podiumContainer.setVisibility(View.VISIBLE);
-        Log.d(TAG, "UI Update: Showing podium with " + filteredList.size() + " users.");
 
-        if (filteredList.size() >= 1) {
-            fillPodium(podium1, filteredList.get(0), 1);
+        if (allUsers.size() >= 1) {
+            fillPodium(podium1, allUsers.get(0), 1, 140, R.color.gold);
             podium1.setVisibility(View.VISIBLE);
         } else {
             podium1.setVisibility(View.INVISIBLE);
         }
 
-        if (filteredList.size() >= 2) {
-            fillPodium(podium2, filteredList.get(1), 2);
+        if (allUsers.size() >= 2) {
+            fillPodium(podium2, allUsers.get(1), 2, 100, R.color.silver);
             podium2.setVisibility(View.VISIBLE);
         } else {
             podium2.setVisibility(View.INVISIBLE);
         }
 
-        if (filteredList.size() >= 3) {
-            fillPodium(podium3, filteredList.get(2), 3);
+        if (allUsers.size() >= 3) {
+            fillPodium(podium3, allUsers.get(2), 3, 70, R.color.bronze);
             podium3.setVisibility(View.VISIBLE);
         } else {
             podium3.setVisibility(View.INVISIBLE);
         }
 
         List<LeaderboardUser> recyclerList = new ArrayList<>();
-        if (filteredList.size() > 3) {
-            recyclerList.addAll(filteredList.subList(3, filteredList.size()));
+        if (allUsers.size() > 3) {
+            recyclerList.addAll(allUsers.subList(3, allUsers.size()));
         }
         adapter.updateData(recyclerList);
     }
 
-    private void fillPodium(View view, LeaderboardUser user, int rank) {
+    private void fillPodium(View view, LeaderboardUser user, int rank, int stepHeightDp, int colorRes) {
         TextView tvName = view.findViewById(R.id.tvPlayerName);
         TextView tvScore = view.findViewById(R.id.tvPlayerScore);
         TextView tvRank = view.findViewById(R.id.tvRankBadge);
-        
+        MaterialCardView cardBadge = view.findViewById(R.id.cardRankBadge);
+        View viewGlow = view.findViewById(R.id.viewRankGlow);
+        MaterialCardView cardStep = view.findViewById(R.id.cardPodiumStep);
+        View viewStepColor = view.findViewById(R.id.viewStepTopColor);
+
+        int color = ContextCompat.getColor(this, colorRes);
+
         if (tvName != null) tvName.setText(user.nickname != null ? user.nickname : "---");
         if (tvScore != null) {
-            long p = user.leaguePoints != null ? user.leaguePoints : 0;
+            long p = user.totalScore != null ? user.totalScore : 0;
             tvScore.setText(p + " pts");
+            tvScore.setTextColor(color);
         }
-        if (tvRank != null) tvRank.setText("#" + rank);
+        if (tvRank != null) tvRank.setText(String.valueOf(rank));
+        
+        if (cardBadge != null) cardBadge.setCardBackgroundColor(ColorStateList.valueOf(color));
+        if (viewGlow != null) viewGlow.setBackgroundTintList(ColorStateList.valueOf(color));
+        if (viewStepColor != null) viewStepColor.setBackgroundColor(color);
+
+        if (cardStep != null) {
+            ViewGroup.LayoutParams lp = cardStep.getLayoutParams();
+            lp.height = (int) (stepHeightDp * getResources().getDisplayMetrics().density);
+            cardStep.setLayoutParams(lp);
+        }
     }
 
     private void setupBottomNavigation() {

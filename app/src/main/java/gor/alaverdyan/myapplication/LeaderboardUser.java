@@ -9,8 +9,6 @@ public class LeaderboardUser {
     public String nickname;
     public Long totalScore;
     public Long quizCoins;
-    public String league;
-    public Long leaguePoints;
     public String email;
     public Integer gamesPlayed;
     public String lastLoginDate;
@@ -18,12 +16,10 @@ public class LeaderboardUser {
 
     public LeaderboardUser() {}
 
-    public LeaderboardUser(String uid, String nickname, Long totalScore, Long quizCoins, String league, Long leaguePoints) {
+    public LeaderboardUser(String uid, String nickname, Long totalScore, Long quizCoins) {
         this.uid = uid;
         this.nickname = nickname;
         this.totalScore = totalScore;
         this.quizCoins = quizCoins;
-        this.league = league;
-        this.leaguePoints = leaguePoints;
     }
 }

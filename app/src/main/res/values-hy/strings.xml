@@ -40,17 +40,6 @@
     <string name="bonus_fifty_fifty">½</string>
     <string name="bonus_time_freeze">❄️</string>
 
-    <string name="league_bronze">Բրոնզե Լիգա</string>
-    <string name="league_silver">Արծաթե Լիգա</string>
-    <string name="league_gold">Ոսկե Լիգա</string>
-    <string name="league_elite">Էլիտար Լիգա</string>
-    <string name="league_bronze_tab">🥉 Բրոնզ</string>
-    <string name="league_silver_tab">🥈 Արծաթ</string>
-    <string name="league_gold_tab">🥇 Ոսկի</string>
-    <string name="league_elite_tab">💎 Էլիտա</string>
-    <string name="leagues_title">Quizora Լիգաներ</string>
-    <string name="rank_points">%1$d միավոր</string>
-
     <string name="account_stats">Հաշվի վիճակագրություն</string>
     <string name="total_pts">Ընդհանուր միավոր</string>
     <string name="quizzes">Թեստեր</string>

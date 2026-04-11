@@ -29,7 +29,6 @@
         <activity android:name=".SettingsActivity" android:exported="false" />
         <activity android:name=".GameActivity" android:exported="false" />
         <activity android:name=".LeaderboardActivity" android:exported="false" />
-        <activity android:name=".ShopActivity" android:exported="false" />
         <activity android:name=".EmailVerificationActivity" android:exported="false" />
 
     </application>

@@ -40,17 +40,6 @@
     <string name="bonus_fifty_fifty">½</string>
     <string name="bonus_time_freeze">❄️</string>
 
-    <string name="league_bronze">Bronze League</string>
-    <string name="league_silver">Silver League</string>
-    <string name="league_gold">Gold League</string>
-    <string name="league_elite">Elite League</string>
-    <string name="league_bronze_tab">🥉 Bronze</string>
-    <string name="league_silver_tab">🥈 Silver</string>
-    <string name="league_gold_tab">🥇 Gold</string>
-    <string name="league_elite_tab">💎 Elite</string>
-    <string name="leagues_title">Quizora Leagues</string>
-    <string name="rank_points">%1$d pts</string>
-
     <string name="account_stats">Account Statistics</string>
     <string name="total_pts">Total Pts</string>
     <string name="quizzes">Quizzes</string>
