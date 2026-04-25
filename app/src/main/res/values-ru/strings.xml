@@ -30,6 +30,13 @@
     <string name="sport">Спорт</string>
     <string name="sport_subtitle">Играйте в игру</string>
 
+    <string name="category_info">Информация о категории</string>
+    <string name="math_info">Погрузитесь в мир чисел, логики и головоломок. От алгебры до геометрии — проверьте свои математические способности!</string>
+    <string name="chemistry_info">Изучайте элементы, реакции и строительные блоки материи. Идеально для любителей науки!</string>
+    <string name="history_info">Путешествие сквозь время. Откройте для себя значимые события, древние цивилизации и исторических личностей, сформировавших наш мир.</string>
+    <string name="sport_info">Проверьте свои знания о спортсменах, играх и знаковых моментах из различных видов спорта по всему миру.</string>
+    <string name="close">Закрыть</string>
+
     <string name="question_of">Вопрос %1$d из 10</string>
     <string name="next_question">Следующий вопрос</string>
     <string name="congratulations">Поздравляем!</string>

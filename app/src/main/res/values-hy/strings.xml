@@ -30,6 +30,13 @@
     <string name="sport">Սպորտ</string>
     <string name="sport_subtitle">Խաղացեք խաղը</string>
 
+    <string name="category_info">Կատեգորիայի տեղեկատվություն</string>
+    <string name="math_info">Սուզվեք թվերի, տրամաբանության և հանելուկների աշխարհ: Հանրահաշվից մինչև երկրաչափություն, փորձարկեք ձեր մաթեմատիկական հմտությունները:</string>
+    <string name="chemistry_info">Բացահայտեք տարրերը, ռեակցիաները և նյութի կառուցվածքային միավորները: Հիանալի է գիտության սիրահարների համար:</string>
+    <string name="history_info">Ճանապարհորդություն ժամանակի միջով: Բացահայտեք նշանակալի իրադարձություններ, հին քաղաքակրթություններ և պատմական դեմքեր, որոնք կերտել են մեր աշխարհը:</string>
+    <string name="sport_info">Փորձարկեք ձեր գիտելիքները մարզիկների, խաղերի և խորհրդանշական պահերի մասին տարբեր մարզաձևերից ամբողջ աշխարհում:</string>
+    <string name="close">Փակել</string>
+
     <string name="question_of">Հարց %1$d - 10-ից</string>
     <string name="next_question">Հաջորդ հարցը</string>
     <string name="congratulations">Շնորհավորում ենք:</string>

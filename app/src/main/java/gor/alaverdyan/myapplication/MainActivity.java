@@ -10,12 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         cardHistory.setOnClickListener(v -> selectCategory(cardHistory, "History", R.string.history));
         cardSport.setOnClickListener(v -> selectCategory(cardSport, "Sport", R.string.sport));
 
+        findViewById(R.id.btnInfoMath).setOnClickListener(v -> showInfoDialog(getString(R.string.math), getString(R.string.math_info)));
+        findViewById(R.id.btnInfoChemistry).setOnClickListener(v -> showInfoDialog(getString(R.string.chemistry), getString(R.string.chemistry_info)));
+        findViewById(R.id.btnInfoHistory).setOnClickListener(v -> showInfoDialog(getString(R.string.history), getString(R.string.history_info)));
+        findViewById(R.id.btnInfoSport).setOnClickListener(v -> showInfoDialog(getString(R.string.sport), getString(R.string.sport_info)));
+
         MaterialButtonToggleGroup toggleGroup = findViewById(R.id.toggleDifficulty);
         toggleGroup.check(R.id.btnEasy);
         
@@ -89,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
         loadUserInfo();
         checkDailyBonus();
         setupBottomNavigation();
+    }
+
+    private void showInfoDialog(String title, String message) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.close, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     private void loadUserInfo() {

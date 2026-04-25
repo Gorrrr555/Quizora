@@ -30,6 +30,13 @@
     <string name="sport">Sports</string>
     <string name="sport_subtitle">Play the game</string>
 
+    <string name="category_info">Category Info</string>
+    <string name="math_info">Dive into the world of numbers, logic, and puzzles. From algebra to geometry, test your mathematical prowess!</string>
+    <string name="chemistry_info">Explore elements, reactions, and the building blocks of matter. Perfect for science enthusiasts!</string>
+    <string name="history_info">Journey through time. Discover significant events, ancient civilizations, and historical figures that shaped our world.</string>
+    <string name="sport_info">Test your knowledge of athletes, games, and iconic moments from various sports around the globe.</string>
+    <string name="close">Close</string>
+
     <string name="question_of">Question %1$d of 10</string>
     <string name="next_question">Next Question</string>
     <string name="congratulations">Congratulations!</string>

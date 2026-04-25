@@ -3,6 +3,7 @@ package gor.alaverdyan.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -110,21 +110,21 @@ public class LeaderboardActivity extends AppCompatActivity {
         podiumContainer.setVisibility(View.VISIBLE);
 
         if (allUsers.size() >= 1) {
-            fillPodium(podium1, allUsers.get(0), 1, 140, R.color.gold);
+            fillPodium(podium1, allUsers.get(0), 1);
             podium1.setVisibility(View.VISIBLE);
         } else {
             podium1.setVisibility(View.INVISIBLE);
         }
 
         if (allUsers.size() >= 2) {
-            fillPodium(podium2, allUsers.get(1), 2, 100, R.color.silver);
+            fillPodium(podium2, allUsers.get(1), 2);
             podium2.setVisibility(View.VISIBLE);
         } else {
             podium2.setVisibility(View.INVISIBLE);
         }
 
         if (allUsers.size() >= 3) {
-            fillPodium(podium3, allUsers.get(2), 3, 70, R.color.bronze);
+            fillPodium(podium3, allUsers.get(2), 3);
             podium3.setVisibility(View.VISIBLE);
         } else {
             podium3.setVisibility(View.INVISIBLE);
@@ -137,34 +137,55 @@ public class LeaderboardActivity extends AppCompatActivity {
         adapter.updateData(recyclerList);
     }
 
-    private void fillPodium(View view, LeaderboardUser user, int rank, int stepHeightDp, int colorRes) {
+    private void fillPodium(View view, LeaderboardUser user, int rank) {
         TextView tvName = view.findViewById(R.id.tvPlayerName);
         TextView tvScore = view.findViewById(R.id.tvPlayerScore);
         TextView tvRank = view.findViewById(R.id.tvRankBadge);
-        MaterialCardView cardBadge = view.findViewById(R.id.cardRankBadge);
-        View viewGlow = view.findViewById(R.id.viewRankGlow);
-        MaterialCardView cardStep = view.findViewById(R.id.cardPodiumStep);
-        View viewStepColor = view.findViewById(R.id.viewStepTopColor);
-
-        int color = ContextCompat.getColor(this, colorRes);
+        View cardPodiumStep = view.findViewById(R.id.cardPodiumStep);
+        View viewStepTopColor = view.findViewById(R.id.viewStepTopColor);
+        MaterialCardView cardRankBadge = view.findViewById(R.id.cardRankBadge);
 
         if (tvName != null) tvName.setText(user.nickname != null ? user.nickname : "---");
         if (tvScore != null) {
             long p = user.totalScore != null ? user.totalScore : 0;
             tvScore.setText(p + " pts");
-            tvScore.setTextColor(color);
         }
-        if (tvRank != null) tvRank.setText(String.valueOf(rank));
-        
-        if (cardBadge != null) cardBadge.setCardBackgroundColor(ColorStateList.valueOf(color));
-        if (viewGlow != null) viewGlow.setBackgroundTintList(ColorStateList.valueOf(color));
-        if (viewStepColor != null) viewStepColor.setBackgroundColor(color);
+        if (tvRank != null) tvRank.setText("#" + rank);
 
-        if (cardStep != null) {
-            ViewGroup.LayoutParams lp = cardStep.getLayoutParams();
-            lp.height = (int) (stepHeightDp * getResources().getDisplayMetrics().density);
-            cardStep.setLayoutParams(lp);
+        if (cardPodiumStep != null) {
+            int color;
+            int heightDp;
+            switch (rank) {
+                case 1:
+                    color = Color.parseColor("#FFD700"); // Gold
+                    heightDp = 140;
+                    break;
+                case 2:
+                    color = Color.parseColor("#C0C0C0"); // Silver
+                    heightDp = 110;
+                    break;
+                case 3:
+                    color = Color.parseColor("#CD7F32"); // Bronze
+                    heightDp = 90;
+                    break;
+                default:
+                    color = Color.GRAY;
+                    heightDp = 70;
+                    break;
+            }
+
+            ViewGroup.LayoutParams params = cardPodiumStep.getLayoutParams();
+            params.height = dpToPx(heightDp);
+            cardPodiumStep.setLayoutParams(params);
+
+            if (viewStepTopColor != null) viewStepTopColor.setBackgroundColor(color);
+            if (cardRankBadge != null) cardRankBadge.setCardBackgroundColor(ColorStateList.valueOf(color));
+            if (tvScore != null) tvScore.setTextColor(color);
         }
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density);
     }
 
     private void setupBottomNavigation() {
