@@ -12,15 +12,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
+    private TextInputLayout tilEmail, tilPassword;
     private Button btnLogin;
     private ProgressBar progressBar;
-    private TextView tvGoToRegister;
+    private TextView tvGoToRegister, tvForgotPassword;
 
     private FirebaseAuth mAuth;
 
@@ -36,11 +38,14 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        tilEmail = findViewById(R.id.tilEmail);
+        tilPassword = findViewById(R.id.tilPassword);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         progressBar = findViewById(R.id.progressBar);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +58,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Feature coming soon!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,13 +96,16 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
+        tilEmail.setError(null);
+        tilPassword.setError(null);
+
         if (email.isEmpty()) {
-            etEmail.setError("Email is required!");
+            tilEmail.setError("Email is required!");
             etEmail.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            etPassword.setError("Password is required!");
+            tilPassword.setError("Password is required!");
             etPassword.requestFocus();
             return;
         }

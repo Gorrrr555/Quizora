@@ -1,5 +1,8 @@
 package gor.alaverdyan.myapplication;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +11,12 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -48,12 +57,14 @@ public class GameActivity extends AppCompatActivity {
 
     private RelativeLayout loadingLayout, finishLayout;
     private TextView tvQuestion, tvScore, tvTimer, tvQuestionCount, tvSolution;
-    private TextView tvLoadingTitle, tvLoadingSubtitle, tvFinalScore, tvSummaryCorrect, tvSummaryPoints, tvEarnedTitle, tvSummaryCoins;
+    private TextView tvLoadingTitle, tvLoadingSubtitle, tvSummaryCorrect, tvSummaryPoints, tvEarnedTitle, tvSummaryCoins;
     private LinearProgressIndicator questionProgress;
+    private CircularProgressIndicator timerProgress;
     private LinearLayout optionsContainer;
-    private MaterialCardView cardSolution, cardNewTitle;
+    private MaterialCardView cardSolution, cardNewTitle, cardLoadingBrain;
     private MaterialButton btnNext, btnViewLeaderboard, btnBackToMenu;
     private MaterialButton btnFiftyFifty, btnTimeFreeze;
+    private ImageButton btnBack;
 
     private String category, difficulty;
     private int score = 0;
@@ -63,19 +74,24 @@ public class GameActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private final String API_KEY = BuildConfig.OPENROUTER_API_KEY;
 
-    private List<MaterialButton> optionButtons = new ArrayList<>();
+    private List<View> optionViews = new ArrayList<>();
     private int currentCorrectIdx = -1;
     private String currentExplanation = "";
 
     private List<String> askedQuestions = new ArrayList<>();
 
     private String[] loadingMessages;
-    private Handler loadingHandler = new Handler(Looper.getMainLooper());
+    private final Handler loadingHandler = new Handler(Looper.getMainLooper());
     private Runnable loadingRunnable;
+    private ObjectAnimator brainPulseAnimator;
 
     private boolean isFiftyFiftyUsed = false;
     private boolean isTimeFreezeUsed = false;
     private boolean isTimerFrozen = false;
+    private boolean isQuestionLoading = false;
+
+    private int retryCount = 0;
+    private static final int MAX_RETRIES = 3;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -87,9 +103,19 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        initViews();
+        setupListeners();
+
+        category = getIntent().getStringExtra("category");
+        difficulty = getIntent().getStringExtra("difficulty");
+        loadingMessages = getResources().getStringArray(R.array.loading_messages);
+
+        loadQuestion();
+    }
+
+    private void initViews() {
         loadingLayout = findViewById(R.id.loadingLayout);
         finishLayout = findViewById(R.id.finishLayout);
-        
         tvQuestion = findViewById(R.id.tvQuestion);
         tvScore = findViewById(R.id.tvScore);
         tvTimer = findViewById(R.id.tvTimer);
@@ -97,29 +123,25 @@ public class GameActivity extends AppCompatActivity {
         tvSolution = findViewById(R.id.tvSolution);
         tvLoadingTitle = findViewById(R.id.tvLoadingTitle);
         tvLoadingSubtitle = findViewById(R.id.tvLoadingSubtitle);
-        tvFinalScore = findViewById(R.id.tvFinalScore);
         tvSummaryCorrect = findViewById(R.id.tvSummaryCorrect);
         tvSummaryPoints = findViewById(R.id.tvSummaryPoints);
         tvSummaryCoins = findViewById(R.id.tvSummaryCoins);
         tvEarnedTitle = findViewById(R.id.tvEarnedTitle);
-        
         questionProgress = findViewById(R.id.questionProgress);
+        timerProgress = findViewById(R.id.timerProgress);
         optionsContainer = findViewById(R.id.optionsContainer);
         cardSolution = findViewById(R.id.cardSolution);
         cardNewTitle = findViewById(R.id.cardNewTitle);
-        
+        cardLoadingBrain = findViewById(R.id.cardLoadingBrain);
         btnNext = findViewById(R.id.btnNext);
         btnViewLeaderboard = findViewById(R.id.btnViewLeaderboard);
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
-        
+        btnBack = findViewById(R.id.btnBack);
         btnFiftyFifty = findViewById(R.id.btnFiftyFifty);
         btnTimeFreeze = findViewById(R.id.btnTimeFreeze);
+    }
 
-        category = getIntent().getStringExtra("category");
-        difficulty = getIntent().getStringExtra("difficulty");
-
-        loadingMessages = getResources().getStringArray(R.array.loading_messages);
-
+    private void setupListeners() {
         btnNext.setOnClickListener(v -> {
             questionIndex++;
             loadQuestion();
@@ -131,85 +153,92 @@ public class GameActivity extends AppCompatActivity {
         });
 
         btnBackToMenu.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> finish());
 
-        setupBonuses();
-        loadQuestion();
-    }
-
-    private void setupBonuses() {
         btnFiftyFifty.setOnClickListener(v -> {
-            if (!isFiftyFiftyUsed && optionButtons.size() == 4) {
-                useFiftyFifty();
-            }
+            if (!isFiftyFiftyUsed && optionViews.size() == 4) useFiftyFifty();
         });
 
         btnTimeFreeze.setOnClickListener(v -> {
-            if (!isTimeFreezeUsed) {
-                useTimeFreeze();
-            }
+            if (!isTimeFreezeUsed) useTimeFreeze();
         });
     }
 
     private void useFiftyFifty() {
         isFiftyFiftyUsed = true;
         btnFiftyFifty.setEnabled(false);
-        btnFiftyFifty.setAlpha(0.5f);
+        btnFiftyFifty.animate().alpha(0.5f).scaleX(0.8f).scaleY(0.8f).setDuration(400).start();
         
         List<Integer> wrongIndices = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            if (i + 1 != currentCorrectIdx) {
-                wrongIndices.add(i);
-            }
+            if (i + 1 != currentCorrectIdx) wrongIndices.add(i);
         }
         Collections.shuffle(wrongIndices);
         
-        optionButtons.get(wrongIndices.get(0)).setVisibility(View.INVISIBLE);
-        optionButtons.get(wrongIndices.get(1)).setVisibility(View.INVISIBLE);
-        
-        Toast.makeText(this, "50/50 Activated!", Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < 2; i++) {
+            int idx = wrongIndices.get(i);
+            optionViews.get(idx).animate().alpha(0f).scaleX(0.5f).scaleY(0.5f).setDuration(500)
+                    .withEndAction(() -> optionViews.get(idx).setVisibility(View.INVISIBLE)).start();
+        }
+        Toast.makeText(this, R.string.bonus_fifty_fifty, Toast.LENGTH_SHORT).show();
     }
 
     private void useTimeFreeze() {
         isTimeFreezeUsed = true;
         isTimerFrozen = true;
         btnTimeFreeze.setEnabled(false);
-        btnTimeFreeze.setAlpha(0.5f);
+        btnTimeFreeze.animate().alpha(0.5f).scaleX(0.8f).scaleY(0.8f).setDuration(400).start();
         
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        tvTimer.setTextColor(Color.CYAN);
-        tvTimer.setText("FROZEN");
-        
-        Toast.makeText(this, "Time is Frozen! ❄️", Toast.LENGTH_SHORT).show();
+        if (countDownTimer != null) countDownTimer.cancel();
+        tvTimer.setTextColor(Color.parseColor("#06B6D4")); 
+        tvTimer.setText(R.string.bonus_time_freeze);
+        timerProgress.setIndicatorColor(Color.parseColor("#06B6D4"));
+        Toast.makeText(this, R.string.bonus_time_freeze, Toast.LENGTH_SHORT).show();
     }
 
     private void startLoadingAnimation() {
+        if (loadingLayout.getVisibility() == View.VISIBLE) return;
+
         loadingLayout.setVisibility(View.VISIBLE);
         loadingLayout.setAlpha(0f);
-        loadingLayout.animate().alpha(1f).setDuration(400).start();
+        loadingLayout.animate().alpha(1f).setDuration(500).start();
         
-        loadingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (loadingLayout.getVisibility() == View.VISIBLE && loadingMessages != null && loadingMessages.length > 0) {
-                    String msg = loadingMessages[new Random().nextInt(loadingMessages.length)];
-                    tvLoadingSubtitle.setText(msg);
-                    loadingHandler.postDelayed(this, 2000);
+        if (brainPulseAnimator == null) {
+            brainPulseAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                    cardLoadingBrain,
+                    PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.05f),
+                    PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.05f)
+            );
+            brainPulseAnimator.setDuration(1000);
+            brainPulseAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            brainPulseAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            brainPulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        }
+        if (!brainPulseAnimator.isRunning()) brainPulseAnimator.start();
+
+        if (loadingRunnable == null) {
+            loadingRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (loadingLayout.getVisibility() == View.VISIBLE && loadingMessages != null && loadingMessages.length > 0) {
+                        String msg = loadingMessages[new Random().nextInt(loadingMessages.length)];
+                        tvLoadingSubtitle.setText(msg);
+                        loadingHandler.postDelayed(this, 3000);
+                    }
                 }
-            }
-        };
+            };
+        }
+        loadingHandler.removeCallbacks(loadingRunnable);
         loadingHandler.post(loadingRunnable);
     }
 
     private void stopLoadingAnimation() {
-        loadingLayout.animate().alpha(0f).setDuration(300).withEndAction(() -> {
+        if (brainPulseAnimator != null) brainPulseAnimator.cancel();
+        if (loadingRunnable != null) loadingHandler.removeCallbacks(loadingRunnable);
+
+        loadingLayout.animate().alpha(0f).setDuration(400).withEndAction(() -> {
             loadingLayout.setVisibility(View.GONE);
         }).start();
-        
-        if (loadingRunnable != null) {
-            loadingHandler.removeCallbacks(loadingRunnable);
-        }
     }
 
     private void loadQuestion() {
@@ -217,35 +246,28 @@ public class GameActivity extends AppCompatActivity {
             handleGameOver();
             return;
         }
+        if (isQuestionLoading) return;
+        isQuestionLoading = true;
 
         if (countDownTimer != null) countDownTimer.cancel();
         isTimerFrozen = false;
         tvTimer.setTextColor(ContextCompat.getColor(this, R.color.primaryBlue));
+        timerProgress.setIndicatorColor(ContextCompat.getColor(this, R.color.primaryBlue));
 
         startLoadingAnimation();
         optionsContainer.removeAllViews();
-        optionButtons.clear();
+        optionViews.clear();
         cardSolution.setVisibility(View.GONE);
         btnNext.setVisibility(View.GONE);
         
-        // Re-enable bonuses for new question if they were not used
-        if (!isFiftyFiftyUsed) {
-            btnFiftyFifty.setEnabled(true);
-            btnFiftyFifty.setAlpha(1.0f);
-        }
-        if (!isTimeFreezeUsed) {
-            btnTimeFreeze.setEnabled(true);
-            btnTimeFreeze.setAlpha(1.0f);
-        }
+        resetBonusButtons();
         
-        tvQuestionCount.setText(getString(R.string.question_of, questionIndex));
-        tvScore.setText(getString(R.string.score) + ": " + score);
+        tvQuestionCount.setText("MISSION " + questionIndex + " / 10");
+        tvScore.setText(String.valueOf(score));
         questionProgress.setProgress(questionIndex * 10);
 
         String currentLang = LocaleHelper.getLanguage(this);
         String targetLanguage = currentLang.equalsIgnoreCase("ru") ? "Russian" : "English";
-
-        OkHttpClient client = new OkHttpClient();
         String exclusion = askedQuestions.isEmpty() ? "" : ". Do NOT ask any of these: " + TextUtils.join(", ", askedQuestions);
         
         String prompt = "Generate exactly one " + difficulty + " quiz question about " + category + " in " + targetLanguage + ". " +
@@ -253,9 +275,10 @@ public class GameActivity extends AppCompatActivity {
                 "Do NOT include markdown, backticks, or any introductory text. Just the raw string. " +
                 exclusion + ". Seed: " + System.currentTimeMillis();
 
+        OkHttpClient client = new OkHttpClient();
         try {
             JSONObject json = new JSONObject();
-            json.put("model", "google/gemini-2.0-flash-001");
+            json.put("model", "google/gemini-2.0-flash-lite-001");
             json.put("temperature", 0.7); 
             JSONArray messages = new JSONArray();
             messages.put(new JSONObject().put("role", "user").put("content", prompt));
@@ -269,64 +292,97 @@ public class GameActivity extends AppCompatActivity {
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     runOnUiThread(() -> {
+                        isQuestionLoading = false;
                         stopLoadingAnimation();
-                        tvQuestion.setText("Network Error");
+                        tvQuestion.setText(R.string.error_transmission);
                     });
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful() && response.body() != null) {
-                        try {
-                            String res = response.body().string();
-                            String content = new JSONObject(res).getJSONArray("choices")
-                                    .getJSONObject(0).getJSONObject("message").getString("content");
-                            
-                            content = content.replace("```", "").replace("markdown", "").trim();
-                            
-                            final String finalContent = content;
-                            runOnUiThread(() -> {
-                                parseAndShow(finalContent);
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    final String res = response.isSuccessful() && response.body() != null ? response.body().string() : null;
+                    runOnUiThread(() -> {
+                        isQuestionLoading = false;
+                        if (res != null) {
+                            try {
+                                String content = new JSONObject(res).getJSONArray("choices")
+                                        .getJSONObject(0).getJSONObject("message").getString("content");
+                                content = content.replace("```", "").replace("markdown", "").trim();
+                                retryCount = 0;
+                                parseAndShow(content);
                                 if (!isTimerFrozen) startTimer();
-                            });
-                        } catch (Exception e) { 
-                            runOnUiThread(() -> loadQuestion()); 
+                            } catch (Exception e) { 
+                                handleRetry();
+                            }
+                        } else {
+                            stopLoadingAnimation();
+                            tvQuestion.setText(R.string.error_transmission);
                         }
-                    } else {
-                        runOnUiThread(() -> stopLoadingAnimation());
-                    }
+                    });
                 }
             });
         } catch (Exception e) { 
-            e.printStackTrace();
+            isQuestionLoading = false;
             stopLoadingAnimation();
+        }
+    }
+
+    private void resetBonusButtons() {
+        if (!isFiftyFiftyUsed) {
+            btnFiftyFifty.setEnabled(true);
+            btnFiftyFifty.setAlpha(1.0f);
+            btnFiftyFifty.setScaleX(1.0f);
+            btnFiftyFifty.setScaleY(1.0f);
+        }
+        if (!isTimeFreezeUsed) {
+            btnTimeFreeze.setEnabled(true);
+            btnTimeFreeze.setAlpha(1.0f);
+            btnTimeFreeze.setScaleX(1.0f);
+            btnTimeFreeze.setScaleY(1.0f);
+        }
+    }
+
+    private void handleRetry() {
+        if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            new Handler(Looper.getMainLooper()).postDelayed(this::loadQuestion, 1500);
+        } else {
+            stopLoadingAnimation();
+            tvQuestion.setText(R.string.error_transmission);
+            retryCount = 0;
         }
     }
 
     private void startTimer() {
         if (isTimerFrozen) return;
-
-        long timeLimit;
-        if (difficulty.equalsIgnoreCase("easy")) timeLimit = 15000;
-        else if (difficulty.equalsIgnoreCase("medium")) timeLimit = 30000;
-        else timeLimit = 45000;
-
-        countDownTimer = new CountDownTimer(timeLimit, 1000) {
+        final long timeLimit = difficulty.equalsIgnoreCase("easy") ? 15000 : (difficulty.equalsIgnoreCase("medium") ? 30000 : 45000);
+        timerProgress.setMax((int) timeLimit);
+        countDownTimer = new CountDownTimer(timeLimit, 50) {
             @Override
             public void onTick(long millis) {
-                long sec = millis / 1000;
-                tvTimer.setText(String.format("00:%02d", sec));
-                if (millis < 5000) tvTimer.setTextColor(ContextCompat.getColor(GameActivity.this, R.color.secondaryColor));
-                else tvTimer.setTextColor(ContextCompat.getColor(GameActivity.this, R.color.primaryBlue));
+                tvTimer.setText(String.valueOf((int) (millis / 1000)));
+                timerProgress.setProgress((int) millis);
+                if (millis < 5000) {
+                    tvTimer.setTextColor(ContextCompat.getColor(GameActivity.this, R.color.secondaryColor));
+                    timerProgress.setIndicatorColor(ContextCompat.getColor(GameActivity.this, R.color.secondaryColor));
+                    if (millis % 1000 < 50) pulseTimer();
+                }
             }
-
             @Override
             public void onFinish() {
+                tvTimer.setText("0");
+                timerProgress.setProgress(0);
                 showResults(-1);
             }
         }.start();
+    }
+
+    private void pulseTimer() {
+        ObjectAnimator.ofPropertyValuesHolder(findViewById(R.id.timerWrapper),
+                PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f, 1.0f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f, 1.0f)).setDuration(300).start();
     }
 
     private void parseAndShow(String text) {
@@ -336,171 +392,149 @@ public class GameActivity extends AppCompatActivity {
             String qText = p[0];
             tvQuestion.setText(qText);
             askedQuestions.add(qText);
-
             try {
                 currentCorrectIdx = Integer.parseInt(p[5].trim().replaceAll("[^0-9]", ""));
-                currentExplanation = (p.length >= 7) ? p[6] : "No explanation provided.";
-
+                currentExplanation = (p.length >= 7) ? p[6] : "Analysis suggests this is the optimal choice.";
+                char[] letters = {'A', 'B', 'C', 'D'};
                 for (int i = 1; i <= 4; i++) {
                     final int current = i;
-                    MaterialButton btn = new MaterialButton(this, null, com.google.android.material.R.attr.materialButtonStyle);
-                    btn.setText(p[i].trim());
-                    btn.setAllCaps(false);
-                    btn.setBackgroundColor(ContextCompat.getColor(this, R.color.surfaceColor));
-                    btn.setStrokeColorResource(R.color.cardStroke);
-                    btn.setStrokeWidth(2);
-                    btn.setCornerRadius(28);
-                    btn.setTextColor(ContextCompat.getColor(this, R.color.textDark));
-                    btn.setTextSize(16);
-
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, 160);
-                    params.setMargins(0, 15, 0, 15);
-                    btn.setLayoutParams(params);
-
-                    btn.setOnClickListener(v -> showResults(current));
-                    optionsContainer.addView(btn);
-                    optionButtons.add(btn);
+                    View view = LayoutInflater.from(this).inflate(R.layout.item_option, optionsContainer, false);
+                    ((TextView) view.findViewById(R.id.tvOptionLetter)).setText(String.valueOf(letters[i-1]));
+                    ((TextView) view.findViewById(R.id.tvOptionText)).setText(p[i].trim());
+                    view.setOnClickListener(v -> showResults(current));
+                    view.setAlpha(0f);
+                    view.setTranslationY(dpToPx(40));
+                    optionsContainer.addView(view);
+                    optionViews.add(view);
+                    view.animate().alpha(1f).translationY(0).setDuration(500).setStartDelay(i * 100).setInterpolator(new OvershootInterpolator(1.1f)).start();
                 }
-            } catch (Exception e) {
-                loadQuestion(); 
-            }
-        } else { 
-            loadQuestion(); 
-        }
+            } catch (Exception e) { handleRetry(); }
+        } else { handleRetry(); }
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density);
     }
 
     private void showResults(int selectedIdx) {
         if (countDownTimer != null) countDownTimer.cancel();
         disableOptions();
-
-        for (int i = 0; i < optionButtons.size(); i++) {
+        for (int i = 0; i < optionViews.size(); i++) {
             int humanIdx = i + 1;
-            MaterialButton btn = optionButtons.get(i);
-            
+            View view = optionViews.get(i);
+            MaterialCardView card = view.findViewById(R.id.optionCard);
+            MaterialCardView letterCard = view.findViewById(R.id.letterCard);
+            TextView letterText = view.findViewById(R.id.tvOptionLetter);
+            TextView optionText = view.findViewById(R.id.tvOptionText);
+            ImageView statusIcon = view.findViewById(R.id.ivOptionStatus);
             if (humanIdx == currentCorrectIdx) {
-                btn.setVisibility(View.VISIBLE);
-                btn.setBackgroundColor(ContextCompat.getColor(this, R.color.successLight));
-                btn.setStrokeColorResource(R.color.successText);
-                btn.setTextColor(ContextCompat.getColor(this, R.color.successText));
+                view.setVisibility(View.VISIBLE);
+                view.animate().scaleX(1.02f).scaleY(1.02f).setDuration(400).setInterpolator(new OvershootInterpolator()).start();
+                card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.successLight));
+                card.setStrokeColor(ContextCompat.getColor(this, R.color.successText));
+                card.setStrokeWidth(dpToPx(2));
+                letterCard.setCardBackgroundColor(ContextCompat.getColor(this, R.color.successText));
+                letterText.setTextColor(Color.WHITE);
+                optionText.setTextColor(ContextCompat.getColor(this, R.color.successText));
+                statusIcon.setImageResource(R.drawable.ic_check_circle); 
+                statusIcon.setColorFilter(ContextCompat.getColor(this, R.color.successText));
+                statusIcon.setVisibility(View.VISIBLE);
             } else if (humanIdx == selectedIdx) {
-                btn.setBackgroundColor(ContextCompat.getColor(this, R.color.errorLight));
-                btn.setStrokeColorResource(R.color.errorText);
-                btn.setTextColor(ContextCompat.getColor(this, R.color.errorText));
+                shakeView(view);
+                card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.errorLight));
+                card.setStrokeColor(ContextCompat.getColor(this, R.color.errorText));
+                card.setStrokeWidth(dpToPx(2));
+                letterCard.setCardBackgroundColor(ContextCompat.getColor(this, R.color.errorText));
+                letterText.setTextColor(Color.WHITE);
+                optionText.setTextColor(ContextCompat.getColor(this, R.color.errorText));
+                statusIcon.setImageResource(R.drawable.ic_error); 
+                statusIcon.setColorFilter(ContextCompat.getColor(this, R.color.errorText));
+                statusIcon.setVisibility(View.VISIBLE);
+            } else {
+                view.animate().alpha(0.4f).scaleX(0.95f).scaleY(0.95f).setDuration(400).start();
             }
         }
-
         if (selectedIdx == currentCorrectIdx) {
-            score += 10;
-            coinsEarned += 2;
-            correctAnswersCount++;
-            tvScore.setText(getString(R.string.score) + ": " + score);
-            Toast.makeText(this, "Correct! 🎉", Toast.LENGTH_SHORT).show();
+            score += 10; coinsEarned += 2; correctAnswersCount++;
+            tvScore.setText(String.valueOf(score));
         } else {
             tvSolution.setText(currentExplanation);
             cardSolution.setVisibility(View.VISIBLE);
-            if (selectedIdx != -1) {
-                Toast.makeText(this, "Wrong! ❌", Toast.LENGTH_SHORT).show();
-            }
+            cardSolution.setAlpha(0f);
+            cardSolution.setTranslationY(dpToPx(20));
+            cardSolution.animate().alpha(1f).translationY(0).setDuration(500).start();
         }
         btnNext.setVisibility(View.VISIBLE);
+        btnNext.setAlpha(0f);
+        btnNext.setTranslationY(dpToPx(30));
+        btnNext.animate().alpha(1f).translationY(0).setDuration(500).setStartDelay(300).setInterpolator(new OvershootInterpolator()).start();
+    }
+
+    private void shakeView(View view) {
+        ObjectAnimator.ofFloat(view, "translationX", 0, 20, -20, 20, -20, 10, -10, 0).setDuration(500).start();
     }
 
     private void disableOptions() {
-        for (MaterialButton b : optionButtons) {
-            b.setEnabled(false);
-        }
-        // Disable bonuses as well
+        for (View v : optionViews) v.setEnabled(false);
         btnFiftyFifty.setEnabled(false);
-        btnFiftyFifty.setAlpha(0.5f);
         btnTimeFreeze.setEnabled(false);
-        btnTimeFreeze.setAlpha(0.5f);
     }
 
     private void handleGameOver() {
         if (countDownTimer != null) countDownTimer.cancel();
         String uid = FirebaseAuth.getInstance().getUid();
+        if (uid == null) return;
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
-
-        if (correctAnswersCount == 10) {
-            coinsEarned += 10;
-        }
+        if (correctAnswersCount == 10) coinsEarned += 10;
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Long currentTotalScore = snapshot.child("totalScore").getValue(Long.class);
-                    Long currentGamesCount = snapshot.child("gamesPlayed").getValue(Long.class);
-                    Long currentCoins = snapshot.child("quizCoins").getValue(Long.class);
-
-                    if (currentTotalScore == null) currentTotalScore = 0L;
-                    if (currentGamesCount == null) currentGamesCount = 0L;
-                    if (currentCoins == null) currentCoins = 0L;
-
-                    long newTotal = currentTotalScore + score;
-                    
+                    long newTotal = (snapshot.child("totalScore").getValue(Long.class) != null ? snapshot.child("totalScore").getValue(Long.class) : 0L) + score;
                     userRef.child("totalScore").setValue(newTotal);
-                    userRef.child("gamesPlayed").setValue(currentGamesCount + 1);
-                    userRef.child("quizCoins").setValue(currentCoins + coinsEarned);
-
+                    userRef.child("gamesPlayed").setValue((snapshot.child("gamesPlayed").getValue(Long.class) != null ? snapshot.child("gamesPlayed").getValue(Long.class) : 0L) + 1);
+                    userRef.child("quizCoins").setValue((snapshot.child("quizCoins").getValue(Long.class) != null ? snapshot.child("quizCoins").getValue(Long.class) : 0L) + coinsEarned);
                     FirebaseDatabase.getInstance().getReference("leaderboard").child(uid).setValue(newTotal);
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        String earnedTitle = getUniqueTitle(category, difficulty);
-        tvEarnedTitle.setText(earnedTitle);
-
-        if (correctAnswersCount == 10) {
-            String unlockKey = "";
-            if (difficulty.equalsIgnoreCase("easy")) unlockKey = "medium_unlocked";
-            else if (difficulty.equalsIgnoreCase("medium")) unlockKey = "hard_unlocked";
-
-            if (!unlockKey.isEmpty()) {
-                userRef.child("progress").child(category).child(unlockKey).setValue(true);
-                Toast.makeText(this, "Mastered " + category + "! Next Level Unlocked!", Toast.LENGTH_LONG).show();
-            }
-        }
-
+        tvEarnedTitle.setText(getUniqueTitle(category, difficulty));
         finishLayout.setVisibility(View.VISIBLE);
         finishLayout.setAlpha(0f);
-        finishLayout.animate().alpha(1f).setDuration(500).start();
-        
-        tvFinalScore.setText(getString(R.string.congratulations));
-        tvSummaryCorrect.setText(String.valueOf(correctAnswersCount));
+        finishLayout.animate().alpha(1f).setDuration(800).start();
+        tvSummaryCorrect.setText(correctAnswersCount + "/10");
         tvSummaryPoints.setText("+" + score);
         tvSummaryCoins.setText("+" + coinsEarned);
+
+        View trophyView = finishLayout.findViewById(R.id.trophyLayout);
+        if (trophyView != null) {
+            ObjectAnimator pulse = ObjectAnimator.ofPropertyValuesHolder(trophyView, PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f), PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f));
+            pulse.setDuration(1200); pulse.setRepeatCount(ValueAnimator.INFINITE); pulse.setRepeatMode(ValueAnimator.REVERSE); pulse.setInterpolator(new AccelerateDecelerateInterpolator()); pulse.start();
+        }
     }
 
     private String getUniqueTitle(String category, String difficulty) {
         int resId = R.string.title_conqueror;
-        if (category.equals("Math")) {
-            if (difficulty.equals("Easy")) resId = R.string.title_math_easy;
-            else if (difficulty.equals("Medium")) resId = R.string.title_math_medium;
-            else resId = R.string.title_math_hard;
-        } else if (category.equals("Chemistry")) {
-            if (difficulty.equals("Easy")) resId = R.string.title_chem_easy;
-            else if (difficulty.equals("Medium")) resId = R.string.title_chem_medium;
-            else resId = R.string.title_chem_hard;
-        } else if (category.equals("History")) {
-            if (difficulty.equals("Easy")) resId = R.string.title_hist_easy;
-            else if (difficulty.equals("Medium")) resId = R.string.title_hist_medium;
-            else resId = R.string.title_hist_hard;
-        } else if (category.equals("Sport")) {
-            if (difficulty.equals("Easy")) resId = R.string.title_sport_easy;
-            else if (difficulty.equals("Medium")) resId = R.string.title_sport_medium;
-            else resId = R.string.title_sport_hard;
-        }
+        if (category.equals("Math")) resId = difficulty.equals("Easy") ? R.string.title_math_easy : (difficulty.equals("Medium") ? R.string.title_math_medium : R.string.title_math_hard);
+        else if (category.equals("Chemistry")) resId = difficulty.equals("Easy") ? R.string.title_chem_easy : (difficulty.equals("Medium") ? R.string.title_chem_medium : R.string.title_chem_hard);
+        else if (category.equals("History")) resId = difficulty.equals("Easy") ? R.string.title_hist_easy : (difficulty.equals("Medium") ? R.string.title_hist_medium : R.string.title_hist_hard);
+        else if (category.equals("Sport")) resId = difficulty.equals("Easy") ? R.string.title_sport_easy : (difficulty.equals("Medium") ? R.string.title_sport_medium : R.string.title_sport_hard);
         return getString(resId);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLoadingAnimation();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopLoadingAnimation();
+        if (countDownTimer != null) countDownTimer.cancel();
+        loadingHandler.removeCallbacksAndMessages(null);
     }
 }

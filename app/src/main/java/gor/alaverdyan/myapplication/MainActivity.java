@@ -2,7 +2,7 @@ package gor.alaverdyan.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,14 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private String selectedDifficulty = "Easy";
     private LinearLayout difficultySection;
     private Button btnEasy, btnMed, btnHard, btnStart;
-    private TextView tvTopNickname, tvSubtitle, tvCoinsCount;
-    private MaterialCardView lastSelectedCard = null, cardCoins;
+    private TextView tvTopNickname, tvSubtitle, tvCoinsCount, tvStreakCount;
+    private MaterialCardView lastSelectedCard = null;
     private BottomNavigationView bottomNav;
 
     @Override
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         tvTopNickname = findViewById(R.id.tvTopNickname);
         tvSubtitle = findViewById(R.id.tvSubtitle);
         tvCoinsCount = findViewById(R.id.tvCoinsCount);
-        cardCoins = findViewById(R.id.cardCoins);
+        tvStreakCount = findViewById(R.id.tvStreakCount);
         difficultySection = findViewById(R.id.difficultySection);
         btnStart = findViewById(R.id.btnStart);
         btnEasy = findViewById(R.id.btnEasy);
@@ -70,10 +70,41 @@ public class MainActivity extends AppCompatActivity {
         cardHistory.setOnClickListener(v -> selectCategory(cardHistory, "History", R.string.history));
         cardSport.setOnClickListener(v -> selectCategory(cardSport, "Sport", R.string.sport));
 
-        findViewById(R.id.btnInfoMath).setOnClickListener(v -> showInfoDialog(getString(R.string.math), getString(R.string.math_info)));
-        findViewById(R.id.btnInfoChemistry).setOnClickListener(v -> showInfoDialog(getString(R.string.chemistry), getString(R.string.chemistry_info)));
-        findViewById(R.id.btnInfoHistory).setOnClickListener(v -> showInfoDialog(getString(R.string.history), getString(R.string.history_info)));
-        findViewById(R.id.btnInfoSport).setOnClickListener(v -> showInfoDialog(getString(R.string.sport), getString(R.string.sport_info)));
+        findViewById(R.id.btnInfoMath).setOnClickListener(v -> showCategoryInfo(
+                getString(R.string.math),
+                getString(R.string.math_subtitle),
+                getString(R.string.math_info),
+                "∑",
+                ContextCompat.getColor(this, R.color.math_bg),
+                ContextCompat.getColor(this, R.color.math_icon)
+        ));
+        
+        findViewById(R.id.btnInfoChemistry).setOnClickListener(v -> showCategoryInfo(
+                getString(R.string.chemistry),
+                getString(R.string.chemistry_subtitle),
+                getString(R.string.chemistry_info),
+                "🧪",
+                ContextCompat.getColor(this, R.color.chem_bg),
+                ContextCompat.getColor(this, R.color.chem_icon)
+        ));
+        
+        findViewById(R.id.btnInfoHistory).setOnClickListener(v -> showCategoryInfo(
+                getString(R.string.history),
+                getString(R.string.history_subtitle),
+                getString(R.string.history_info),
+                "📜",
+                ContextCompat.getColor(this, R.color.hist_bg),
+                ContextCompat.getColor(this, R.color.hist_icon)
+        ));
+        
+        findViewById(R.id.btnInfoSport).setOnClickListener(v -> showCategoryInfo(
+                getString(R.string.sport),
+                getString(R.string.sport_subtitle),
+                getString(R.string.sport_info),
+                "🏆",
+                ContextCompat.getColor(this, R.color.sport_bg),
+                ContextCompat.getColor(this, R.color.sport_icon)
+        ));
 
         MaterialButtonToggleGroup toggleGroup = findViewById(R.id.toggleDifficulty);
         toggleGroup.check(R.id.btnEasy);
@@ -98,12 +129,30 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigation();
     }
 
-    private void showInfoDialog(String title, String message) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(R.string.close, (dialog, which) -> dialog.dismiss())
-                .show();
+    private void showCategoryInfo(String title, String subtitle, String desc, String emoji, int bgColor, int iconColor) {
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        View view = getLayoutInflater().inflate(R.layout.dialog_category_info, null);
+        
+        TextView tvTitle = view.findViewById(R.id.tvCategoryTitle);
+        TextView tvSubtitle = view.findViewById(R.id.tvCategorySubtitle);
+        TextView tvDesc = view.findViewById(R.id.tvCategoryDescription);
+        TextView tvEmoji = view.findViewById(R.id.tvCategoryEmoji);
+        MaterialCardView cardIcon = view.findViewById(R.id.cardCategoryIcon);
+        MaterialButton btnClose = view.findViewById(R.id.btnCloseInfo);
+
+        tvTitle.setText(title);
+        tvSubtitle.setText(subtitle);
+        tvSubtitle.setTextColor(iconColor);
+        tvDesc.setText(desc);
+        tvEmoji.setText(emoji);
+        tvEmoji.setTextColor(iconColor);
+        cardIcon.setCardBackgroundColor(ColorStateList.valueOf(bgColor));
+        btnClose.setBackgroundTintList(ColorStateList.valueOf(iconColor));
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setContentView(view);
+        dialog.show();
     }
 
     private void loadUserInfo() {
@@ -116,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 String nickname = snapshot.child("nickname").getValue(String.class);
                                 Long coins = snapshot.child("quizCoins").getValue(Long.class);
+                                Long streak = snapshot.child("streak").getValue(Long.class);
                                 
                                 if (nickname != null) {
                                     tvTopNickname.setText(getString(R.string.hello_user, nickname));
@@ -125,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
                                     tvCoinsCount.setText(String.valueOf(coins));
                                 } else {
                                     tvCoinsCount.setText("0");
+                                }
+
+                                if (streak != null) {
+                                    tvStreakCount.setText(String.valueOf(streak));
+                                } else {
+                                    tvStreakCount.setText("0");
                                 }
                             }
                         }
@@ -154,6 +210,18 @@ public class MainActivity extends AppCompatActivity {
                             if (currentCoins == null) currentCoins = 0L;
                             userRef.child("quizCoins").setValue(currentCoins + 20);
                             userRef.child("lastLoginDate").setValue(today);
+                            
+                            userRef.child("streak").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot streakSnapshot) {
+                                    Long currentStreak = streakSnapshot.getValue(Long.class);
+                                    if (currentStreak == null) currentStreak = 0L;
+                                    userRef.child("streak").setValue(currentStreak + 1);
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {}
+                            });
+
                             Toast.makeText(MainActivity.this, "Daily login bonus: +20 Coins! 🪙", Toast.LENGTH_LONG).show();
                         }
 
@@ -171,14 +239,14 @@ public class MainActivity extends AppCompatActivity {
     private void selectCategory(MaterialCardView card, String category, int stringResId) {
         if (lastSelectedCard != null) {
             lastSelectedCard.setStrokeColor(ContextCompat.getColor(this, R.color.cardStroke));
-            lastSelectedCard.setStrokeWidth(2);
-            lastSelectedCard.setCardElevation(2);
+            lastSelectedCard.setStrokeWidth(dpToPx(1));
+            lastSelectedCard.setCardElevation(dpToPx(2));
         }
 
         selectedCategory = category;
         card.setStrokeColor(ContextCompat.getColor(this, R.color.primaryBlue));
-        card.setStrokeWidth(8);
-        card.setCardElevation(12);
+        card.setStrokeWidth(dpToPx(3));
+        card.setCardElevation(dpToPx(8));
         lastSelectedCard = card;
 
         difficultySection.setVisibility(View.VISIBLE);
@@ -189,6 +257,10 @@ public class MainActivity extends AppCompatActivity {
         selectedDifficulty = "Easy";
 
         checkUnlocksForCategory(category);
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density);
     }
 
     private void checkUnlocksForCategory(String category) {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,8 +36,12 @@ public class LeaderboardActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
 
     private View podium1, podium2, podium3, podiumContainer;
+    private MaterialCardView cardMyRank;
+    private TextView tvMyRank, tvMyNickname, tvMyScore;
+    
     private DatabaseReference usersRef;
     private ValueEventListener usersListener;
+    private String currentUid;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -48,6 +53,8 @@ public class LeaderboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
+        currentUid = FirebaseAuth.getInstance().getUid();
+
         rvLeaderboard = findViewById(R.id.rvLeaderboard);
         bottomNav = findViewById(R.id.bottom_navigation);
         
@@ -55,6 +62,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         podium1 = findViewById(R.id.podium1);
         podium2 = findViewById(R.id.podium2);
         podium3 = findViewById(R.id.podium3);
+
+        cardMyRank = findViewById(R.id.cardMyRank);
+        tvMyRank = findViewById(R.id.tvMyRank);
+        tvMyNickname = findViewById(R.id.tvMyNickname);
+        tvMyScore = findViewById(R.id.tvMyScore);
 
         rvLeaderboard.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LeaderboardAdapter(new ArrayList<>(), this);
@@ -90,6 +102,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 
                 allUsers = tempList;
                 updateUI();
+                updateMyRank();
             }
 
             @Override
@@ -137,6 +150,38 @@ public class LeaderboardActivity extends AppCompatActivity {
         adapter.updateData(recyclerList);
     }
 
+    private void updateMyRank() {
+        if (currentUid == null || allUsers.isEmpty()) {
+            cardMyRank.setVisibility(View.GONE);
+            return;
+        }
+
+        int myRank = -1;
+        LeaderboardUser currentUser = null;
+        for (int i = 0; i < allUsers.size(); i++) {
+            if (allUsers.get(i).uid != null && allUsers.get(i).uid.equals(currentUid)) {
+                myRank = i + 1;
+                currentUser = allUsers.get(i);
+                break;
+            }
+        }
+
+        if (myRank != -1 && currentUser != null) {
+            cardMyRank.setVisibility(View.VISIBLE);
+            tvMyRank.setText(String.valueOf(myRank));
+            tvMyNickname.setText(currentUser.nickname != null ? currentUser.nickname : getString(R.string.you));
+            tvMyScore.setText(getString(R.string.points_format, currentUser.totalScore));
+            
+            if (myRank <= 3) {
+                cardMyRank.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#4F46E5")));
+            } else {
+                cardMyRank.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#3730A3")));
+            }
+        } else {
+            cardMyRank.setVisibility(View.GONE);
+        }
+    }
+
     private void fillPodium(View view, LeaderboardUser user, int rank) {
         TextView tvName = view.findViewById(R.id.tvPlayerName);
         TextView tvScore = view.findViewById(R.id.tvPlayerScore);
@@ -148,7 +193,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (tvName != null) tvName.setText(user.nickname != null ? user.nickname : "---");
         if (tvScore != null) {
             long p = user.totalScore != null ? user.totalScore : 0;
-            tvScore.setText(p + " pts");
+            tvScore.setText(getString(R.string.points_format, p));
         }
         if (tvRank != null) tvRank.setText("#" + rank);
 
@@ -157,16 +202,16 @@ public class LeaderboardActivity extends AppCompatActivity {
             int heightDp;
             switch (rank) {
                 case 1:
-                    color = Color.parseColor("#FFD700"); // Gold
-                    heightDp = 140;
+                    color = Color.parseColor("#FFD700"); 
+                    heightDp = 150;
                     break;
                 case 2:
-                    color = Color.parseColor("#C0C0C0"); // Silver
-                    heightDp = 110;
+                    color = Color.parseColor("#E2E8F0"); 
+                    heightDp = 120;
                     break;
                 case 3:
-                    color = Color.parseColor("#CD7F32"); // Bronze
-                    heightDp = 90;
+                    color = Color.parseColor("#FDBA74"); 
+                    heightDp = 95;
                     break;
                 default:
                     color = Color.GRAY;
@@ -180,7 +225,12 @@ public class LeaderboardActivity extends AppCompatActivity {
 
             if (viewStepTopColor != null) viewStepTopColor.setBackgroundColor(color);
             if (cardRankBadge != null) cardRankBadge.setCardBackgroundColor(ColorStateList.valueOf(color));
-            if (tvScore != null) tvScore.setTextColor(color);
+            
+            if (rank == 2) {
+                if (tvScore != null) tvScore.setTextColor(Color.parseColor("#CBD5E1"));
+            } else {
+                if (tvScore != null) tvScore.setTextColor(color);
+            }
         }
     }
 
@@ -195,10 +245,12 @@ public class LeaderboardActivity extends AppCompatActivity {
             if (id == R.id.nav_home) {
                 startActivity(new Intent(LeaderboardActivity.this, MainActivity.class));
                 overridePendingTransition(0, 0);
+                finish();
                 return true;
             } else if (id == R.id.nav_settings) {
                 startActivity(new Intent(LeaderboardActivity.this, SettingsActivity.class));
                 overridePendingTransition(0, 0);
+                finish();
                 return true;
             }
             return id == R.id.nav_leaderboard;

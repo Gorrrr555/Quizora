@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 public class SettingsActivity extends AppCompatActivity {
 
     private SwitchCompat switchDarkMode;
-    private Button btnRussian, btnEnglish, btnLogout;
+    private Button btnRussian, btnEnglish;
+    private View btnLogoutLayout;
     private TextView tvNickname, tvEmail, tvScore, tvGamesPlayed;
     private SharedPreferences settingsPref;
     private FirebaseAuth mAuth;
@@ -49,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvUserEmail);
         tvScore = findViewById(R.id.tvTotalScore);
         tvGamesPlayed = findViewById(R.id.tvGamesPlayed);
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogoutLayout = findViewById(R.id.btnLogoutLayout);
         switchDarkMode = findViewById(R.id.switchDarkMode);
         btnRussian = findViewById(R.id.btnRussian);
         btnEnglish = findViewById(R.id.btnEnglish);
@@ -77,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnRussian.setOnClickListener(v -> updateLanguage("ru"));
         btnEnglish.setOnClickListener(v -> updateLanguage("en"));
 
-        btnLogout.setOnClickListener(v -> {
+        btnLogoutLayout.setOnClickListener(v -> {
             mAuth.signOut();
             Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

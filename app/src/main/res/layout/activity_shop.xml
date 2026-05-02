@@ -161,7 +161,6 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.1" />
 
-            <!-- Placeholder for Themes/Avatars -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

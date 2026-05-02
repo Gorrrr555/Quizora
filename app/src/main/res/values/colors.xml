@@ -1,27 +1,31 @@
 <resources>
-    <!-- Primary Palette -->
-    <color name="primaryBlue">#6366F1</color> <!-- Indigo 500 -->
-    <color name="primaryBlueVariant">#4338CA</color> <!-- Indigo 700 -->
-    <color name="primaryLight">#EEF2FF</color> <!-- Indigo 50 -->
-    <color name="secondaryColor">#F43F5E</color> <!-- Rose 500 -->
-    <color name="accentAmber">#F59E0B</color> <!-- Amber 500 -->
+    <color name="primaryBlue">#4F46E5</color>
+    <color name="primaryBlueVariant">#3730A3</color>
+    <color name="primaryLight">#F5F3FF</color>
+    <color name="secondaryColor">#EC4899</color>
+    <color name="accentAmber">#F59E0B</color>
 
-    <!-- Neutral Colors -->
-    <color name="bgGray">#F8FAFC</color> <!-- Slate 50 -->
+    <color name="bgGray">#F1F5F9</color>
     <color name="surfaceColor">#FFFFFF</color>
-    <color name="textDark">#1E293B</color> <!-- Slate 800 -->
-    <color name="textSecondary">#64748B</color> <!-- Slate 500 -->
-    <color name="cardStroke">#F1F5F9</color> <!-- Slate 100 -->
+    <color name="textDark">#0F172A</color>
+    <color name="textSecondary">#64748B</color>
+    <color name="cardStroke">#E2E8F0</color>
 
-    <!-- Constant Colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <!-- Header Gradient -->
     <color name="headerGradientStart">#6366F1</color>
-    <color name="headerGradientEnd">#818CF8</color>
+    <color name="headerGradientEnd">#A855F7</color>
 
-    <!-- Feedback Colors -->
+    <color name="math_bg">#EFF6FF</color>
+    <color name="math_icon">#3B82F6</color>
+    <color name="chem_bg">#F0FDF4</color>
+    <color name="chem_icon">#22C55E</color>
+    <color name="hist_bg">#FEFCE8</color>
+    <color name="hist_icon">#EAB308</color>
+    <color name="sport_bg">#FFF1F2</color>
+    <color name="sport_icon">#F43F5E</color>
+
     <color name="successLight">#DCFCE7</color>
     <color name="successText">#15803D</color>
     <color name="errorLight">#FEE2E2</color>
