@@ -10,13 +10,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegisterNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerUser();
+                checkNicknameAndRegister();
             }
         });
 
@@ -74,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void registerUser() {
+    private void checkNicknameAndRegister() {
         String nickname = etRegNickname.getText().toString().trim();
         String email = etRegEmail.getText().toString().trim();
         String password = etRegPassword.getText().toString().trim();
@@ -123,6 +127,27 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+        mDatabase.orderByChild("nickname").equalTo(nickname).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    progressBar.setVisibility(View.GONE);
+                    tilRegNickname.setError("This nickname is already taken!");
+                    etRegNickname.requestFocus();
+                } else {
+                    registerUser(nickname, email, password);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(RegisterActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void registerUser(String nickname, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

@@ -18,11 +18,17 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     private List<LeaderboardUser> userList;
     private Context context;
     private String currentUid;
+    private OnUserClickListener listener;
 
-    public LeaderboardAdapter(List<LeaderboardUser> userList, Context context) {
+    public interface OnUserClickListener {
+        void onUserClick(LeaderboardUser user);
+    }
+
+    public LeaderboardAdapter(List<LeaderboardUser> userList, Context context, OnUserClickListener listener) {
         this.userList = userList;
         this.context = context;
         this.currentUid = FirebaseAuth.getInstance().getUid();
+        this.listener = listener;
     }
 
     public void updateData(List<LeaderboardUser> newList) {
@@ -40,9 +46,10 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LeaderboardUser user = userList.get(position);
-        holder.tvRank.setText(String.valueOf(position + 4)); 
-        holder.tvNickname.setText(user.nickname);
-        holder.tvScore.setText(context.getString(R.string.points_format, user.totalScore));
+        
+        holder.tvRank.setText(String.valueOf(position + 1)); 
+        holder.tvNickname.setText(user.nickname != null ? user.nickname : "Player");
+        holder.tvScore.setText(context.getString(R.string.points_format, user.totalScore != null ? user.totalScore : 0L));
         
         boolean isCurrentUser = user.uid != null && user.uid.equals(currentUid);
         
@@ -50,13 +57,17 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             holder.mainCard.setStrokeColor(ContextCompat.getColor(context, R.color.primaryBlue));
             holder.mainCard.setStrokeWidth(4);
             holder.tvNickname.setTypeface(null, Typeface.BOLD);
-            holder.tvNickname.setTextColor(ContextCompat.getColor(context, R.color.primaryBlue));
         } else {
             holder.mainCard.setStrokeColor(ContextCompat.getColor(context, R.color.cardStroke));
-            holder.mainCard.setStrokeWidth(2);
+            holder.mainCard.setStrokeWidth(1);
             holder.tvNickname.setTypeface(null, Typeface.NORMAL);
-            holder.tvNickname.setTextColor(ContextCompat.getColor(context, R.color.textDark));
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onUserClick(user);
+            }
+        });
     }
 
     @Override

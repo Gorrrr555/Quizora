@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,10 +71,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         tvMyScore = findViewById(R.id.tvMyScore);
 
         rvLeaderboard.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new LeaderboardAdapter(new ArrayList<>(), this);
+        adapter = new LeaderboardAdapter(new ArrayList<>(), this, this::showUserProfile);
         rvLeaderboard.setAdapter(adapter);
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        usersRef.keepSynced(true);
 
         setupBottomNavigation();
         startDataListener();
@@ -87,9 +90,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         try {
                             LeaderboardUser user = data.getValue(LeaderboardUser.class);
-                            if (user != null) {
+                            if (user != null && user.nickname != null && !user.nickname.trim().isEmpty() 
+                                    && user.totalScore != null && user.totalScore > 0) {
                                 user.uid = data.getKey();
-                                if (user.totalScore == null) user.totalScore = 0L;
                                 tempList.add(user);
                             }
                         } catch (Exception e) {
@@ -100,7 +103,12 @@ public class LeaderboardActivity extends AppCompatActivity {
                 
                 Collections.sort(tempList, (u1, u2) -> Long.compare(u2.totalScore, u1.totalScore));
                 
-                allUsers = tempList;
+                if (tempList.size() > 10) {
+                    allUsers = new ArrayList<>(tempList.subList(0, 10));
+                } else {
+                    allUsers = tempList;
+                }
+
                 updateUI();
                 updateMyRank();
             }
@@ -111,6 +119,27 @@ public class LeaderboardActivity extends AppCompatActivity {
             }
         };
         usersRef.addValueEventListener(usersListener);
+    }
+
+    private void showUserProfile(LeaderboardUser user) {
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        View view = getLayoutInflater().inflate(R.layout.dialog_user_profile, (ViewGroup) findViewById(android.R.id.content), false);
+
+        TextView tvNickname = view.findViewById(R.id.tvProfileNickname);
+        TextView tvEmail = view.findViewById(R.id.tvProfileEmail);
+        TextView tvScore = view.findViewById(R.id.tvProfileScore);
+        TextView tvGames = view.findViewById(R.id.tvProfileGames);
+        View btnClose = view.findViewById(R.id.btnCloseProfile);
+
+        tvNickname.setText(user.nickname);
+        tvEmail.setText(user.email != null ? user.email : "HIDDEN");
+        tvScore.setText(String.valueOf(user.totalScore != null ? user.totalScore : 0));
+        tvGames.setText(String.valueOf(user.gamesPlayed != null ? user.gamesPlayed : 0));
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setContentView(view);
+        dialog.show();
     }
 
     private void updateUI() {
@@ -125,6 +154,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (allUsers.size() >= 1) {
             fillPodium(podium1, allUsers.get(0), 1);
             podium1.setVisibility(View.VISIBLE);
+            podium1.setOnClickListener(v -> showUserProfile(allUsers.get(0)));
         } else {
             podium1.setVisibility(View.INVISIBLE);
         }
@@ -132,6 +162,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (allUsers.size() >= 2) {
             fillPodium(podium2, allUsers.get(1), 2);
             podium2.setVisibility(View.VISIBLE);
+            podium2.setOnClickListener(v -> showUserProfile(allUsers.get(1)));
         } else {
             podium2.setVisibility(View.INVISIBLE);
         }
@@ -139,15 +170,12 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (allUsers.size() >= 3) {
             fillPodium(podium3, allUsers.get(2), 3);
             podium3.setVisibility(View.VISIBLE);
+            podium3.setOnClickListener(v -> showUserProfile(allUsers.get(2)));
         } else {
             podium3.setVisibility(View.INVISIBLE);
         }
 
-        List<LeaderboardUser> recyclerList = new ArrayList<>();
-        if (allUsers.size() > 3) {
-            recyclerList.addAll(allUsers.subList(3, allUsers.size()));
-        }
-        adapter.updateData(recyclerList);
+        adapter.updateData(allUsers);
     }
 
     private void updateMyRank() {
@@ -172,11 +200,11 @@ public class LeaderboardActivity extends AppCompatActivity {
             tvMyNickname.setText(currentUser.nickname != null ? currentUser.nickname : getString(R.string.you));
             tvMyScore.setText(getString(R.string.points_format, currentUser.totalScore));
             
-            if (myRank <= 3) {
-                cardMyRank.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#4F46E5")));
-            } else {
-                cardMyRank.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#3730A3")));
-            }
+            int myRankColor = ContextCompat.getColor(this, myRank <= 3 ? R.color.primaryBlue : R.color.primaryBlueVariant);
+            cardMyRank.setCardBackgroundColor(ColorStateList.valueOf(myRankColor));
+            
+            LeaderboardUser finalCurrentUser = currentUser;
+            cardMyRank.setOnClickListener(v -> showUserProfile(finalCurrentUser));
         } else {
             cardMyRank.setVisibility(View.GONE);
         }
@@ -226,10 +254,9 @@ public class LeaderboardActivity extends AppCompatActivity {
             if (viewStepTopColor != null) viewStepTopColor.setBackgroundColor(color);
             if (cardRankBadge != null) cardRankBadge.setCardBackgroundColor(ColorStateList.valueOf(color));
             
-            if (rank == 2) {
-                if (tvScore != null) tvScore.setTextColor(Color.parseColor("#CBD5E1"));
-            } else {
-                if (tvScore != null) tvScore.setTextColor(color);
+            if (tvScore != null) {
+                tvScore.setTextColor(Color.WHITE);
+                tvScore.setShadowLayer(4, 0, 2, Color.BLACK);
             }
         }
     }

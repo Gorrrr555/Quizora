@@ -10,7 +10,7 @@ public class LeaderboardUser {
     public Long totalScore;
     public Long quizCoins;
     public String email;
-    public Integer gamesPlayed;
+    public Long gamesPlayed;
     public String lastLoginDate;
     public Map<String, Object> progress;
 

@@ -9,14 +9,22 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/white</item>
 
+        <!-- Surface, Background and Error Colors -->
+        <item name="android:colorBackground">@color/bgDark</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorOnSurface">@color/textDark</item>
+        <item name="colorError">@color/errorText</item>
+        <item name="colorOnError">@color/white</item>
+
         <!-- Background and Window Colors -->
-        <item name="android:windowBackground">@color/bgGray</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/bgGray</item>
+        <item name="android:windowBackground">@color/bgDark</item>
+        <item name="android:statusBarColor">@color/bgDark</item>
+        <item name="android:navigationBarColor">@color/bgDark</item>
 
         <!-- Text Colors -->
         <item name="android:textColorPrimary">@color/textDark</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorHint">@color/textSecondary</item>
 
         <!-- Component Styles -->
         <item name="cardBackgroundColor">@color/surfaceColor</item>
@@ -27,6 +35,10 @@
         <item name="backgroundTint">@color/surfaceColor</item>
         <item name="itemIconTint">@color/nav_item_color</item>
         <item name="itemTextColor">@color/nav_item_color</item>
+        <item name="itemRippleColor">@color/primaryLight</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="elevation">8dp</item>
     </style>
 
     <style name="CircleImage">

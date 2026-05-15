@@ -65,6 +65,18 @@
     <string name="title_sport_hard">Բոլոր ժամանակների մեծագույնը</string>
     <string name="title_conqueror">Վիկտորինայի նվաճող</string>
 
+    <string name="welcome_back_user">Բարի վերադարձ,</string>
+    <string name="explorer">Հետազոտող</string>
+    <string name="intel_mission_title">Ընտրեք ձեր հաջորդ\nառաքելությունը</string>
+    <string name="streak_days_count">%1$d օր անընդմեջ</string>
+    <string name="daily_quest">ԱՄԵՆՕՐՅԱ ՔՎԵՍՏ</string>
+    <string name="mystery_protocol">Գաղտնի արձանագրություն</string>
+    <string name="mystery_protocol_desc">Լուծեք 3 բարդ հարց՝ լեգենդար պահոցը բացելու համար:</string>
+    <string name="mission_sectors">Առաքելության սեկտորներ</string>
+    <string name="difficulty_protocol">Բարդության արձանագրություն</string>
+    <string name="start_mission">ՍԿՍԵԼ ԱՌԱՔԵԼՈՒԹՅՈՒՆԸ</string>
+    <string name="icon_history">📜</string>
+
     <string-array name="loading_messages">
         <item>Որոնում արխիվներում…</item>
         <item>Փնտրում ենք մարտահրավերներ…</item>

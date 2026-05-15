@@ -59,7 +59,6 @@ public class GameActivity extends AppCompatActivity {
     private TextView tvQuestion, tvScore, tvTimer, tvQuestionCount, tvSolution;
     private TextView tvLoadingTitle, tvLoadingSubtitle, tvSummaryCorrect, tvSummaryPoints, tvEarnedTitle, tvSummaryCoins;
     private LinearProgressIndicator questionProgress;
-    private CircularProgressIndicator timerProgress;
     private LinearLayout optionsContainer;
     private MaterialCardView cardSolution, cardNewTitle, cardLoadingBrain;
     private MaterialButton btnNext, btnViewLeaderboard, btnBackToMenu;
@@ -128,7 +127,6 @@ public class GameActivity extends AppCompatActivity {
         tvSummaryCoins = findViewById(R.id.tvSummaryCoins);
         tvEarnedTitle = findViewById(R.id.tvEarnedTitle);
         questionProgress = findViewById(R.id.questionProgress);
-        timerProgress = findViewById(R.id.timerProgress);
         optionsContainer = findViewById(R.id.optionsContainer);
         cardSolution = findViewById(R.id.cardSolution);
         cardNewTitle = findViewById(R.id.cardNewTitle);
@@ -192,7 +190,6 @@ public class GameActivity extends AppCompatActivity {
         if (countDownTimer != null) countDownTimer.cancel();
         tvTimer.setTextColor(Color.parseColor("#06B6D4")); 
         tvTimer.setText(R.string.bonus_time_freeze);
-        timerProgress.setIndicatorColor(Color.parseColor("#06B6D4"));
         Toast.makeText(this, R.string.bonus_time_freeze, Toast.LENGTH_SHORT).show();
     }
 
@@ -252,7 +249,6 @@ public class GameActivity extends AppCompatActivity {
         if (countDownTimer != null) countDownTimer.cancel();
         isTimerFrozen = false;
         tvTimer.setTextColor(ContextCompat.getColor(this, R.color.primaryBlue));
-        timerProgress.setIndicatorColor(ContextCompat.getColor(this, R.color.primaryBlue));
 
         startLoadingAnimation();
         optionsContainer.removeAllViews();
@@ -262,7 +258,7 @@ public class GameActivity extends AppCompatActivity {
         
         resetBonusButtons();
         
-        tvQuestionCount.setText("MISSION " + questionIndex + " / 10");
+        tvQuestionCount.setText(questionIndex + " / 10");
         tvScore.setText(String.valueOf(score));
         questionProgress.setProgress(questionIndex * 10);
 
@@ -358,29 +354,25 @@ public class GameActivity extends AppCompatActivity {
     private void startTimer() {
         if (isTimerFrozen) return;
         final long timeLimit = difficulty.equalsIgnoreCase("easy") ? 15000 : (difficulty.equalsIgnoreCase("medium") ? 30000 : 45000);
-        timerProgress.setMax((int) timeLimit);
         countDownTimer = new CountDownTimer(timeLimit, 50) {
             @Override
             public void onTick(long millis) {
                 tvTimer.setText(String.valueOf((int) (millis / 1000)));
-                timerProgress.setProgress((int) millis);
                 if (millis < 5000) {
                     tvTimer.setTextColor(ContextCompat.getColor(GameActivity.this, R.color.secondaryColor));
-                    timerProgress.setIndicatorColor(ContextCompat.getColor(GameActivity.this, R.color.secondaryColor));
                     if (millis % 1000 < 50) pulseTimer();
                 }
             }
             @Override
             public void onFinish() {
                 tvTimer.setText("0");
-                timerProgress.setProgress(0);
                 showResults(-1);
             }
         }.start();
     }
 
     private void pulseTimer() {
-        ObjectAnimator.ofPropertyValuesHolder(findViewById(R.id.timerWrapper),
+        ObjectAnimator.ofPropertyValuesHolder(findViewById(R.id.timerRing),
                 PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f, 1.0f),
                 PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f, 1.0f)).setDuration(300).start();
     }
@@ -508,12 +500,6 @@ public class GameActivity extends AppCompatActivity {
         tvSummaryCorrect.setText(correctAnswersCount + "/10");
         tvSummaryPoints.setText("+" + score);
         tvSummaryCoins.setText("+" + coinsEarned);
-
-        View trophyView = finishLayout.findViewById(R.id.trophyLayout);
-        if (trophyView != null) {
-            ObjectAnimator pulse = ObjectAnimator.ofPropertyValuesHolder(trophyView, PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f), PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f));
-            pulse.setDuration(1200); pulse.setRepeatCount(ValueAnimator.INFINITE); pulse.setRepeatMode(ValueAnimator.REVERSE); pulse.setInterpolator(new AccelerateDecelerateInterpolator()); pulse.start();
-        }
     }
 
     private String getUniqueTitle(String category, String difficulty) {

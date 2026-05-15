@@ -65,6 +65,18 @@
     <string name="title_sport_hard">Величайший игрок</string>
     <string name="title_conqueror">Покоритель викторин</string>
 
+    <string name="welcome_back_user">С возвращением,</string>
+    <string name="explorer">Исследователь</string>
+    <string name="intel_mission_title">Выберите свою следующую\nмиссию</string>
+    <string name="streak_days_count">%1$d Дней подряд</string>
+    <string name="daily_quest">ЕЖЕДНЕВНЫЙ КВЕСТ</string>
+    <string name="mystery_protocol">Секретный протокол</string>
+    <string name="mystery_protocol_desc">Решите 3 сложных вопроса, чтобы открыть легендарное хранилище.</string>
+    <string name="mission_sectors">Сектора миссий</string>
+    <string name="difficulty_protocol">Протокол сложности</string>
+    <string name="start_mission">НАЧАТЬ МИССИЮ</string>
+    <string name="icon_history">📜</string>
+
     <string-array name="loading_messages">
         <item>Ищем в архивах…</item>
         <item>Ищем испытания…</item>

@@ -158,36 +158,37 @@ public class MainActivity extends AppCompatActivity {
     private void loadUserInfo() {
         String uid = FirebaseAuth.getInstance().getUid();
         if (uid != null) {
-            FirebaseDatabase.getInstance().getReference("users").child(uid)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                String nickname = snapshot.child("nickname").getValue(String.class);
-                                Long coins = snapshot.child("quizCoins").getValue(Long.class);
-                                Long streak = snapshot.child("streak").getValue(Long.class);
-                                
-                                if (nickname != null) {
-                                    tvTopNickname.setText(getString(R.string.hello_user, nickname));
-                                }
-                                
-                                if (coins != null) {
-                                    tvCoinsCount.setText(String.valueOf(coins));
-                                } else {
-                                    tvCoinsCount.setText("0");
-                                }
-
-                                if (streak != null) {
-                                    tvStreakCount.setText(String.valueOf(streak));
-                                } else {
-                                    tvStreakCount.setText("0");
-                                }
-                            }
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+            userRef.keepSynced(true);
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String nickname = snapshot.child("nickname").getValue(String.class);
+                        Long coins = snapshot.child("quizCoins").getValue(Long.class);
+                        Long streak = snapshot.child("streak").getValue(Long.class);
+                        
+                        if (nickname != null) {
+                            tvTopNickname.setText(getString(R.string.hello_user, nickname));
+                        }
+                        
+                        if (coins != null) {
+                            tvCoinsCount.setText(String.valueOf(coins));
+                        } else {
+                            tvCoinsCount.setText("0");
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {}
-                    });
+                        if (streak != null) {
+                            tvStreakCount.setText(String.valueOf(streak));
+                        } else {
+                            tvStreakCount.setText("0");
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
         }
     }
 
@@ -293,10 +294,12 @@ public class MainActivity extends AppCompatActivity {
             if (id == R.id.nav_leaderboard) {
                 startActivity(new Intent(MainActivity.this, LeaderboardActivity.class));
                 overridePendingTransition(0, 0);
+                finish();
                 return true;
             } else if (id == R.id.nav_settings) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 overridePendingTransition(0, 0);
+                finish();
                 return true;
             }
             return id == R.id.nav_home;
