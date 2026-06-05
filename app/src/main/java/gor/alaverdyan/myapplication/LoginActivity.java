@@ -101,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Exception e = task.getException();
                         if (e instanceof FirebaseAuthInvalidUserException) {
-                            // Account doesn't exist, create it automatically
                             mAuth.createUserWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD)
                                     .addOnCompleteListener(regTask -> {
                                         if (regTask.isSuccessful()) {

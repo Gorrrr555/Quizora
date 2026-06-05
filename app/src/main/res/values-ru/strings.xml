@@ -99,4 +99,9 @@
         <item>Делаем вопрос сложнее!</item>
         <item>Почти готово…</item>
     </string-array>
+    <string name="home">Главная</string>
+    <string name="ranking">Рейтинг</string>
+    <string name="easy">Легко</string>
+    <string name="medium">Средне</string>
+    <string name="hard">Сложно</string>
 </resources>

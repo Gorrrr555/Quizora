@@ -1,16 +1,15 @@
 <resources>
-    <!-- Light Theme: White, Blue, Purple focus -->
-    <color name="primaryBlue">#8B5CF6</color> <!-- Purple -->
+    <color name="primaryBlue">#8B5CF6</color>
     <color name="primaryBlueVariant">#7C3AED</color>
     <color name="primaryLight">#F5F3FF</color>
-    <color name="secondaryColor">#6366F1</color> <!-- Blue -->
+    <color name="secondaryColor">#6366F1</color>
     <color name="accentAmber">#F59E0B</color>
 
-    <color name="bgDark">#F5F3FF</color> <!-- Light Lavender/Blue background -->
+    <color name="bgDark">#F5F3FF</color>
     <color name="bgLight">#FFFFFF</color>
     <color name="bgGray">#F9FAFB</color>
     <color name="surfaceColor">#FFFFFF</color>
-    <color name="textDark">#1E1B4B</color> <!-- Deep Navy -->
+    <color name="textDark">#1E1B4B</color>
     <color name="textSecondary">#64748B</color>
     <color name="cardStroke">#E2E8F0</color>
 
@@ -20,7 +19,6 @@
     <color name="headerGradientStart">#8B5CF6</color>
     <color name="headerGradientEnd">#6366F1</color>
 
-    <!-- Category Backgrounds -->
     <color name="math_bg">#F5F3FF</color>
     <color name="math_icon">#8B5CF6</color>
     <color name="chem_bg">#F0FDF4</color>

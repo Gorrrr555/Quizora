@@ -1,0 +1,310 @@
+{
+  "en": {
+    "Math": {
+      "Easy": [
+        {"q": "What is 15 + 27?", "o": ["32", "42", "41", "38"], "a": 2, "e": "Simple addition: 15 + 27 = 42. Adding the tens first (10+20=30) and then the units (5+7=12) makes it easier: 30 + 12 = 42."},
+        {"q": "What is the square root (√) of 64?", "o": ["6", "7", "8", "9"], "a": 3, "e": "The square root √64 = 8, because 8 × 8 = 64. Squaring and square rooting are inverse operations."},
+        {"q": "What is 12 × 5?", "o": ["50", "60", "70", "55"], "a": 2, "e": "Basic multiplication: 12 × 5 = 60. A quick tip: to multiply by 5, you can multiply by 10 and then divide by 2 (120 / 2 = 60)."},
+        {"q": "What is 100 − 37?", "o": ["63", "53", "73", "67"], "a": 1, "e": "Subtraction result: 100 − 37 = 63. You can also think of it as 100 - 30 - 7."},
+        {"q": "What is 81 ÷ 9?", "o": ["7", "8", "9", "10"], "a": 3, "e": "Division: 81 ÷ 9 = 9, because 9 × 9 = 81. In the decimal system, multiples of 9 have digits that sum to 9 (8+1=9)."},
+        {"q": "What is 7 + 8 + 9?", "o": ["22", "23", "24", "25"], "a": 3, "e": "Summation: 7 + 8 + 9 = 24. These are consecutive numbers; their sum is always 3 times the middle number (3 × 8 = 24)."},
+        {"q": "What is 50% of 200?", "o": ["50", "100", "150", "75"], "a": 2, "e": "50% is half of the total. Half of 200 is 100. Percent means 'per hundred'."},
+        {"q": "How many sides does a hexagon have?", "o": ["5", "6", "7", "8"], "a": 2, "e": "In geometry, a hexagon (hexa- meaning six) has exactly 6 sides. Snowflakes and honeycombs often feature hexagonal shapes."},
+        {"q": "What is 11² (11 squared)?", "o": ["111", "121", "131", "101"], "a": 2, "e": "Squaring a number means multiplying it by itself: 11 × 11 = 121. There is a pattern for multiplying 2-digit numbers by 11: add the digits and put the sum in the middle (1+1=2, so 1 2 1)."},
+        {"q": "What is ¼ of 100?", "o": ["20", "25", "30", "50"], "a": 2, "e": "One quarter (¼) is found by dividing by 4: 100 ÷ 4 = 25. It's also 25% of 100."}
+      ],
+      "Medium": [
+        {"q": "What is the value of π (Pi) to two decimal places?", "o": ["3.12", "3.14", "3.16", "3.18"], "a": 2, "e": "π is the ratio of a circle's circumference to its diameter, approximately 3.14159... It is an irrational number, meaning its decimals never repeat or end."},
+        {"q": "Solve for x: 2x + 5 = 15", "o": ["5", "10", "7.5", "2"], "a": 1, "e": "Subtract 5 from both sides: 2x = 10. Then divide by 2: x = 5. This is a linear algebraic equation."},
+        {"q": "What is 15²?", "o": ["225", "215", "235", "205"], "a": 1, "e": "15 squared: 15 × 15 = 225. Numbers ending in 5 have squares that always end in 25."},
+        {"q": "Area (A) of a circle with radius r=2? (A = πr², use π≈3.14)", "o": ["6.28", "12.56", "4", "8.14"], "a": 2, "e": "A = 3.14 × (2)² = 3.14 × 4 = 12.56. The area grows quadratically with the radius."},
+        {"q": "What is √225?", "o": ["13", "14", "15", "16"], "a": 3, "e": "√225 = 15 because 15 × 15 = 225. This is the inverse of 15 squared."},
+        {"q": "What is 2⁵ (2 to the power of 5)?", "o": ["16", "32", "64", "25"], "a": 2, "e": "2 × 2 × 2 × 2 × 2 = 32. This is used frequently in computer science (e.g., bits and bytes)."},
+        {"q": "If a triangle has angles 60° and 40°, what is the 3rd angle?", "o": ["80°", "90°", "100°", "70°"], "a": 1, "e": "The sum of interior angles in any Euclidean triangle is always 180°. 180 − (60 + 40) = 80."},
+        {"q": "What is 10! ÷ 9!?", "o": ["1", "10", "9", "90"], "a": 2, "e": "Factorials: 10! = 10 × 9 × 8... and 9! = 9 × 8... Therefore, 10! ÷ 9! = 10. Factorials grow extremely fast."},
+        {"q": "Solve: 3(x − 4) = 12", "o": ["4", "8", "6", "0"], "a": 2, "e": "Expand: 3x − 12 = 12. Add 12: 3x = 24. Divide by 3: x = 8. Alternatively, divide by 3 first: x - 4 = 4, so x = 8."},
+        {"q": "What is the hypotenuse (c) of a right triangle with sides a=3, b=4?", "o": ["5", "6", "7", "25"], "a": 1, "e": "Pythagorean theorem: a² + b² = c². 3² + 4² = 9 + 16 = 25. √25 = 5. (3, 4, 5) is the most famous Pythagorean triple."}
+      ],
+      "Hard": [
+        {"q": "What is the derivative (d/dx) of sin(x)?", "o": ["cos(x)", "−cos(x)", "sin(x)", "−sin(x)"], "a": 1, "e": "In calculus, the rate of change of sin(x) is cos(x). This relates to the slope of the sine wave at any given point."},
+        {"q": "What is the integral ∫ (1/x) dx?", "o": ["x", "ln|x|", "eˣ", "x²/2"], "a": 2, "e": "The antiderivative of 1/x is the natural logarithm ln|x|. This is a fundamental result in integral calculus."},
+        {"q": "What is the value of Euler's number (e) approximately?", "o": ["2.718", "3.141", "1.618", "1.414"], "a": 1, "e": "e ≈ 2.71828. It is the base of natural logarithms and is vital for modeling growth and decay."},
+        {"q": "Solve for x: log₁₀(x) = 3", "o": ["30", "100", "1000", "300"], "a": 3, "e": "Logs are the inverse of exponents: x = 10³. 10 × 10 × 10 = 1000. Common logs use base 10."},
+        {"q": "What is the sum (Σ) of the first 100 integers?", "o": ["5000", "5050", "5100", "4950"], "a": 2, "e": "Using S = n(n+1)/2: 100(101)/2 = 50 × 101 = 5050. Legend says Gauss discovered this as a child."},
+        {"q": "What is the limit (lim) of (sin x)/x as x → 0?", "o": ["0", "1", "∞", "Undefined"], "a": 2, "e": "This is a fundamental limit in calculus, equal to 1. It is often proved using the Squeeze Theorem."},
+        {"q": "What is the binary representation (base-2) of 25?", "o": ["11001", "10101", "11101", "11011"], "a": 1, "e": "25 = 16 + 8 + 1, which is (1×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰), or 11001₂. Binary is the language of computers."},
+        {"q": "What is the only even prime number?", "o": ["0", "2", "4", "None"], "a": 2, "e": "2 is the only even number whose only factors are 1 and itself. Every other even number is divisible by 2."},
+        {"q": "What is the value of i² in complex numbers?", "o": ["1", "−1", "0", "√−1"], "a": 2, "e": "The imaginary unit i is defined as √−1, so i² = −1. This allows for the solution of equations like x² + 1 = 0."},
+        {"q": "Which mathematician is famous for his 'Last Theorem'?", "o": ["Gauss", "Euler", "Fermat", "Newton"], "a": 3, "e": "Pierre de Fermat stated that aⁿ + bⁿ = cⁿ has no integer solutions for n > 2. It remained unproven for 358 years until Andrew Wiles proved it in 1994."}
+      ]
+    },
+    "Chemistry": {
+      "Easy": [
+        {"q": "What is the chemical formula for Water?", "o": ["H₂O", "CO₂", "O₂", "HO₂"], "a": 1, "e": "Water consists of two Hydrogen atoms and one Oxygen atom. It's the most essential solvent for life on Earth."},
+        {"q": "Which gas (CO₂) do humans exhale as waste?", "o": ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], "a": 3, "e": "We breathe in O₂ for cellular respiration and exhale Carbon Dioxide (CO₂) as a byproduct."},
+        {"q": "What is the symbol for Oxygen on the Periodic Table?", "o": ["Ox", "O", "O₂", "Og"], "a": 2, "e": "The elemental symbol for Oxygen is 'O'. It makes up about 21% of Earth's atmosphere."},
+        {"q": "Most abundant gas in Earth's atmosphere?", "o": ["O₂", "CO₂", "N₂", "Ar"], "a": 3, "e": "Nitrogen (N₂) makes up about 78% of the air, while Oxygen is only about 21%."},
+        {"q": "What is the pH of pure water?", "o": ["5", "7", "9", "0"], "a": 2, "e": "pH 7 is neutral. The pH scale measures how acidic or basic a substance is, ranging from 0 to 14."},
+        {"q": "Common name for Sodium Chloride (NaCl)?", "o": ["Sugar", "Salt", "Baking Soda", "Vinegar"], "a": 2, "e": "NaCl is common table salt. It is an ionic compound composed of sodium and chlorine ions."},
+        {"q": "Which element has the symbol 'H'?", "o": ["Helium", "Hydrogen", "Hafnium", "Mercury"], "a": 2, "e": "H is Hydrogen, the first and lightest element in the universe. It powers stars through nuclear fusion."},
+        {"q": "What is the dense center of an atom called?", "o": ["Proton", "Electron", "Nucleus", "Neutron"], "a": 3, "e": "The nucleus contains protons and neutrons, making up nearly all of an atom's mass."},
+        {"q": "State of water at 150°C (standard pressure)?", "o": ["Solid", "Liquid", "Gas", "Plasma"], "a": 3, "e": "Water boils at 100°C, becoming water vapor (gas). 150°C is well above the boiling point."},
+        {"q": "Which metal is liquid at room temperature?", "o": ["Gold", "Silver", "Mercury", "Iron"], "a": 3, "e": "Mercury (Hg) is unique for being a liquid metal at standard conditions. It was once widely used in thermometers."}
+      ],
+      "Medium": [
+        {"q": "What is the atomic number of Gold (Au)?", "o": ["77", "78", "79", "80"], "a": 3, "e": "Gold (Au) has 79 protons. Its symbol 'Au' comes from the Latin word 'Aurum', meaning 'shining dawn'."},
+        {"q": "Chemical formula for Methane (natural gas)?", "o": ["CH₄", "C₂H₆", "CO₂", "NH₃"], "a": 1, "e": "Methane (CH₄) is the simplest alkane and a potent greenhouse gas. It consists of one carbon and four hydrogen atoms."},
+        {"q": "Who is credited with creating the first Periodic Table?", "o": ["Newton", "Einstein", "Mendeleev", "Curie"], "a": 3, "e": "Dmitri Mendeleev published the first widely recognized periodic table in 1869, predicting properties of elements yet to be discovered."},
+        {"q": "Main component of Natural Gas?", "o": ["Propane", "Butane", "Methane", "Ethane"], "a": 3, "e": "Natural gas is primarily Methane (CH₄). It is used for heating, cooking, and electricity generation."},
+        {"q": "What is the symbol for Silver?", "o": ["Si", "Ag", "Au", "Sl"], "a": 2, "e": "Silver's symbol is Ag, from the Latin word 'Argentum'. It has the highest electrical conductivity of any element."},
+        {"q": "Which acid gives lemons their sour taste?", "o": ["Sulfuric acid", "Citric acid", "Acetic acid", "HCl"], "a": 2, "e": "Citric acid is a weak organic acid found in citrus fruits. It is a natural preservative."},
+        {"q": "What is the lightest element in the Periodic Table?", "o": ["He", "H", "Li", "O"], "a": 2, "e": "Hydrogen (H) is the lightest element, with an atomic mass of approximately 1.008 u."},
+        {"q": "How many protons does a Carbon atom have?", "o": ["4", "6", "8", "12"], "a": 2, "e": "Carbon's atomic number is 6. Carbon is the basis of all known life on Earth (organic chemistry)."},
+        {"q": "Process of iron reacting with oxygen to form rust?", "o": ["Reduction", "Oxidation", "Combustion", "Sublimation"], "a": 2, "e": "Rusting is an oxidation reaction. Iron reacts with oxygen in the presence of water or air moisture."},
+        {"q": "What is 'Dry Ice' chemically?", "o": ["H₂O (s)", "N₂ (s)", "CO₂ (s)", "O₂ (s)"], "a": 3, "e": "Dry ice is solid Carbon Dioxide. It sublimes (turns directly from solid to gas) at -78.5°C."}
+      ],
+      "Hard": [
+        {"q": "Process: Solid → Gas (without passing through liquid)?", "o": ["Evaporation", "Sublimation", "Condensation", "Deposition"], "a": 2, "e": "Sublimation occurs when a substance changes from solid to gas directly. Examples include dry ice and mothballs."},
+        {"q": "What is Avogadro's Number (Nₐ)?", "o": ["6.022 × 10²³", "3.141 × 10²³", "9.81 × 10²³", "1.602 × 10⁻¹⁹"], "a": 1, "e": "Avogadro's number (6.022 × 10²³) is the number of constituent particles (usually atoms or molecules) in one mole of a substance."},
+        {"q": "What is the strongest type of primary chemical bond?", "o": ["Ionic", "Hydrogen", "Covalent", "Van der Waals"], "a": 3, "e": "Covalent bonds, where electrons are shared between atoms, are generally the strongest. Triple bonds (like in N₂) are especially strong."},
+        {"q": "Which gas law states P₁V₁ = P₂V₂ at constant temperature?", "o": ["Charles' Law", "Boyle's Law", "Gay-Lussac", "Dalton"], "a": 2, "e": "Boyle's Law states that the pressure of a given mass of an ideal gas is inversely proportional to its volume at a constant temperature."},
+        {"q": "Noble gas often used as a shield in arc welding?", "o": ["Neon", "Helium", "Argon", "Krypton"], "a": 3, "e": "Argon is used because it is chemically inert and prevents the hot metal from reacting with oxygen or nitrogen in the air."},
+        {"q": "Full electronic configuration of Neon (Z=10)?", "o": ["1s² 2s² 2p⁴", "1s² 2s² 2p⁶", "1s² 2s² 2p²", "2s² 2p⁸"], "a": 2, "e": "Neon has 10 electrons: 2 in the first shell (1s²) and 8 in the second (2s² 2p⁶). This full octet makes it very stable."},
+        {"q": "What is the primary catalyst used in the Haber Process?", "o": ["Nickel", "Platinum", "Iron (Fe)", "Copper"], "a": 3, "e": "Iron (with promoters) is used to speed up the synthesis of Ammonia (NH₃) from Nitrogen and Hydrogen."},
+        {"q": "A substance that can act as both an acid and a base is...?", "o": ["Amphoteric", "Isotopic", "Allotropic", "Catalytic"], "a": 1, "e": "Amphoteric substances (like water or aluminum oxide) can react as both acids and bases depending on the environment."},
+        {"q": "Approximate bond angle in a water molecule?", "o": ["90°", "109.5°", "104.5°", "120°"], "a": 3, "e": "Due to the repulsion of the two lone pairs on oxygen, the 'perfect' tetrahedral angle of 109.5° is squeezed down to 104.5°."},
+        {"q": "Which radioactive element was discovered by Marie Curie?", "o": ["Uranium", "Radium (Ra)", "Gold", "Iron"], "a": 2, "e": "Marie Curie discovered Polonium and Radium. She is the only person to win Nobel Prizes in two different scientific fields."}
+      ]
+    },
+    "History": {
+      "Easy": [
+        {"q": "Who was the first President of the United States?", "o": ["Jefferson", "Lincoln", "Washington", "Adams"], "a": 3, "e": "George Washington served from 1789 to 1797. He is often called the 'Father of His Country'."},
+        {"q": "In which country was the Great Wall built?", "o": ["Japan", "China", "India", "Mongolia"], "a": 2, "e": "The Great Wall was built over centuries to protect China from invasions from the north."},
+        {"q": "Who was the first man to step on the Moon (1969)?", "o": ["Aldrin", "Gagarin", "Armstrong", "Glenn"], "a": 3, "e": "Neil Armstrong was the commander of Apollo 11. His first words were: 'That's one small step for [a] man, one giant leap for mankind.'"},
+        {"q": "Which ancient civilization built the Giza Pyramids?", "o": ["Romans", "Greeks", "Egyptians", "Mayans"], "a": 3, "e": "The pyramids were built as monumental tombs for Pharaohs during the Old and Middle Kingdom periods of Egypt."},
+        {"q": "Which ship brought the Pilgrims to America in 1620?", "o": ["Titanic", "Santa Maria", "Mayflower", "Beagle"], "a": 3, "e": "The Mayflower transported English Separatists (Pilgrims) from Plymouth, England, to the 'New World'."},
+        {"q": "Which city was divided by a wall from 1961 to 1989?", "o": ["Paris", "Berlin", "London", "Moscow"], "a": 2, "e": "The Berlin Wall separated West Berlin from East Germany. Its fall symbolized the end of the Cold War."},
+        {"q": "Which explorer is famously credited with 'discovering' America in 1492?", "o": ["da Gama", "Magellan", "Columbus", "Cook"], "a": 3, "e": "Christopher Columbus's voyages opened the way for European exploration and colonization of the Americas."},
+        {"q": "What was the war between the North and South US (1861–1865)?", "o": ["WWI", "WWII", "Civil War", "Revolution"], "a": 3, "e": "The American Civil War was fought primarily over the issues of slavery and states' rights."},
+        {"q": "On which continent is Italy located?", "o": ["Asia", "Africa", "Europe", "South America"], "a": 3, "e": "Italy is a boot-shaped peninsula in Southern Europe, bordering the Mediterranean Sea."},
+        {"q": "Who was the legendary French heroine known as the 'Maid of Orleans'?", "o": ["Antoinette", "Joan of Arc", "Victoria", "Catherine"], "a": 2, "e": "Joan of Arc led the French army to several important victories during the Hundred Years' War before being captured and burned at the stake."}
+      ],
+      "Medium": [
+        {"q": "In which year did the RMS Titanic sink?", "o": ["1910", "1912", "1914", "1908"], "a": 2, "e": "The Titanic sank on April 15, 1912, after hitting an iceberg on its maiden voyage from Southampton to New York City."},
+        {"q": "Who was the primary author of the US Declaration of Independence?", "o": ["Franklin", "Jefferson", "Madison", "Hamilton"], "a": 2, "e": "Thomas Jefferson drafted the Declaration in 1776, articulating the philosophical foundations of the new nation."},
+        {"q": "In which year was the Magna Carta signed?", "o": ["1066", "1215", "1492", "1776"], "a": 2, "e": "King John of England signed the Magna Carta ('Great Charter') in 1215, establishing that everyone, including the king, is subject to the law."},
+        {"q": "Who was the leader of the Soviet Union during World War II?", "o": ["Lenin", "Stalin", "Khrushchev", "Gorbachev"], "a": 2, "e": "Joseph Stalin led the USSR from the mid-1920s until his death in 1953, including during the victory over Nazi Germany."},
+        {"q": "In which year did the French Revolution begin?", "o": ["1776", "1789", "1804", "1815"], "a": 2, "e": "The Revolution began in 1789 with the storming of the Bastille, leading to the end of the absolute monarchy in France."},
+        {"q": "Which ancient empire was ruled by Julius Caesar?", "o": ["Greek", "Roman", "Ottoman", "Persian"], "a": 2, "e": "Julius Caesar was a Roman general and statesman who played a critical role in the events that led to the demise of the Roman Republic and the rise of the Roman Empire."},
+        {"q": "What was the 'rebirth' of art and learning in Europe (14th–17th century)?", "o": ["Dark Ages", "Enlightenment", "Renaissance", "Industrial"], "a": 3, "e": "The Renaissance was a period of intense artistic and intellectual activity, starting in Italy and spreading throughout Europe."},
+        {"q": "Who was the British Prime Minister during most of World War II?", "o": ["Chamberlain", "Churchill", "Attlee", "Eden"], "a": 2, "e": "Winston Churchill's leadership and speeches inspired the British people during the darkest days of the war."},
+        {"q": "Which US President issued the Emancipation Proclamation?", "o": ["Washington", "Jefferson", "Lincoln", "Roosevelt"], "a": 3, "e": "Abraham Lincoln issued the proclamation in 1863, declaring 'that all persons held as slaves' within the rebellious states 'are, and henceforward shall be free'."},
+        {"q": "Which modern-day country was the center of the Aztec Empire?", "o": ["Peru", "Mexico", "Brazil", "Chile"], "a": 2, "e": "The Aztecs built their capital, Tenochtitlan, on an island in Lake Texcoco, which is now the site of Mexico City."}
+      ],
+      "Hard": [
+        {"q": "Which treaty officially ended World War I in 1919?", "o": ["Treaty of Paris", "Treaty of Versailles", "Treaty of Ghent", "Utrecht"], "a": 2, "e": "The Treaty of Versailles imposed harsh reparations and territorial losses on Germany, which many historians argue contributed to the rise of WWII."},
+        {"q": "Who was the first woman to win a Nobel Prize?", "o": ["Marie Curie", "Mother Teresa", "Jane Addams", "Nightingale"], "a": 1, "e": "Marie Curie won in 1903 (Physics) for her work on radioactivity. She later won a second prize in 1911 (Chemistry)."},
+        {"q": "In which year did Constantinople fall to the Ottoman Turks?", "o": ["1453", "1204", "1492", "476"], "a": 1, "e": "The fall of Constantinople in 1453 marked the end of the Byzantine Empire and is often considered the end of the Middle Ages."},
+        {"q": "Who was the longest-reigning British monarch before Elizabeth II?", "o": ["George III", "Victoria", "Henry VIII", "Anne"], "a": 2, "e": "Queen Victoria reigned for 63 years and 7 months (1837–1901), a period known as the Victorian Era."},
+        {"q": "Which expedition was the first to circumnavigate the globe?", "o": ["Columbus", "da Gama", "Magellan", "Drake"], "a": 3, "e": "The Magellan-Elcano expedition (1519–1522) was the first to sail around the world, though Magellan himself was killed in the Philippines."},
+        {"q": "Which civilization produced the 'Code of Hammurabi'?", "o": ["Egypt", "Babylon", "Sumar", "Assyria"], "a": 2, "e": "The Code of Hammurabi is one of the oldest and best-preserved sets of laws from ancient Mesopotamia, dating back to around 1754 BC."},
+        {"q": "Which war was ended by the Peace of Westphalia (1648)?", "o": ["100 Years' War", "30 Years' War", "7 Years' War", "Napoleonic"], "a": 2, "e": "The Thirty Years' War was a series of devastating conflicts in Central Europe, primarily involving religious and political rivalries."},
+        {"q": "Who was known as the 'Sun King' (Le Roi Soleil)?", "o": ["Louis XIV", "Louis XVI", "Napoleon", "Charlemagne"], "a": 1, "e": "Louis XIV of France reigned for 72 years, the longest recorded reign of any monarch of a sovereign country in history."},
+        {"q": "Which battle is often called the 'Turning Point' of the US Civil War?", "o": ["Antietam", "Gettysburg", "Bull Run", "Vicksburg"], "a": 2, "e": "The Union victory at the Battle of Gettysburg (July 1863) ended General Robert E. Lee's second invasion of the North."},
+        {"q": "Who was the first female Prime Minister of the United Kingdom?", "o": ["Theresa May", "Margaret Thatcher", "Angela Merkel", "Gandhi"], "a": 2, "e": "Margaret Thatcher, the 'Iron Lady', served as PM from 1979 to 1990 and was known for her conservative policies."}
+      ]
+    },
+    "Sport": {
+      "Easy": [
+        {"q": "How many players are on a standard soccer team on the field?", "o": ["9", "10", "11", "12"], "a": 3, "e": "Each team has 11 players, including the goalkeeper. Soccer is the most popular sport in the world."},
+        {"q": "Which sport is played with a racket and a shuttlecock?", "o": ["Tennis", "Badminton", "Squash", "Ping Pong"], "a": 2, "e": "Badminton is a fast-paced sport where the shuttlecock (or 'birdie') can reach speeds over 200 mph."},
+        {"q": "What is the highest score possible with a single dart?", "o": ["20", "50", "60", "100"], "a": 3, "e": "Hitting the 'Treble 20' (the small red segment in the 20 section) scores 60 points. The bullseye is only worth 50."},
+        {"q": "How many interlocking rings are in the Olympic logo?", "o": ["4", "5", "6", "7"], "a": 2, "e": "The 5 rings represent the five inhabited continents of the world, joined together in the spirit of sport."},
+        {"q": "Which major tennis tournament is held annually in London?", "o": ["US Open", "Wimbledon", "French Open", "Aussie Open"], "a": 2, "e": "Wimbledon is the only Grand Slam still played on grass and is famous for its strict all-white dress code."},
+        {"q": "What color jersey does the leader of the Tour de France wear?", "o": ["Green", "Red", "Yellow", "White"], "a": 3, "e": "The 'Maillot Jaune' (Yellow Jersey) was introduced in 1919 so spectators could easily identify the leader."},
+        {"q": "How many holes are in a standard round of golf?", "o": ["9", "18", "24", "12"], "a": 2, "e": "A standard round consists of 18 holes. The famous St Andrews Links originally had 22 holes before being changed to 18 in 1764."},
+        {"q": "In which sport can you score a 'Hole-in-One'?", "o": ["Basketball", "Soccer", "Golf", "Hockey"], "a": 3, "e": "An 'Ace' or hole-in-one occurs when the golfer hits the ball into the hole directly from the tee."},
+        {"q": "Which sport is played with a flat rubber 'Puck'?", "o": ["Field Hockey", "Ice Hockey", "Lacrosse", "Curling"], "a": 2, "e": "Ice hockey pucks are made of vulcanized rubber and are often frozen before a game to prevent them from bouncing."},
+        {"q": "What is the nickname of New Zealand's national rugby team?", "o": ["Wallabies", "Springboks", "All Blacks", "Lions"], "a": 3, "e": "The 'All Blacks' are famous for their black uniforms and performing the 'Haka', a traditional Maori challenge, before matches."}
+      ],
+      "Medium": [
+        {"q": "Which country won the 2018 FIFA World Cup?", "o": ["Brazil", "Germany", "France", "Argentina"], "a": 3, "e": "France won their second World Cup title by defeating Croatia 4-2 in the final in Moscow. Their first win was in 1998."},
+        {"q": "Which legendary boxer was known as 'The Greatest'?", "o": ["Mike Tyson", "Joe Frazier", "Muhammad Ali", "Foreman"], "a": 3, "e": "Muhammad Ali was a three-time world heavyweight champion and remains one of the most significant sporting figures of the 20th century."},
+        {"q": "How many minutes are in a standard NBA quarter?", "o": ["10", "12", "15", "8"], "a": 2, "e": "An NBA game consists of four 12-minute quarters. International (FIBA) games use 10-minute quarters."},
+        {"q": "Which city hosted the first modern Olympic Games in 1896?", "o": ["Paris", "Athens", "Rome", "London"], "a": 2, "e": "The games were held in Athens, Greece, to honor the origins of the ancient Olympic Games."},
+        {"q": "In baseball, how many 'Strikes' result in a batter being out?", "o": ["2", "3", "4", "5"], "a": 2, "e": "'Three strikes and you're out' is one of the most famous rules in sports. A strike occurs if the batter swings and misses or the ball passes through the strike zone."},
+        {"q": "Which NFL teams have the most Super Bowl wins (as of 2024)?", "o": ["Patriots", "Steelers", "Both A & B", "Cowboys"], "a": 3, "e": "The New England Patriots and Pittsburgh Steelers both hold the record with 6 Super Bowl championships each."},
+        {"q": "Who holds the world record for the fastest 100m sprint?", "o": ["Yohan Blake", "Usain Bolt", "Tyson Gay", "Carl Lewis"], "a": 2, "e": "Usain Bolt set the staggering record of 9.58 seconds at the 2009 World Championships in Berlin."},
+        {"q": "What is the standard diameter of a basketball hoop in inches?", "o": ["16\"", "18\"", "20\"", "22\""], "a": 2, "e": "The standard rim is 18 inches in diameter. Interestingly, a standard basketball is only about 9.5 inches wide, so two balls can almost fit through at once."},
+        {"q": "Who holds the record for the most Men's Grand Slam titles?", "o": ["Federer", "Nadal", "Djokovic", "Murray"], "a": 3, "e": "As of early 2024, Novak Djokovic holds the record with 24 Grand Slam singles titles, surpassing both Nadal and Federer."},
+        {"q": "How many points is a Touchdown worth in American Football?", "o": ["3", "6", "7", "5"], "a": 2, "e": "A touchdown is worth 6 points. After a touchdown, the team can attempt a 'Point After Touchdown' (PAT) kick for 1 point or a 'Two-Point Conversion'."}
+      ],
+      "Hard": [
+        {"q": "Which athlete has won the most Olympic gold medals of all time?", "o": ["Bolt", "Phelps", "Latynina", "Spitz"], "a": 2, "e": "American swimmer Michael Phelps has won 23 gold medals (and 28 medals total) across four Olympic Games."},
+        {"q": "In Cricket, what is the term for scoring 100 runs in one innings?", "o": ["Grand", "Century", "Ton", "Both B & C"], "a": 4, "e": "Scoring 100 runs is a major milestone for a batsman, commonly called a 'Century' or a 'Ton'."},
+        {"q": "Which country has won the most FIFA World Cups?", "o": ["Germany", "Italy", "Brazil", "Argentina"], "a": 3, "e": "Brazil has won the FIFA World Cup five times (1958, 1962, 1970, 1994, 2002). They are the only team to have played in every tournament."},
+        {"q": "Who was the first woman to run a marathon in under 2:20:00?", "o": ["Radcliffe", "Loroupe", "Takahashi", "Kosgei"], "a": 3, "e": "Japanese runner Naoko Takahashi broke the barrier at the 2001 Berlin Marathon with a time of 2:19:46."},
+        {"q": "What is the official distance of a full marathon in miles?", "o": ["25.2", "26.2", "27.2", "24.2"], "a": 2, "e": "A marathon is exactly 26 miles and 385 yards. This distance was standardized during the 1908 London Olympics."},
+        {"q": "What is the major international team trophy in Men's Tennis?", "o": ["Ryder Cup", "Davis Cup", "America's Cup", "World Cup"], "a": 2, "e": "The Davis Cup, founded in 1900, is the premier international team event in men's tennis, often called the 'World Cup of Tennis'."},
+        {"q": "Which city hosted the 1992 Summer Olympics?", "o": ["Seoul", "Barcelona", "Atlanta", "Sydney"], "a": 2, "e": "The Barcelona 1992 games are widely considered one of the most successful and influential Olympics of the modern era."},
+        {"q": "Which trophy is awarded annually to the NHL champions?", "o": ["Vince Lombardi", "Stanley Cup", "O'Brien", "Commish"], "a": 2, "e": "The Stanley Cup is the oldest professional sports trophy in North America, first awarded in 1893."},
+        {"q": "Who was the first gymnast to be awarded a perfect 10.0 in the Olympics?", "o": ["Biles", "Comăneci", "Korbut", "Retton"], "a": 2, "e": "Nadia Comăneci achieved this at the 1976 Montreal Games. The scoreboard was only designed for three digits, so it displayed '1.00'."},
+        {"q": "Which F1 drivers hold the record for most World Championships?", "o": ["Senna", "Prost", "Hamilton & Schumacher", "Vettel"], "a": 3, "e": "Both Lewis Hamilton and Michael Schumacher have won seven Formula One World Drivers' Championship titles."}
+      ]
+    }
+  },
+  "ru": {
+    "Math": {
+      "Easy": [
+        {"q": "Сколько будет 15 + 27?", "o": ["32", "42", "41", "38"], "a": 2, "e": "Сложение: 15 + 27 = 42. Простой способ: 10 + 20 = 30, а 5 + 7 = 12. 30 + 12 = 42."},
+        {"q": "Чему равен квадратный корень (√) из 64?", "o": ["6", "7", "8", "9"], "a": 3, "e": "√64 = 8, так как 8 × 8 = 64. Извлечение корня — действие, обратное возведению в квадрат."},
+        {"q": "Сколько будет 12 × 5?", "o": ["50", "60", "70", "55"], "a": 2, "e": "12 × 5 = 60. Подсказка: чтобы умножить на 5, можно умножить на 10 и разделить на 2 (120 / 2 = 60)."},
+        {"q": "Сколько будет 100 − 37?", "o": ["63", "53", "73", "67"], "a": 1, "e": "Результат вычитания: 100 − 37 = 63. Можно представить как 100 - 30 - 7."},
+        {"q": "Сколько будет 81 ÷ 9?", "o": ["7", "8", "9", "10"], "a": 3, "e": "Деление: 81 ÷ 9 = 9, так как 9 × 9 = 81. В десятичной системе сумма цифр чисел, кратных 9, всегда кратна 9 (8+1=9)."},
+        {"q": "Сколько будет 7 + 8 + 9?", "o": ["22", "23", "24", "25"], "a": 3, "e": "Сумма: 7 + 8 + 9 = 24. Для трех последовательных чисел сумма всегда равна среднему числу, умноженному на 3 (8 × 3 = 24)."},
+        {"q": "Чему равны 50% от 200?", "o": ["50", "100", "150", "75"], "a": 2, "e": "50% — это ровно половина. Половина от 200 равна 100. 'Процент' означает 'на сотню'."},
+        {"q": "Сколько сторон у шестиугольника?", "o": ["5", "6", "7", "8"], "a": 2, "e": "В геометрии шестиугольник имеет ровно 6 сторон. Снежинки и пчелиные соты часто имеют форму шестиугольника."},
+        {"q": "Сколько будет 11² (11 в квадрате)?", "o": ["111", "121", "131", "101"], "a": 2, "e": "Квадрат числа — это число, умноженное на самого себя: 11 × 11 = 121. При умножении двузначного числа на 11 сумма его цифр ставится в середину (1+1=2, значит 1 2 1)."},
+        {"q": "Чему равна ¼ от 100?", "o": ["20", "25", "30", "50"], "a": 2, "e": "Одна четверть (¼) находится делением на 4: 100 ÷ 4 = 25. Это также составляет 25% от 100."}
+      ],
+      "Medium": [
+        {"q": "Чему равно значение числа π (Пи) до двух знаков?", "o": ["3.12", "3.14", "3.16", "3.18"], "a": 2, "e": "π — это отношение длины окружности к её диаметру, примерно 3.14159... Это иррациональное число, его десятичная дробь бесконечна."},
+        {"q": "Решите уравнение: 2x + 5 = 15", "o": ["5", "10", "7.5", "2"], "a": 1, "e": "Вычтем 5 из обеих частей: 2x = 10. Затем разделим на 2: x = 5. Это линейное уравнение."},
+        {"q": "Сколько будет 15²?", "o": ["225", "215", "235", "205"], "a": 1, "e": "15 в квадрате: 15 × 15 = 225. Квадраты чисел, оканчивающихся на 5, всегда заканчиваются на 25."},
+        {"q": "Площадь (S) круга при радиусе r=2? (S = πr², π≈3.14)", "o": ["6.28", "12.56", "4", "8.14"], "a": 2, "e": "S = 3.14 × (2)² = 3.14 × 4 = 12.56. Площадь круга растет пропорционально квадрату радиуса."},
+        {"q": "Чему равен √225?", "o": ["13", "14", "15", "16"], "a": 3, "e": "√225 = 15, так как 15 × 15 = 225. Это действие, обратное возведению 15 в квадрат."},
+        {"q": "Сколько будет 2⁵ (2 в пятой степени)?", "o": ["16", "32", "64", "25"], "a": 2, "e": "2 × 2 × 2 × 2 × 2 = 32. Степени двойки широко используются в информатике (биты, байты)."},
+        {"q": "Если в треугольнике углы 60° и 40°, какой третий угол?", "o": ["80°", "90°", "100°", "70°"], "a": 1, "e": "Сумма внутренних углов любого плоского треугольника всегда равна 180°. 180 − (60 + 40) = 80."},
+        {"q": "Сколько будет 10! ÷ 9!?", "o": ["1", "10", "9", "90"], "a": 2, "e": "Факториал: 10! = 10 × 9!. Таким образом, 10! ÷ 9! = 10. Факториалы растут чрезвычайно быстро."},
+        {"q": "Решите: 3(x − 4) = 12", "o": ["4", "8", "6", "0"], "a": 2, "e": "Раскроем скобки: 3x − 12 = 12. Прибавим 12: 3x = 24. x = 8. Либо сначала разделим на 3: x - 4 = 4, x = 8."},
+        {"q": "Чему равна гипотенуза (c) треугольника с катетами a=3, b=4?", "o": ["5", "6", "7", "25"], "a": 1, "e": "Теорема Пифагора: a² + b² = c². 3² + 4² = 9 + 16 = 25. √25 = 5. (3, 4, 5) — самый известный Пифагоров треугольник."}
+      ],
+      "Hard": [
+        {"q": "Чему равна производная (d/dx) функции sin(x)?", "o": ["cos(x)", "−cos(x)", "sin(x)", "−sin(x)"], "a": 1, "e": "В математическом анализе производная синуса равна косинусу. Это определяет скорость изменения функции в каждой точке."},
+        {"q": "Чему равен неопределенный интеграл ∫ (1/x) dx?", "o": ["x", "ln|x|", "eˣ", "x²/2"], "a": 2, "e": "Первообразная функции 1/x — это натуральный логарифм модуля x (ln|x|)."},
+        {"q": "Чему примерно равно число Эйлера (e)?", "o": ["2.718", "3.141", "1.618", "1.414"], "a": 1, "e": "e ≈ 2.71828. Это основание натуральных логарифмов, критически важное для описания процессов роста и распада."},
+        {"q": "Решите уравнение: log₁₀(x) = 3", "o": ["30", "100", "1000", "300"], "a": 3, "e": "Логарифм — это показатель степени: x = 10³. 10 × 10 × 10 = 1000. Десятичный логарифм имеет основание 10."},
+        {"q": "Чему равна сумма (Σ) первых 100 целых чисел?", "o": ["5000", "5050", "5100", "4950"], "a": 2, "e": "По формуле S = n(n+1)/2: 100(101)/2 = 5050. Легенда гласит, что Гаусс вывел эту формулу еще в начальной школе."},
+        {"q": "Чему равен предел (lim) (sin x)/x при x → 0?", "o": ["0", "1", "∞", "Не определен"], "a": 2, "e": "Это первый замечательный предел, который равен 1. Доказывается с помощью теоремы о двух милиционерах (о сжатой переменной)."},
+        {"q": "Как выглядит двоичная запись (base-2) числа 25?", "o": ["11001", "10101", "11101", "11011"], "a": 1, "e": "25 = 16 + 8 + 1. В двоичной системе это 11001₂ (1×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰). Двоичный код — основа работы процессоров."},
+        {"q": "Какое число является единственным четным простым числом?", "o": ["0", "2", "4", "Нет такого"], "a": 2, "e": "2 — единственное четное число, делителями которого являются только 1 и оно само. Любое другое четное число делится на 2."},
+        {"q": "Чему равно i² в системе комплексных чисел?", "o": ["1", "−1", "0", "√−1"], "a": 2, "e": "Мнимая единица i определяется как √−1, следовательно, i² = −1. Это позволяет решать уравнения типа x² + 1 = 0."},
+        {"q": "Какой математик известен своей 'Великой теоремой'?", "o": ["Гаусс", "Эйлер", "Ферма", "Ньютон"], "a": 3, "e": "Пьер Ферма утверждал, что уравнение aⁿ + bⁿ = cⁿ не имеет целых решений при n > 2. Теорема оставалась недоказанной 358 лет."}
+      ]
+    },
+    "Chemistry": {
+      "Easy": [
+        {"q": "Какова химическая формула воды?", "o": ["H₂O", "CO₂", "O₂", "HO₂"], "a": 1, "e": "Вода состоит из двух атомов водорода и одного атома кислорода. Это универсальный растворитель, необходимый для жизни."},
+        {"q": "Какой газ (CO₂) выдыхает человек в процессе дыхания?", "o": ["Кислород", "Азот", "Углекислый газ", "Водород"], "a": 3, "e": "Мы вдыхаем O₂ для получения энергии и выдыхаем углекислый газ (CO₂) как побочный продукт обмена веществ."},
+        {"q": "Каков химический символ кислорода в таблице Менделеева?", "o": ["Ox", "O", "O₂", "Og"], "a": 2, "e": "Символ кислорода — 'O'. Он составляет около 21% земной атмосферы и необходим для горения."},
+        {"q": "Какой газ является самым распространенным в атмосфере Земли?", "o": ["O₂", "CO₂", "N₂", "Ar"], "a": 3, "e": "Азот (N₂) составляет около 78% воздуха, тогда как кислород — только около 21%."},
+        {"q": "Чему равен уровень pH чистой дистиллированной воды?", "o": ["5", "7", "9", "0"], "a": 2, "e": "pH 7 считается нейтральным. Шкала pH измеряет кислотность или щелочность среды от 0 до 14."},
+        {"q": "Каково бытовое название хлорида натрия (NaCl)?", "o": ["Сахар", "Соль", "Сода", "Уксус"], "a": 2, "e": "NaCl — это обычная поваренная соль. Это ионное соединение, состоящее из натрия и хлора."},
+        {"q": "У какого химического элемента символ 'H'?", "o": ["Гелий", "Водород", "Гафний", "Ртуть"], "a": 2, "e": "H — это водород, самый первый, легкий и распространенный элемент во Вселенной. Он питает энергией звезды."},
+        {"q": "Как называется плотный центр атома?", "o": ["Протон", "Электрон", "Ядро", "Нейтрон"], "a": 3, "e": "Ядро содержит протоны и нейтроны, в нем сосредоточена почти вся масса атома."},
+        {"q": "В каком состоянии находится вода при температуре 150°C?", "o": ["Твердое", "Жидкое", "Газообразное", "Плазма"], "a": 3, "e": "Вода закипает при 100°C (при нормальном давлении), превращаясь в пар (газ). 150°C — это значительно выше точки кипения."},
+        {"q": "Какой металл остается жидким при комнатной температуре?", "o": ["Золото", "Серебро", "Ртуть", "Железо"], "a": 3, "e": "Ртуть (Hg) уникальна тем, что является жидким металлом в обычных условиях. Раньше её часто использовали в градусниках."}
+      ],
+      "Medium": [
+        {"q": "Каков атомный номер золота (Au)?", "o": ["77", "78", "79", "80"], "a": 3, "e": "Атомный номер золота — 79. Его символ 'Au' происходит от латинского 'Aurum', что означает 'сияющий рассвет'."},
+        {"q": "Химическая формула метана (природного газа)?", "o": ["CH₄", "C₂H₆", "CO₂", "NH₃"], "a": 1, "e": "Метан (CH₄) — простейший углеводород. Он состоит из одного атома углерода и четырех атомов водорода."},
+        {"q": "Кто считается создателем первой Периодической таблицы элементов?", "o": ["Ньютон", "Эйнштейн", "Менделеев", "Кюри"], "a": 3, "e": "Дмитрий Менделеев опубликовал свою таблицу в 1869 году, предсказав свойства еще не открытых на тот момент элементов."},
+        {"q": "Что является основным компонентом природного газа?", "o": ["Пропан", "Бутан", "Метан", "Этан"], "a": 3, "e": "Природный газ состоит преимущественно из метана (CH₄). Он используется для отопления и выработки электроэнергии."},
+        {"q": "Каков химический символ серебра?", "o": ["Si", "Ag", "Au", "Sl"], "a": 2, "e": "Символ серебра Ag происходит от латинского 'Argentum'. Серебро обладает самой высокой электропроводностью среди всех металлов."},
+        {"q": "Какая кислота содержится в лимонах и придает им кислый вкус?", "o": ["Серная", "Лимонная", "Уксусная", "HCl"], "a": 2, "e": "Лимонная кислота — это слабая органическая кислота, которая также служит природным консервантом."},
+        {"q": "Какой элемент является самым легким в Периодической таблице?", "o": ["He", "H", "Li", "O"], "a": 2, "e": "Водород (H) — самый легкий элемент, его атомная масса составляет примерно 1.008 а.е.м."},
+        {"q": "Сколько протонов содержит атом углерода?", "o": ["4", "6", "8", "12"], "a": 2, "e": "Атомный номер углерода — 6. Углерод является основой всей известной жизни на Земле (органическая химия)."},
+        {"q": "Как называется процесс взаимодействия железа с кислородом?", "o": ["Восстановление", "Окисление", "Горение", "Сублимация"], "a": 2, "e": "Ржавление — это реакция окисления железа. Она происходит при участии кислорода и влаги из воздуха."},
+        {"q": "Что представляет собой 'Сухой лед' с точки зрения химии?", "o": ["H₂O (s)", "N₂ (s)", "CO₂ (s)", "O₂ (s)"], "a": 3, "e": "Сухой лед — это углекислый газ в твердом состоянии. Он переходит сразу в газ (сублимирует) при температуре -78.5°C."}
+      ],
+      "Hard": [
+        {"q": "Переход вещества из твердого состояния сразу в газ называется...?", "o": ["Испарение", "Сублимация", "Конденсация", "Депозиция"], "a": 2, "e": "Сублимация (или возгонка) — это переход без стадии жидкости. Примеры: сухой лед, йод, нафталин."},
+        {"q": "Чему равно число Авогадро (Nₐ)?", "o": ["6.022 × 10²³", "3.141 × 10²³", "9.81 × 10²³", "1.602 × 10⁻¹⁹"], "a": 1, "e": "Число Авогадро (6.022 × 10²³) — это количество структурных единиц (атомов, молекул) в одном моле вещества."},
+        {"q": "Какой тип химической связи считается самым прочным?", "o": ["Ионная", "Водородная", "Ковалентная", "Ван-дер-Ваальса"], "a": 3, "e": "Ковалентная связь, основанная на обобществлении электронов, обычно самая прочная. Особенно сильны тройные связи (как в N₂)."},
+        {"q": "Какой закон утверждает, что P₁V₁ = P₂V₂ при постоянной температуре?", "o": ["Закон Шарля", "Закон Бойля", "Гей-Люссак", "Дальтон"], "a": 2, "e": "Закон Бойля-Мариотта гласит, что давление газа обратно пропорционально его объему при неизменной температуре."},
+        {"q": "Какой благородный газ часто используют для сварки?", "o": ["Неон", "Гелий", "Аргон", "Криптон"], "a": 3, "e": "Аргон используется как инертная среда, чтобы раскаленный металл не реагировал с кислородом или азотом воздуха."},
+        {"q": "Какова полная электронная конфигурация неона (Z=10)?", "o": ["1s² 2s² 2p⁴", "1s² 2s² 2p⁶", "1s² 2s² 2p²", "2s² 2p⁸"], "a": 2, "e": "У неона 10 электронов: 2 на первом уровне (1s²) и 8 на втором (2s² 2p⁶). Заполненный октет делает его очень стабильным."},
+        {"q": "Какой катализатор обычно используется в процессе Габера?", "o": ["Никель", "Платина", "Железо (Fe)", "Медь"], "a": 3, "e": "Железо (с добавками) используется для ускорения синтеза аммиака (NH₃) из азота и водорода."},
+        {"q": "Вещество, способное проявлять свойства и кислоты, и основания?", "o": ["Амфотерное", "Изотопное", "Аллотропное", "Каталитическое"], "a": 1, "e": "Амфотерные соединения (например, вода или оксид алюминия) реагируют по-разному в зависимости от партнера по реакции."},
+        {"q": "Примерный валентный угол в молекуле воды?", "o": ["90°", "109.5°", "104.5°", "120°"], "a": 3, "e": "Из-за отталкивания двух неподеленных электронных пар кислорода идеальный тетраэдрический угол 109.5° сжимается до 104.5°."},
+        {"q": "Какой радиоактивный элемент был открыт Марией Кюри?", "o": ["Уран", "Радий (Ra)", "Золото", "Железо"], "a": 2, "e": "Мария Кюри открыла полоний и радий. Она — единственный ученый, получивший Нобелевские премии в двух разных областях естествознания."}
+      ]
+    },
+    "History": {
+      "Easy": [
+        {"q": "Кто был первым президентом США?", "o": ["Джефферсон", "Линкольн", "Вашингтон", "Адамс"], "a": 3, "e": "Джордж Вашингтон правил с 1789 по 1797 год. Его часто называют 'отцом нации'."},
+        {"q": "В какой стране была построена Великая стена?", "o": ["Япония", "Китай", "Индия", "Монголия"], "a": 2, "e": "Великая китайская стена строилась на протяжении многих веков для защиты от кочевников с севера."},
+        {"q": "Кто первым ступил на поверхность Луны в 1969 году?", "o": ["Олдрин", "Гагарин", "Армстронг", "Гленн"], "a": 3, "e": "Нил Армстронг был командиром корабля 'Аполлон-11'. Его фраза 'Маленький шаг для человека...' стала легендарной."},
+        {"q": "Какая древняя цивилизация построила пирамиды Гизы?", "o": ["Римляне", "Греки", "Египтяне", "Майя"], "a": 3, "e": "Пирамиды были монументальными гробницами для фараонов Древнего и Среднего царств Египта."},
+        {"q": "На каком корабле пилигримы приплыли в Америку в 1620 году?", "o": ["Титаник", "Санта-Мария", "Мейфлауэр", "Бигль"], "a": 3, "e": "Корабль 'Мейфлауэр' доставил группу английских переселенцев (отцов-пилигримов) в Новый Свет."},
+        {"q": "Какой город был разделен стеной с 1961 по 1989 год?", "o": ["Париж", "Берлин", "Лондон", "Москва"], "a": 2, "e": "Берлинская стена отделяла Западный Берлин от ГДР. Её падение символизировало окончание холодной войны."},
+        {"q": "Какому мореплавателю приписывают открытие Америки в 1492 году?", "o": ["да Гама", "Магеллан", "Колумб", "Кук"], "a": 3, "e": "Экспедиция Христофора Колумба открыла путь для европейской колонизации американского континента."},
+        {"q": "Как называлась война между Севером и Югом США (1861–1865)?", "o": ["ПМВ", "ВМВ", "Гражданская война", "Революция"], "a": 3, "e": "Гражданская война в США велась преимущественно из-за вопросов рабства и прав отдельных штатов."},
+        {"q": "На каком континенте расположена Италия?", "o": ["Азия", "Африка", "Европа", "Южная Америка"], "a": 3, "e": "Италия — это государство в Южной Европе, занимающее Апеннинский полуостров в Средиземном море."},
+        {"q": "Как звали французскую героиню, известную как 'Орлеанская дева'?", "o": ["Антуанетта", "Жанна д'Арк", "Виктория", "Екатерина"], "a": 2, "e": "Жанна д'Арк возглавила французские войска в ряде битв Столетней войны, прежде чем была казнена."}
+      ],
+      "Medium": [
+        {"q": "В каком году затонул лайнер 'Титаник'?", "o": ["1910", "1912", "1914", "1908"], "a": 2, "e": "Титаник затонул 15 апреля 1912 года после столкновения с айсбергом во время своего первого рейса в Нью-Йорк."},
+        {"q": "Кто был основным автором Декларации независимости США?", "o": ["Франклин", "Джефферсон", "Мэдисон", "Гамильтон"], "a": 2, "e": "Томас Джефферсон составил проект Декларации в 1776 году, заложив основы государственности США."},
+        {"q": "В каком году была подписана Великая хартия вольностей (Magna Carta)?", "o": ["1066", "1215", "1492", "1776"], "a": 2, "e": "Король Иоанн Безземельный подписал Хартию в 1215 году. Она установила принцип верховенства закона над властью монарха."},
+        {"q": "Кто был лидером Советского Союза во время Второй мировой войны?", "o": ["Ленин", "Сталин", "Хрущев", "Горбачев"], "a": 2, "e": "Иосиф Сталин возглавлял СССР с середины 1920-х до 1953 года, включая период победы над нацистской Германией."},
+        {"q": "В каком году началась Великая французская революция?", "o": ["1776", "1789", "1804", "1815"], "a": 2, "e": "Революция началась в 1789 году со взятия Бастилии и привела к падению абсолютной монархии во Франции."},
+        {"q": "Какой древней империей правил Юлий Цезарь?", "o": ["Греческая", "Римская", "Османская", "Персидская"], "a": 2, "e": "Юлий Цезарь был выдающимся полководцем и политиком, чей приход к власти ознаменовал переход от Республики к Римской империи."},
+        {"q": "Как называлась эпоха расцвета искусства и наук в Европе (XIV–XVII вв.)?", "o": ["Темные века", "Просвещение", "Возрождение", "Индустриализация"], "a": 3, "e": "Эпоха Возрождения (Ренессанс) началась в Италии и ознаменовалась возвращением к идеалам античности и гуманизма."},
+        {"q": "Кто был премьер-министром Великобритании большую часть Второй мировой войны?", "o": ["Чемберлен", "Черчилль", "Эттли", "Иден"], "a": 2, "e": "Уинстон Черчилль своей решимостью и речами вдохновлял британский народ в самые тяжелые годы войны."},
+        {"q": "Какой президент США издал Прокламацию об освобождении рабов?", "o": ["Вашингтон", "Джефферсон", "Линкольн", "Рузвельт"], "a": 3, "e": "Авраам Линкольн издал прокламацию в 1863 году, юридически освободив рабов на территориях Конфедерации."},
+        {"q": "Какая современная страна была центром империи Ацтеков?", "o": ["Перу", "Мексика", "Бразилия", "Чили"], "a": 2, "e": "Ацтеки построили свою столицу Теночтитлан на месте, где сейчас расположен город Мехико."}
+      ],
+      "Hard": [
+        {"q": "Какой договор официально завершил Первую мировую войну в 1919 году?", "o": ["Парижский", "Версальский", "Гентский", "Утрехтский"], "a": 2, "e": "Версальский мирный договор возложил на Германию тяжелые репарации и территориальные потери."},
+        {"q": "Кто был первой женщиной, получившей Нобелевскую премию?", "o": ["Мария Кюри", "Мать Тереза", "Джейн Аддамс", "Найтингейл"], "a": 1, "e": "Мария Кюри получила премию по физике в 1903 году, а позже — вторую премию по химии в 1911 году."},
+        {"q": "В каком году Константинополь пал под ударами турок-османов?", "o": ["1453", "1204", "1492", "476"], "a": 1, "e": "Падение Константинополя в 1453 году означало гибель Византийческой империи и конец эпохи Средневековья."},
+        {"q": "Кто был самым долгоправящим британским монархом до Елизаветы II?", "o": ["Георг III", "Виктория", "Генрих VIII", "Анна"], "a": 2, "e": "Королева Виктория правила 63 года и 7 месяцев (1837–1901), этот период вошел в историю как 'Викторианская эпоха'."},
+        {"q": "Чья экспедиция совершила первое кругосветное плавание?", "o": ["Колумб", "да Гама", "Магеллан", "Дрейк"], "a": 3, "e": "Экспедиция Магеллана-Элькано (1519–1522) доказала шарообразность Земли, хотя сам Магеллан погиб в пути."},
+        {"q": "Какая цивилизация создала 'Кодекс Хаммурапи'?", "o": ["Египет", "Вавилон", "Шумер", "Ассирия"], "a": 2, "e": "Кодекс Хаммурапи — один из древнейших законодательных памятников Месопотамии (ок. 1754 г. до н. э.)."},
+        {"q": "Какая война завершилась подписанием Вестфальского мира (1648)?", "o": ["Столетняя", "Тридцатилетняя", "Семилетняя", "Наполеоновская"], "a": 2, "e": "Тридцатилетняя война была серией религиозных и политических конфликтов в Европе, опустошивших Германию."},
+        {"q": "Кого называли 'Королем-Солнце' (Le Roi Soleil)?", "o": ["Людовик XIV", "Людовик XVI", "Наполеон", "Карл Великий"], "a": 1, "e": "Людовик XIV правил Францией 72 года — это самый долгий срок правления среди монархов суверенных стран Европы."},
+        {"q": "Какое сражение часто называют 'поворотным моментом' Гражданской войны в США?", "o": ["Энтитем", "Геттисберг", "Булл-Ран", "Виксберг"], "a": 2, "e": "Победа северян при Геттисберге (1863) остановила наступление генерала Ли на территорию Севера."},
+        {"q": "Кто была первой женщиной на посту премьер-министра Великобритании?", "o": ["Тереза Мэй", "Маргарет Тэтчер", "Ангела Меркель", "Индира Ганди"], "a": 2, "e": "Маргарет Тэтчер, 'Железная леди', возглавляла правительство с 1979 по 1990 год."}
+      ]
+    },
+    "Sport": {
+      "Easy": [
+        {"q": "Сколько игроков в стандартной футбольной команде на поле?", "o": ["9", "10", "11", "12"], "a": 3, "e": "В команде 11 игроков, включая вратаря. Футбол — самый популярный вид спорта в мире."},
+        {"q": "В каком виде спорта используют ракетку и волан?", "o": ["Теннис", "Бадминтон", "Сквош", "Пинг-понг"], "a": 2, "e": "Бадминтон — очень динамичный спорт, скорость полета волана может превышать 300 км/ч."},
+        {"q": "Какое максимальное количество очков можно набрать одним броском в дартсе?", "o": ["20", "50", "60", "100"], "a": 3, "e": "Попадание в 'троенное 20' дает 60 очков. Центр мишени ('яблочко') дает только 50 очков."},
+        {"q": "Сколько переплетенных колец изображено на олимпийском логотипе?", "o": ["4", "5", "6", "7"], "a": 2, "e": "5 колец символизируют пять населенных континентов, объединенных олимпийским движением."},
+        {"q": "Какой крупный теннисный турнир ежегодно проходит в Лондоне?", "o": ["US Open", "Уимблдон", "Ролан Гаррос", "Aus Open"], "a": 2, "e": "Уимблдон — старейший турнир Большого шлема, на нем обязательно играть в белой форме на травяном корте."},
+        {"q": "Какого цвета майку носит лидер велогонки 'Тур де Франс'?", "o": ["Зеленый", "Красный", "Желтый", "Белый"], "a": 3, "e": "Желтая майка лидера ('Maillot Jaune') была введена в 1919 году, чтобы зрители могли сразу его узнать."},
+        {"q": "Сколько лунок в стандартном раунде игры в гольф?", "o": ["9", "18", "24", "12"], "a": 2, "e": "Стандартное поле для гольфа состоит из 18 лунок. Этот стандарт сложился исторически в Сент-Эндрюсе."},
+        {"q": "В каком виде спорта можно совершить 'Хол-ин-уан' (попадание с одного удара)?", "o": ["Баскетбол", "Футбол", "Гольф", "Хоккей"], "a": 3, "e": "Это происходит, когда игрок попадает в лунку прямо со стартовой площадки (ти)."},
+        {"q": "В каком виде спорта играют плоской резиновой шайбой?", "o": ["Травяной хоккей", "Хоккей на льду", "Лакросс", "Керлинг"], "a": 2, "e": "Шайбы для хоккея изготавливают из вулканизированной резины и замораживают перед игрой, чтобы они меньше прыгали."},
+        {"q": "Каково прозвище национальной сборной Новой Зеландии по регби?", "o": ["Wallabies", "Springboks", "All Blacks", "Lions"], "a": 3, "e": "'All Blacks' знамениты своей черной формой и исполнением ритуального танца Хака перед матчами."}
+      ],
+      "Medium": [
+        {"q": "Какая страна выиграла чемпионат мира по футболу 2018 года?", "o": ["Бразилия", "Германия", "Франция", "Аргентина"], "a": 3, "e": "Франция стала чемпионом, обыграв в финале Хорватию со счетом 4:2. Это их второй титул (первый был в 1998)."},
+        {"q": "Какого легендарного боксера называли 'Величайшим'?", "o": ["Тайсон", "Фрейзер", "Мухаммед Али", "Форман"], "a": 3, "e": "Мухаммед Али — легенда бокса и один из самых узнаваемых спортсменов в истории человечества."},
+        {"q": "Сколько минут длится одна четверть в матче НБА?", "o": ["10", "12", "15", "8"], "a": 2, "e": "В НБА четверть длится 12 минут, тогда как в международных правилах (ФИБА) — 10 минут."},
+        {"q": "Какой город принимал первые современные Олимпийские игры в 1896 году?", "o": ["Париж", "Афины", "Рим", "Лондон"], "a": 2, "e": "Игры прошли в Афинах (Греция) в знак преемственности традиций древних Олимпиад."},
+        {"q": "Сколько 'страйков' в бейсболе приводят к ауту бьющего?", "o": ["2", "3", "4", "5"], "a": 2, "e": "Правило 'трех страйков' — одно из фундаментальных в бейсболе. После третьего страйка бьющий выбывает из игры."},
+        {"q": "У каких команд НФЛ больше всего побед в Супербоуле (на 2024 год)?", "o": ["Патриотс", "Стилерс", "Оба варианта", "Ковбойз"], "a": 3, "e": "У 'Нью-Ингленд Пэтриотс' и 'Питтсбург Стилерс' по 6 чемпионских титулов Супербоул."},
+        {"q": "Кто является мировым рекордсменом в беге на 100 метров?", "o": ["Блейк", "Усейн Болт", "Гэй", "Льюис"], "a": 2, "e": "Усейн Болт установил невероятный рекорд 9,58 секунды на чемпионате мира в Берлине в 2009 году."},
+        {"q": "Каков стандартный диаметр баскетбольного кольца в дюймах?", "o": ["16\"", "18\"", "20\"", "22\""], "a": 2, "e": "Стандартное кольцо имеет диаметр 18 дюймов. В кольцо могут почти одновременно пролететь два баскетбольных мяча."},
+        {"q": "Кто является рекордсменом по количеству титулов Большого шлема в мужском теннисе?", "o": ["Федерер", "Надаль", "Джокович", "Маррей"], "a": 3, "e": "К началу 2024 года Новак Джокович удерживает рекорд с 24 титулами Большого шлема в одиночном разряде."},
+        {"q": "Сколько очков дает тачдаун в американском футболе?", "o": ["3", "6", "7", "5"], "a": 2, "e": "Тачдаун дает 6 очков. После него команда может забить экстра-поинт (итого 7 очков) или разыграть 2-очковую реализацию."}
+      ],
+      "Hard": [
+        {"q": "Кто из атлетов выиграл больше всего олимпийских золотых медалей в истории?", "o": ["Болт", "Фелпс", "Латынина", "Спитц"], "a": 2, "e": "Американский пловец Майкл Фелпс выиграл 23 золотые медали (и 28 медалей всего) за четыре Олимпиады."},
+        {"q": "В крикете, как называется набор 100 ранов за один иннингс?", "o": ["Гранд", "Сенчури", "Тон", "Б и В"], "a": 4, "e": "Набор 100 очков — важное достижение, которое называют 'Century' (столетие) или 'Ton'."},
+        {"q": "Сборная какой страны выигрывала чемпионат мира по футболу чаще всех?", "o": ["Германия", "Италия", "Бразилия", "Аргентина"], "a": 3, "e": "Бразилия становилась чемпионом 5 раз. Это единственная сборная, участвовавшая во всех финальных стадиях ЧМ."},
+        {"q": "Кто была первой женщиной, пробежавшей марафон быстрее 2:20:00?", "o": ["Рэдклифф", "Лорупе", "Такахаси", "Косгей"], "a": 3, "e": "Японская бегунья Наоко Такахаси преодолела этот барьер на Берлинском марафоне в 2001 году (2:19:46)."},
+        {"q": "Какова официальная дистанция марафонского забега в милях?", "o": ["25.2", "26.2", "27.2", "24.2"], "a": 2, "e": "Дистанция составляет 26 миль и 385 ярдов (42 км 195 метров). Она была окончательно закреплена в 1908 году."},
+        {"q": "Как называется главный командный трофей в мужском теннисе?", "o": ["Кубок Райдера", "Кубок Дэвиса", "Кубок Америки", "World Cup"], "a": 2, "e": "Кубок Дэвиса, основанный в 1900 году, часто называют 'чемпионатом мира по теннису'."},
+        {"q": "В каком городе проходили летние Олимпийские игры 1992 года?", "o": ["Сеул", "Барселона", "Атланта", "Сидней"], "a": 2, "e": "Олимпиада в Барселоне считается одной из самых успешных в истории и дала мощный импульс развитию города."},
+        {"q": "Какой трофей ежегодно вручается чемпионам НХЛ?", "o": ["Винс Ломбарди", "Кубок Стэнли", "О'Брайен", "Commish"], "a": 2, "e": "Кубок Стэнли — старейший профессиональный спортивный приз в Северной Америке, вручается с 1893 года."},
+        {"q": "Кто первой из гимнасток получила 'идеальную 10.0' на Олимпиаде?", "o": ["Байлз", "Команечи", "Корбут", "Реттон"], "a": 2, "e": "Надя Команечи из Румынии сделала это в Монреале в 1976 году. Табло не было рассчитано на 4 знака и показало '1.00'."},
+        {"q": "Какие пилоты Ф1 делят рекорд по количеству чемпионских титулов?", "o": ["Сенна", "Прост", "Хэмилтон и Шумахер", "Феттель"], "a": 3, "e": "Льюис Хэмилтон и Михаэль Шумахер выиграли по семь чемпионских титулов 'Формулы-1'."}
+      ]
+    }
+  }
+}

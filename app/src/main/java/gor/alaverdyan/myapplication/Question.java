@@ -1,17 +1,20 @@
 package gor.alaverdyan.myapplication;
 
 public class Question {
-    private String q, o1, o2, o3, o4;
-    private int a;
+    private String text;
+    private String[] options;
+    private int correctIndex;
+    private String explanation;
 
-    public Question(String q, String o1, String o2, String o3, String o4, int a) {
-        this.q = q; this.o1 = o1; this.o2 = o2; this.o3 = o3; this.o4 = o4; this.a = a;
+    public Question(String text, String[] options, int correctIndex, String explanation) {
+        this.text = text;
+        this.options = options;
+        this.correctIndex = correctIndex;
+        this.explanation = explanation;
     }
 
-    public String getQuestionText() { return q; }
-    public String getOption1() { return o1; }
-    public String getOption2() { return o2; }
-    public String getOption3() { return o3; }
-    public String getOption4() { return o4; }
-    public int getAnswer() { return a; }
+    public String getText() { return text; }
+    public String[] getOptions() { return options; }
+    public int getCorrectIndex() { return correctIndex; }
+    public String getExplanation() { return explanation; }
 }

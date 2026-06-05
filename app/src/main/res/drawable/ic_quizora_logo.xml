@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Background Circle -->
+    <path
+        android:pathData="M100,100m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="190"
+                android:endY="190"
+                android:startX="10"
+                android:startY="10"
+                android:type="linear">
+                <item
+                    android:color="#FF6200EE"
+                    android:offset="0" />
+                <item
+                    android:color="#FF3700B3"
+                    android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Question Mark Icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M100,45c-22.1,0 -40,17.9 -40,40h15c0,-13.8 11.2,-25 25,-25s25,11.2 25,25c0,25 -37.5,23.1 -37.5,62.5h15c0,-28.1 37.5,-30.6 37.5,-62.5c0,-22.1 -17.9,-40 -40,-40zM92.5,140h15v15h-15z" />
+    <!-- Stylized Book/Knowledge Lines -->
+    <path
+        android:fillColor="#40FFFFFF"
+        android:pathData="M60,165 L140,165 L140,170 L60,170 Z M70,175 L130,175 L130,178 L70,178 Z" />
+</vector>

@@ -2,31 +2,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Main Brand Colors -->
         <item name="colorPrimary">@color/primaryBlue</item>
         <item name="colorPrimaryVariant">@color/primaryBlueVariant</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Surface, Background and Error Colors -->
         <item name="android:colorBackground">@color/bgDark</item>
         <item name="colorSurface">@color/surfaceColor</item>
         <item name="colorOnSurface">@color/textDark</item>
         <item name="colorError">@color/errorText</item>
         <item name="colorOnError">@color/white</item>
 
-        <!-- Background and Window Colors -->
         <item name="android:windowBackground">@color/bgDark</item>
         <item name="android:statusBarColor">@color/bgDark</item>
         <item name="android:navigationBarColor">@color/bgDark</item>
 
-        <!-- Text Colors -->
         <item name="android:textColorPrimary">@color/textDark</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorHint">@color/textSecondary</item>
 
-        <!-- Component Styles -->
         <item name="cardBackgroundColor">@color/surfaceColor</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
@@ -52,7 +47,6 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
-    <!-- Updated BottomSheet Theme -->
     <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>

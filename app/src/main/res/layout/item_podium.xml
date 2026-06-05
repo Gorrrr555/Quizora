@@ -70,7 +70,6 @@
         android:textSize="11sp"
         android:textStyle="bold" />
 
-    <!-- Sleeker PODIUM STEP -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardPodiumStep"
         android:layout_width="match_parent"

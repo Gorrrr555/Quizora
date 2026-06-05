@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -20,14 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,22 +35,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -70,23 +56,16 @@ public class GameActivity extends AppCompatActivity {
     private int questionIndex = 1;
     private int correctAnswersCount = 0;
     private CountDownTimer countDownTimer;
-    private final String API_KEY = BuildConfig.OPENROUTER_API_KEY;
 
     private List<View> optionViews = new ArrayList<>();
+    private List<Question> questionList = new ArrayList<>();
     private int currentCorrectIdx = -1;
     private String currentExplanation = "";
-
-    private List<String> askedQuestions = new ArrayList<>();
 
     private String[] loadingMessages;
     private final Handler loadingHandler = new Handler(Looper.getMainLooper());
     private Runnable loadingRunnable;
     private ObjectAnimator brainPulseAnimator;
-
-    private boolean isQuestionLoading = false;
-
-    private int retryCount = 0;
-    private static final int MAX_RETRIES = 3;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -198,8 +177,6 @@ public class GameActivity extends AppCompatActivity {
             handleGameOver();
             return;
         }
-        if (isQuestionLoading) return;
-        isQuestionLoading = true;
 
         if (countDownTimer != null) countDownTimer.cancel();
         tvTimer.setTextColor(ContextCompat.getColor(this, R.color.primaryBlue));
@@ -214,77 +191,45 @@ public class GameActivity extends AppCompatActivity {
         tvScore.setText(String.valueOf(score));
         questionProgress.setProgress(questionIndex * 10);
 
-        String currentLang = LocaleHelper.getLanguage(this);
-        String targetLanguage = currentLang.equalsIgnoreCase("ru") ? "Russian" : "English";
-        String exclusion = askedQuestions.isEmpty() ? "" : ". Do NOT ask any of these: " + TextUtils.join(", ", askedQuestions);
-        
-        String prompt = "Generate exactly one " + difficulty + " quiz question about " + category + " in " + targetLanguage + ". " +
-                "You MUST follow this format strictly: Question|Option1|Option2|Option3|Option4|CorrectIndex(1-4)|ShortExplanation. " +
-                "Do NOT include markdown, backticks, or any introductory text. Just the raw string. " +
-                exclusion + ". Seed: " + System.currentTimeMillis();
-
-        OkHttpClient client = new OkHttpClient();
-        try {
-            JSONObject json = new JSONObject();
-            json.put("model", "google/gemini-2.0-flash-lite-001");
-            json.put("temperature", 0.7); 
-            JSONArray messages = new JSONArray();
-            messages.put(new JSONObject().put("role", "user").put("content", prompt));
-            json.put("messages", messages);
-
-            Request request = new Request.Builder()
-                    .url("https://openrouter.ai/api/v1/chat/completions")
-                    .post(RequestBody.create(json.toString(), MediaType.parse("application/json")))
-                    .addHeader("Authorization", "Bearer " + API_KEY)
-                    .build();
-
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    runOnUiThread(() -> {
-                        isQuestionLoading = false;
-                        stopLoadingAnimation();
-                        tvQuestion.setText(R.string.error_transmission);
-                    });
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    final String res = response.isSuccessful() && response.body() != null ? response.body().string() : null;
-                    runOnUiThread(() -> {
-                        isQuestionLoading = false;
-                        if (res != null) {
-                            try {
-                                String content = new JSONObject(res).getJSONArray("choices")
-                                        .getJSONObject(0).getJSONObject("message").getString("content");
-                                content = content.replace("```", "").replace("markdown", "").trim();
-                                retryCount = 0;
-                                parseAndShow(content);
-                                startTimer();
-                            } catch (Exception e) { 
-                                handleRetry();
-                            }
-                        } else {
-                            stopLoadingAnimation();
-                            tvQuestion.setText(R.string.error_transmission);
-                        }
-                    });
-                }
-            });
-        } catch (Exception e) { 
-            isQuestionLoading = false;
-            stopLoadingAnimation();
+        if (questionList.isEmpty()) {
+            String currentLang = LocaleHelper.getLanguage(this);
+            questionList = LocalQuestionProvider.getQuestions(this, category, difficulty, currentLang, 10);
         }
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (questionList.isEmpty() || questionIndex > questionList.size()) {
+                stopLoadingAnimation();
+                tvQuestion.setText("No questions available.");
+                return;
+            }
+            
+            Question currentQuestion = questionList.get(questionIndex - 1);
+            displayQuestion(currentQuestion);
+            startTimer();
+        }, 1500);
     }
 
-    private void handleRetry() {
-        if (retryCount < MAX_RETRIES) {
-            retryCount++;
-            new Handler(Looper.getMainLooper()).postDelayed(this::loadQuestion, 1500);
-        } else {
-            stopLoadingAnimation();
-            tvQuestion.setText(R.string.error_transmission);
-            retryCount = 0;
+    private void displayQuestion(Question q) {
+        stopLoadingAnimation();
+
+        tvQuestion.setText(q.getText());
+        currentCorrectIdx = q.getCorrectIndex();
+        currentExplanation = q.getExplanation();
+
+        char[] letters = {'A', 'B', 'C', 'D'};
+        String[] options = q.getOptions();
+
+        for (int i = 0; i < 4; i++) {
+            final int current = i + 1;
+            View view = LayoutInflater.from(this).inflate(R.layout.item_option, optionsContainer, false);
+            ((TextView) view.findViewById(R.id.tvOptionLetter)).setText(String.valueOf(letters[i]));
+            ((TextView) view.findViewById(R.id.tvOptionText)).setText(options[i]);
+            view.setOnClickListener(v -> showResults(current));
+            view.setAlpha(0f);
+            view.setTranslationY(dpToPx(40));
+            optionsContainer.addView(view);
+            optionViews.add(view);
+            view.animate().alpha(1f).translationY(0).setDuration(500).setStartDelay((i+1) * 100).setInterpolator(new OvershootInterpolator(1.1f)).start();
         }
     }
 
@@ -311,33 +256,6 @@ public class GameActivity extends AppCompatActivity {
         ObjectAnimator.ofPropertyValuesHolder(findViewById(R.id.timerRing),
                 PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.1f, 1.0f),
                 PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.1f, 1.0f)).setDuration(300).start();
-    }
-
-    private void parseAndShow(String text) {
-        stopLoadingAnimation();
-        String[] p = text.trim().split("\\|");
-        if (p.length >= 6) {
-            String qText = p[0];
-            tvQuestion.setText(qText);
-            askedQuestions.add(qText);
-            try {
-                currentCorrectIdx = Integer.parseInt(p[5].trim().replaceAll("[^0-9]", ""));
-                currentExplanation = (p.length >= 7) ? p[6] : "Analysis suggests this is the optimal choice.";
-                char[] letters = {'A', 'B', 'C', 'D'};
-                for (int i = 1; i <= 4; i++) {
-                    final int current = i;
-                    View view = LayoutInflater.from(this).inflate(R.layout.item_option, optionsContainer, false);
-                    ((TextView) view.findViewById(R.id.tvOptionLetter)).setText(String.valueOf(letters[i-1]));
-                    ((TextView) view.findViewById(R.id.tvOptionText)).setText(p[i].trim());
-                    view.setOnClickListener(v -> showResults(current));
-                    view.setAlpha(0f);
-                    view.setTranslationY(dpToPx(40));
-                    optionsContainer.addView(view);
-                    optionViews.add(view);
-                    view.animate().alpha(1f).translationY(0).setDuration(500).setStartDelay(i * 100).setInterpolator(new OvershootInterpolator(1.1f)).start();
-                }
-            } catch (Exception e) { handleRetry(); }
-        } else { handleRetry(); }
     }
 
     private int dpToPx(int dp) {
