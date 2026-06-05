@@ -44,9 +44,6 @@
     <string name="quiz_summary">Թեստի ամփոփում</string>
     <string name="added_pts">Ավելացված միավորներ</string>
 
-    <string name="bonus_fifty_fifty">½</string>
-    <string name="bonus_time_freeze">❄️</string>
-
     <string name="account_stats">Հաշվի վիճակագրություն</string>
     <string name="total_pts">Ընդհանուր միավոր</string>
     <string name="quizzes">Թեստեր</string>
@@ -76,6 +73,21 @@
     <string name="difficulty_protocol">Բարդության արձանագրություն</string>
     <string name="start_mission">ՍԿՍԵԼ ԱՌԱՔԵԼՈՒԹՅՈՒՆԸ</string>
     <string name="icon_history">📜</string>
+
+    <string name="continue_as_guest">ՇԱՐՈՒՆԱԿԵԼ ՈՐՊԵՍ ՀՅՈՒՐ</string>
+    <string name="guest_user">Հյուր</string>
+    <string name="login_or_register">Մուտք / Գրանցում</string>
+    <string name="no_account_linked">Հաշիվը կցված չէ</string>
+    <string name="test_user_login">ԹԵՍՏԱՅԻՆ ՕԳՏԱՏԵՐ</string>
+    <string name="choose_avatar">Ընտրել ավատար</string>
+    <string name="choose_from_gallery">Ընտրել պատկերասրահից</string>
+    <string name="or_use_emoji">Կամ օգտագործեք էմոջի</string>
+    <string name="remove_current_avatar">Հեռացնել ընթացիկ ավատարը</string>
+    <string name="avatar_removed">Ավատարը հեռացված է</string>
+    <string name="avatar_updated_emoji">Ավատարը թարմացված է: 😎</string>
+    <string name="avatar_updated_gallery">Ավատարը թարմացված է պատկերասրահից:</string>
+    <string name="log_in_to_set_avatar">Մուտք գործեք ավատար տեղադրելու համար</string>
+    <string name="failed_to_load_image">Չհաջողվեց բեռնել պատկերը</string>
 
     <string-array name="loading_messages">
         <item>Որոնում արխիվներում…</item>

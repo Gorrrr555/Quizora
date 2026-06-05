@@ -52,13 +52,20 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
-    <!-- Beautiful BottomSheet Theme -->
-    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <!-- Updated BottomSheet Theme -->
+    <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
 
-    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/surfaceColor</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedTopCorners</item>
+    </style>
+
+    <style name="Theme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/headerGradientStart</item>
+        <item name="android:statusBarColor">@color/headerGradientStart</item>
+        <item name="android:navigationBarColor">@color/headerGradientStart</item>
     </style>
 
 </resources>

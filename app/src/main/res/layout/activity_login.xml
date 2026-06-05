@@ -138,6 +138,29 @@
                         app:elevation="8dp"
                         android:letterSpacing="0.05"/>
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGuest"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/continue_as_guest"
+                        android:textColor="@color/primaryBlue"
+                        android:textAllCaps="false"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTestUser"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="@string/test_user_login"
+                        android:textColor="#FF9800"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
                     <ProgressBar
                         android:id="@+id/progressBar"
                         style="?android:attr/progressBarStyle"

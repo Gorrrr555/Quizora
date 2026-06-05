@@ -62,7 +62,6 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout optionsContainer;
     private MaterialCardView cardSolution, cardNewTitle, cardLoadingBrain;
     private MaterialButton btnNext, btnViewLeaderboard, btnBackToMenu;
-    private MaterialButton btnFiftyFifty, btnTimeFreeze;
     private ImageButton btnBack;
 
     private String category, difficulty;
@@ -84,9 +83,6 @@ public class GameActivity extends AppCompatActivity {
     private Runnable loadingRunnable;
     private ObjectAnimator brainPulseAnimator;
 
-    private boolean isFiftyFiftyUsed = false;
-    private boolean isTimeFreezeUsed = false;
-    private boolean isTimerFrozen = false;
     private boolean isQuestionLoading = false;
 
     private int retryCount = 0;
@@ -135,8 +131,6 @@ public class GameActivity extends AppCompatActivity {
         btnViewLeaderboard = findViewById(R.id.btnViewLeaderboard);
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
         btnBack = findViewById(R.id.btnBack);
-        btnFiftyFifty = findViewById(R.id.btnFiftyFifty);
-        btnTimeFreeze = findViewById(R.id.btnTimeFreeze);
     }
 
     private void setupListeners() {
@@ -152,45 +146,6 @@ public class GameActivity extends AppCompatActivity {
 
         btnBackToMenu.setOnClickListener(v -> finish());
         btnBack.setOnClickListener(v -> finish());
-
-        btnFiftyFifty.setOnClickListener(v -> {
-            if (!isFiftyFiftyUsed && optionViews.size() == 4) useFiftyFifty();
-        });
-
-        btnTimeFreeze.setOnClickListener(v -> {
-            if (!isTimeFreezeUsed) useTimeFreeze();
-        });
-    }
-
-    private void useFiftyFifty() {
-        isFiftyFiftyUsed = true;
-        btnFiftyFifty.setEnabled(false);
-        btnFiftyFifty.animate().alpha(0.5f).scaleX(0.8f).scaleY(0.8f).setDuration(400).start();
-        
-        List<Integer> wrongIndices = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            if (i + 1 != currentCorrectIdx) wrongIndices.add(i);
-        }
-        Collections.shuffle(wrongIndices);
-        
-        for (int i = 0; i < 2; i++) {
-            int idx = wrongIndices.get(i);
-            optionViews.get(idx).animate().alpha(0f).scaleX(0.5f).scaleY(0.5f).setDuration(500)
-                    .withEndAction(() -> optionViews.get(idx).setVisibility(View.INVISIBLE)).start();
-        }
-        Toast.makeText(this, R.string.bonus_fifty_fifty, Toast.LENGTH_SHORT).show();
-    }
-
-    private void useTimeFreeze() {
-        isTimeFreezeUsed = true;
-        isTimerFrozen = true;
-        btnTimeFreeze.setEnabled(false);
-        btnTimeFreeze.animate().alpha(0.5f).scaleX(0.8f).scaleY(0.8f).setDuration(400).start();
-        
-        if (countDownTimer != null) countDownTimer.cancel();
-        tvTimer.setTextColor(Color.parseColor("#06B6D4")); 
-        tvTimer.setText(R.string.bonus_time_freeze);
-        Toast.makeText(this, R.string.bonus_time_freeze, Toast.LENGTH_SHORT).show();
     }
 
     private void startLoadingAnimation() {
@@ -247,7 +202,6 @@ public class GameActivity extends AppCompatActivity {
         isQuestionLoading = true;
 
         if (countDownTimer != null) countDownTimer.cancel();
-        isTimerFrozen = false;
         tvTimer.setTextColor(ContextCompat.getColor(this, R.color.primaryBlue));
 
         startLoadingAnimation();
@@ -255,8 +209,6 @@ public class GameActivity extends AppCompatActivity {
         optionViews.clear();
         cardSolution.setVisibility(View.GONE);
         btnNext.setVisibility(View.GONE);
-        
-        resetBonusButtons();
         
         tvQuestionCount.setText(questionIndex + " / 10");
         tvScore.setText(String.valueOf(score));
@@ -308,7 +260,7 @@ public class GameActivity extends AppCompatActivity {
                                 content = content.replace("```", "").replace("markdown", "").trim();
                                 retryCount = 0;
                                 parseAndShow(content);
-                                if (!isTimerFrozen) startTimer();
+                                startTimer();
                             } catch (Exception e) { 
                                 handleRetry();
                             }
@@ -325,21 +277,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void resetBonusButtons() {
-        if (!isFiftyFiftyUsed) {
-            btnFiftyFifty.setEnabled(true);
-            btnFiftyFifty.setAlpha(1.0f);
-            btnFiftyFifty.setScaleX(1.0f);
-            btnFiftyFifty.setScaleY(1.0f);
-        }
-        if (!isTimeFreezeUsed) {
-            btnTimeFreeze.setEnabled(true);
-            btnTimeFreeze.setAlpha(1.0f);
-            btnTimeFreeze.setScaleX(1.0f);
-            btnTimeFreeze.setScaleY(1.0f);
-        }
-    }
-
     private void handleRetry() {
         if (retryCount < MAX_RETRIES) {
             retryCount++;
@@ -352,7 +289,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        if (isTimerFrozen) return;
         final long timeLimit = difficulty.equalsIgnoreCase("easy") ? 15000 : (difficulty.equalsIgnoreCase("medium") ? 30000 : 45000);
         countDownTimer = new CountDownTimer(timeLimit, 50) {
             @Override
@@ -468,8 +404,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void disableOptions() {
         for (View v : optionViews) v.setEnabled(false);
-        btnFiftyFifty.setEnabled(false);
-        btnTimeFreeze.setEnabled(false);
     }
 
     private void handleGameOver() {

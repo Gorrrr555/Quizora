@@ -20,28 +20,50 @@
             android:paddingTop="32dp"
             android:paddingBottom="20dp">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivAvatarSmall"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:padding="2dp"
-                android:src="@drawable/avatar_placeholder"
-                android:contentDescription="@null"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                app:strokeColor="@color/glassBorder"
-                app:strokeWidth="2dp"
+            <RelativeLayout
+                android:id="@+id/avatarContainer"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivAvatarSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="2dp"
+                    android:src="@drawable/avatar_placeholder"
+                    android:contentDescription="@null"
+                    android:clickable="false"
+                    android:focusable="false"
+                    app:shapeAppearanceOverlay="@style/CircleImage"
+                    app:strokeColor="@color/primaryBlue"
+                    app:strokeWidth="2dp" />
+
+                <TextView
+                    android:id="@+id/tvAvatarEmoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="32sp"
+                    android:textColor="@color/textDark"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/ivAvatarSmall"
+                app:layout_constraintBottom_toBottomOf="@id/avatarContainer"
                 app:layout_constraintEnd_toStartOf="@id/headerStats"
-                app:layout_constraintStart_toEndOf="@id/ivAvatarSmall"
-                app:layout_constraintTop_toTopOf="@id/ivAvatarSmall">
+                app:layout_constraintStart_toEndOf="@id/avatarContainer"
+                app:layout_constraintTop_toTopOf="@id/avatarContainer">
 
                 <TextView
                     android:id="@+id/tvWelcome"
@@ -68,9 +90,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/ivAvatarSmall"
-                app:layout_constraintBottom_toBottomOf="@id/ivAvatarSmall">
+                app:layout_constraintTop_toTopOf="@id/avatarContainer"
+                app:layout_constraintBottom_toBottomOf="@id/avatarContainer">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardCoins"

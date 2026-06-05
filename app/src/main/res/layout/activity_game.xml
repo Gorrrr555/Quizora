@@ -213,57 +213,6 @@
         </androidx.core.widget.NestedScrollView>
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/commandRail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        app:cardBackgroundColor="@color/surfaceColor"
-        app:cardCornerRadius="35dp"
-        app:cardElevation="12dp"
-        app:strokeColor="@color/cardStroke"
-        app:strokeWidth="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="6dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFiftyFifty"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:text="½"
-                android:textColor="@color/primaryBlue"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:cornerRadius="28dp"
-                android:padding="0dp"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:background="@color/cardStroke"
-                android:layout_marginHorizontal="8dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnTimeFreeze"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:text="❄️"
-                android:textSize="22sp"
-                app:cornerRadius="28dp"
-                android:padding="0dp"/>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
     <RelativeLayout
         android:id="@+id/finishLayout"
         android:layout_width="match_parent"

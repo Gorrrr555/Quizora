@@ -16,7 +16,8 @@
 
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,6 +32,7 @@
         <activity android:name=".GameActivity" android:exported="false" />
         <activity android:name=".LeaderboardActivity" android:exported="false" />
         <activity android:name=".EmailVerificationActivity" android:exported="false" />
+        <activity android:name=".AiAssistantActivity" android:exported="false" />
 
     </application>
 </manifest>

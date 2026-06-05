@@ -14,17 +14,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private TextInputLayout tilEmail, tilPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnGuest, btnTestUser;
     private ProgressBar progressBar;
     private TextView tvGoToRegister;
 
     private FirebaseAuth mAuth;
+
+    private static final String TEST_EMAIL = "innovationcampus26@gmail.com";
+    private static final String TEST_PASSWORD = "Samsung2026"; 
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -43,22 +53,18 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnGuest = findViewById(R.id.btnGuest);
+        btnTestUser = findViewById(R.id.btnTestUser);
         progressBar = findViewById(R.id.progressBar);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginUser();
-            }
+        btnLogin.setOnClickListener(v -> loginUser());
+        btnGuest.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         });
-
-        tvGoToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
+        btnTestUser.setOnClickListener(v -> loginWithTestUser());
+        tvGoToRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
 
     @Override
@@ -70,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             currentUser.reload().addOnCompleteListener(task -> {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    if (currentUser.isEmailVerified()) {
+                    if (currentUser.isEmailVerified() || (currentUser.getEmail() != null && currentUser.getEmail().equalsIgnoreCase(TEST_EMAIL))) {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
@@ -82,6 +88,55 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void loginWithTestUser() {
+        progressBar.setVisibility(View.VISIBLE);
+        mAuth.signInWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Exception e = task.getException();
+                        if (e instanceof FirebaseAuthInvalidUserException) {
+                            // Account doesn't exist, create it automatically
+                            mAuth.createUserWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD)
+                                    .addOnCompleteListener(regTask -> {
+                                        if (regTask.isSuccessful()) {
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            if (user != null) {
+                                                DatabaseReference db = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+                                                Map<String, Object> userMap = new HashMap<>();
+                                                userMap.put("nickname", "Samsung");
+                                                userMap.put("email", TEST_EMAIL);
+                                                userMap.put("totalScore", 0L);
+                                                userMap.put("gamesPlayed", 0L);
+                                                userMap.put("quizCoins", 100L);
+                                                userMap.put("streak", 0L);
+                                                userMap.put("lastLoginDate", "");
+
+                                                db.setValue(userMap).addOnCompleteListener(dbTask -> {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                    finish();
+                                                });
+                                            }
+                                        } else {
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(LoginActivity.this, "Access Error: " + regTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(this, "Access Error: The Test User password in the app code is incorrect.", Toast.LENGTH_LONG).show();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(this, "System Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private void loginUser() {
@@ -112,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                             user.reload().addOnCompleteListener(reloadTask -> {
                                 progressBar.setVisibility(View.GONE);
                                 if (reloadTask.isSuccessful()) {
-                                    if (user.isEmailVerified()) {
+                                    if (user.isEmailVerified() || (user.getEmail() != null && user.getEmail().equalsIgnoreCase(TEST_EMAIL))) {
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                         finish();
                                     } else {

@@ -3,9 +3,13 @@ package gor.alaverdyan.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.card.MaterialCardView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
     private String selectedDifficulty = "Easy";
     private LinearLayout difficultySection;
     private Button btnEasy, btnMed, btnHard, btnStart;
-    private TextView tvTopNickname, tvSubtitle, tvCoinsCount, tvStreakCount;
+    private TextView tvTopNickname, tvSubtitle, tvCoinsCount, tvStreakCount, tvAvatarEmoji;
+    private ImageView ivAvatarSmall;
     private MaterialCardView lastSelectedCard = null;
     private BottomNavigationView bottomNav;
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    private AvatarManager avatarManager;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -59,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
         btnMed = findViewById(R.id.btnMed);
         btnHard = findViewById(R.id.btnHard);
         bottomNav = findViewById(R.id.bottom_navigation);
+        
+        ivAvatarSmall = findViewById(R.id.ivAvatarSmall);
+        tvAvatarEmoji = findViewById(R.id.tvAvatarEmoji);
+
+        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+            if (uri != null && avatarManager != null) {
+                avatarManager.handleGalleryImage(uri);
+            }
+        });
 
         MaterialCardView cardMath = findViewById(R.id.cardMath);
         MaterialCardView cardChemistry = findViewById(R.id.cardChemistry);
@@ -125,6 +145,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         loadUserInfo();
+
+        View avatarContainer = findViewById(R.id.avatarContainer);
+        if (avatarContainer != null) {
+            avatarContainer.setOnClickListener(v -> {
+                if (avatarManager != null) {
+                    avatarManager.showAvatarSelectionDialog();
+                } else {
+                    Toast.makeText(this, R.string.log_in_to_set_avatar, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         checkDailyBonus();
         setupBottomNavigation();
     }
@@ -159,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         String uid = FirebaseAuth.getInstance().getUid();
         if (uid != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+            avatarManager = new AvatarManager(this, userRef, pickMedia);
             userRef.keepSynced(true);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -167,9 +200,13 @@ public class MainActivity extends AppCompatActivity {
                         String nickname = snapshot.child("nickname").getValue(String.class);
                         Long coins = snapshot.child("quizCoins").getValue(Long.class);
                         Long streak = snapshot.child("streak").getValue(Long.class);
+                        String emoji = snapshot.child("avatarEmoji").getValue(String.class);
+                        String base64Image = snapshot.child("avatarUrl").getValue(String.class);
                         
                         if (nickname != null) {
                             tvTopNickname.setText(getString(R.string.hello_user, nickname));
+                        } else {
+                            tvTopNickname.setText(getString(R.string.hello_user, "Explorer"));
                         }
                         
                         if (coins != null) {
@@ -183,12 +220,51 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             tvStreakCount.setText("0");
                         }
+
+                        if (emoji != null && !emoji.isEmpty()) {
+                            if (tvAvatarEmoji != null) {
+                                tvAvatarEmoji.setText(emoji);
+                                tvAvatarEmoji.setVisibility(View.VISIBLE);
+                            }
+                            if (ivAvatarSmall != null) ivAvatarSmall.setVisibility(View.GONE);
+                        } else if (base64Image != null && !base64Image.isEmpty()) {
+                            try {
+                                byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                                if (ivAvatarSmall != null) {
+                                    ivAvatarSmall.setImageBitmap(decodedByte);
+                                    ivAvatarSmall.setVisibility(View.VISIBLE);
+                                }
+                                if (tvAvatarEmoji != null) tvAvatarEmoji.setVisibility(View.GONE);
+                            } catch (Exception e) {
+                                if (ivAvatarSmall != null) {
+                                    ivAvatarSmall.setImageResource(R.drawable.avatar_placeholder);
+                                    ivAvatarSmall.setVisibility(View.VISIBLE);
+                                }
+                                if (tvAvatarEmoji != null) tvAvatarEmoji.setVisibility(View.GONE);
+                            }
+                        } else {
+                            if (tvAvatarEmoji != null) tvAvatarEmoji.setVisibility(View.GONE);
+                            if (ivAvatarSmall != null) {
+                                ivAvatarSmall.setVisibility(View.VISIBLE);
+                                ivAvatarSmall.setImageResource(R.drawable.avatar_placeholder);
+                            }
+                        }
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {}
             });
+        } else {
+            tvTopNickname.setText(getString(R.string.hello_user, getString(R.string.guest_user)));
+            tvCoinsCount.setText("0");
+            tvStreakCount.setText("0");
+            if (tvAvatarEmoji != null) tvAvatarEmoji.setVisibility(View.GONE);
+            if (ivAvatarSmall != null) {
+                ivAvatarSmall.setVisibility(View.VISIBLE);
+                ivAvatarSmall.setImageResource(R.drawable.avatar_placeholder);
+            }
         }
     }
 
@@ -266,7 +342,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUnlocksForCategory(String category) {
         String uid = FirebaseAuth.getInstance().getUid();
-        if (uid == null) return;
+        if (uid == null) {
+            btnMed.setEnabled(false);
+            btnMed.setAlpha(0.4f);
+            btnHard.setEnabled(false);
+            btnHard.setAlpha(0.4f);
+            return;
+        }
 
         FirebaseDatabase.getInstance().getReference("users").child(uid).child("progress").child(category)
                 .addValueEventListener(new ValueEventListener() {

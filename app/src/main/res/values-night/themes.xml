@@ -4,4 +4,10 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="Theme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/headerGradientStart</item>
+        <item name="android:statusBarColor">@color/headerGradientStart</item>
+        <item name="android:navigationBarColor">@color/headerGradientStart</item>
+    </style>
 </resources>
